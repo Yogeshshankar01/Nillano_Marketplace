@@ -1,0 +1,27 @@
+
+<app-header></app-header>
+
+<ion-content [fullscreen]="true"> 
+
+  <ion-segment class="p-2" [(ngModel)]="selectedTab" (ionChange)="segmentChanged($event)" >
+    <ion-segment-button class="rounded-4 overflow-hidden tab fw-bold" value="buying"  [ngClass]="{'active-tab': selectedTab === 'buying'}">
+      <ion-label>Buying</ion-label>
+    </ion-segment-button>
+    <ion-segment-button class="rounded-4 overflow-hidden tab fw-bold" value="renting"  [ngClass]="{'active-tab': selectedTab === 'renting'}">
+      <ion-label>Renting</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="selectedTab">
+    <div *ngSwitchCase="'buying'">
+      <!-- Content for Tab 1 -->
+      <h1>Buying</h1>
+    </div>
+    <div *ngSwitchCase="'renting'">
+      <!-- Content for Tab 2 -->
+      <h1>Renting</h1>
+    </div>
+  </div>
+
+  
+</ion-content>

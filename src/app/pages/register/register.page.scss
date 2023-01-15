@@ -1,0 +1,41 @@
+ion-content{
+    --background: linear-gradient(180deg, #1A4640 0%, rgba(242, 242, 242, 0) 100%);
+    // background-image: url(../../../assets/images/login-bg.png);
+    // background-size: contain;
+    // background-repeat: no-repeat;
+    // background-position: left center;
+}
+
+img#login-bg{
+    position: absolute;
+    left: 0%;
+    height: 100%;
+    z-index: 0;
+}
+
+.main-content{
+    width: 50% !important;
+}
+
+img#logo{
+    width: 40%;
+    background-color: #f2f2f2;
+    padding: 1%;
+}
+
+@media(max-width:530px){
+    .main-content{
+        width: 95% !important;
+        background: none !important;
+        justify-content: flex-start !important;
+        padding-top: 10% !important;
+    }
+    img#login-bg{
+        height: auto;
+        width: 100%;
+        bottom: 0%;
+    }
+    img#logo{
+        width: 50%;
+    }
+}

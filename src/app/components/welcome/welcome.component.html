@@ -1,0 +1,45 @@
+<ion-modal #modal trigger="open-modal" [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation" [isOpen]="isModalOpen" >
+  <ng-template>
+    <ion-content class="modal-content">
+      <ion-toolbar>
+        <ion-title>Welcome to Niilano!</ion-title>
+        <ion-buttons slot="end">
+          <ion-button color="light" (click)="modal.dismiss()">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+
+        <ion-text class="ion-text-center">
+          <h4>We're excited to have you on board as a new user. Here's a quick guide to help you get started:</h4>
+        </ion-text>
+
+        <ion-list>
+          <ion-item>
+            <ion-label class="ion-text-wrap">Browse our selection of products available for purchase or rent.</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">You can filter by category, price, and more to find exactly what you're looking for.</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">Once you've found something you like, you can add it to your cart and proceed to checkout.</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">If you want to rent, select the duration of the rental period. You can choose from a variety of rental periods, depending on the product.</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">If you choose to purchase, you can pay using a variety of payment methods, including credit card, PayPal, and more.</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">After your order is processed, you'll receive a confirmation email with all the details.</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">If you have any issues or questions, our support team is here to help. You can reach us through the in-app chat or email us at support@niilano.com.</ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-text class="ion-text-center">
+          <h3>Thanks for choosing Niilano, and happy shopping!</h3>
+        </ion-text>
+
+    </ion-content>
+  </ng-template>
+</ion-modal>

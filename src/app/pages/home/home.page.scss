@@ -25,3 +25,20 @@
 #container a {
   text-decoration: none;
 }
+
+ion-segment {
+  --background: #1A4640;
+}
+
+.tab{
+  color: #f2f2f2;
+}
+
+.active-tab {
+  background-color: #f2f2f2;
+  color: #1A4640;
+}
+
+.active-tab ion-label{
+  border-color: #1A4640;
+}

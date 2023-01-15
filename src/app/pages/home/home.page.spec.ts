@@ -21,4 +21,11 @@ describe('HomePage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have a title property with value "My Title"', () => {
+    const fixture = TestBed.createComponent(HomePage);
+    const component = fixture.componentInstance;
+    expect(component.title).toEqual('My Title');
+  });
+  
 });
