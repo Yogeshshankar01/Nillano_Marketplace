@@ -4,7 +4,7 @@
   <img id="login-bg" src="../../../assets/images/login-bg.png" alt="login bg" />
 
   <div class=" main-content p-3 mx-auto h-100 d-flex align-items-center justify-content-center" style="position: relative; z-index:1; flex-direction: column;  " >
-    <div class="logo text-center">
+    <div class="logo text-center" routerLink="/home">
       <img id="logo" class="rounded p-2" src="../../../assets/images/logo.png" alt="Niilano logo" />
     </div>  
 
@@ -19,7 +19,7 @@
       </div>
     </div> -->
 
-    <ion-segment (ionChange)="onSegmentChange($event)" color="primary" class="mt-5 mb-3">
+    <ion-segment (ionChange)="onSegmentChange($event)" color="primary" class="my-3">
       <ion-segment-button value="login" class="fw-bold" style="background-color:#1A4640;">
         Login
       </ion-segment-button>
