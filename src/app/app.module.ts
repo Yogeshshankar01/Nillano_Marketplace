@@ -12,10 +12,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { LoadingModule } from './components/loading/loading.component.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+// import { ServiceWorkerModule } from '@angular/service-worker';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ...AppStoreModule,
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,CommonModule, ...AppStoreModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: !isDevMode(), // Restrict extension to log-only mode
@@ -25,7 +27,13 @@ import { HttpClientModule } from '@angular/common/http';
     }),
     LoadingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    // ServiceWorkerModule.register('ngsw-worker.js', {
+    //   enabled: !isDevMode(),
+    //   // Register the ServiceWorker as soon as the application is stable
+    //   // or after 30 seconds (whichever comes first).
+    //   registrationStrategy: 'registerWhenStable:30000'
+    // })
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
