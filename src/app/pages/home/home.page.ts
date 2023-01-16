@@ -11,11 +11,13 @@ export class HomePage implements OnDestroy,OnInit {
 
   categories = [
     { name: 'Electronics', imageUrl: '.././../../assets/images/electronics.jpg' },
-    { name: 'Fashion', imageUrl: '.././../../assets/img/fashion.jpg' },
-    { name: 'Home & Garden', imageUrl: '.././../../assets/img/home-garden.jpg' },
-    { name: 'Sports & Outdoors', imageUrl: '.././../../assets/img/sports-outdoors.jpg' },
-    { name: 'Books', imageUrl: '.././../../assets/img/books.jpg' },
-    { name: 'Toys & Games', imageUrl: '.././../../assets/img/toys-games.jpg' },
+    { name: 'Fashion', imageUrl: '.././../../assets/images/fashion.jpg' },
+    { name: 'Vehicles', imageUrl: '.././../../assets/images/vehicles.jpg' },
+    { name: 'Home & Garden', imageUrl: '.././../../assets/images/home-garden.jpg' },
+    { name: 'Sports & Outdoors', imageUrl: '.././../../assets/images/sports-outdoors.jpg' },
+    { name: 'Health & Beauty', imageUrl: '.././../../assets/images/health-beauty.jpg' },
+    { name: 'Toys & Games', imageUrl: '.././../../assets/images/toys-games.jpg' },
+    { name: 'Agriculure & Food', imageUrl: '.././../../assets/images/agric-food.jpg' },
   ];
 
   title = 'My Title'

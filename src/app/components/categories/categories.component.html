@@ -1,3 +1,15 @@
-<p>
-  categories works!
-</p>
+
+            <ion-grid>
+              <ion-text class="ion-text-left" color="dark">
+                <h3>Shop by Category</h3>
+              </ion-text>
+              <ion-row>
+                
+                <ion-col style="color: black;" *ngFor="let category of categories" size="4" size-md="6" class="category-col">
+                  <!-- <ion-icon [name]="category.icon"></ion-icon> -->
+                  <img class="rounded-circle" [src]="category.imageUrl" alt="{{category.name}}">
+                  <p>{{ category.name }}</p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            

@@ -13,25 +13,17 @@
   </ion-segment>
 
   <div [ngSwitch]="selectedTab">
-    <div *ngSwitchCase="'buying'">
+    <div class="container" *ngSwitchCase="'buying'">
       <!-- Content for Tab 1 -->
       <ion-grid>
         <ion-row>
 
-          <ion-col class="category" size="12" size-md="4" size-lg="3">
-            <ion-grid>
-              <ion-row>
-                <ion-col style="color: black;" *ngFor="let category of categories" size="6" class="category-col">
-                  <!-- <ion-icon [name]="category.icon"></ion-icon> -->
-                  <img class="rounded-circle" [src]="category.imageUrl" alt="{{category.name}}">
-                  <p>{{ category.name }}</p>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
+          <ion-col class="category rounded" size="12" size-md="4" size-lg="3">
+            <app-categories></app-categories>
             
           </ion-col>
 
-          <ion-col class="a" size="12" size-md="8" size-lg="9">Column 2</ion-col>
+          <ion-col class="a rounded" size="12" size-md="8" size-lg="9">Column 2</ion-col>
         </ion-row>
       </ion-grid>
       
