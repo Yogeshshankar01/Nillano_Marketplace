@@ -9,6 +9,15 @@ import { AppState } from 'src/app/types/AppState';
 })
 export class HomePage implements OnDestroy,OnInit {
 
+  categories = [
+    { name: 'Electronics', imageUrl: '.././../../assets/images/electronics.jpg' },
+    { name: 'Fashion', imageUrl: '.././../../assets/img/fashion.jpg' },
+    { name: 'Home & Garden', imageUrl: '.././../../assets/img/home-garden.jpg' },
+    { name: 'Sports & Outdoors', imageUrl: '.././../../assets/img/sports-outdoors.jpg' },
+    { name: 'Books', imageUrl: '.././../../assets/img/books.jpg' },
+    { name: 'Toys & Games', imageUrl: '.././../../assets/img/toys-games.jpg' },
+  ];
+
   title = 'My Title'
 
   welcomeMessage = false
