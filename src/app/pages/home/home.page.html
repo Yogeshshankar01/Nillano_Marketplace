@@ -1,7 +1,7 @@
 
 <app-header></app-header>
 
-<ion-content [fullscreen]="true"> 
+<ion-content [fullscreen]="true" style="--background: #f2f2f2;"> 
 
   <ion-segment class="p-2" [(ngModel)]="selectedTab" (ionChange)="segmentChanged($event)" >
     <ion-segment-button class="rounded-4 overflow-hidden tab fw-bold" value="buying"  [ngClass]="{'active-tab': selectedTab === 'buying'}">
