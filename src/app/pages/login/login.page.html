@@ -19,7 +19,7 @@
     </div> -->
 
     <ion-segment (ionChange)="onSegmentChange($event)" color="primary" class="mt-5 mb-3">
-      <ion-segment-button class="fw-bold" value="login" color="success" style="background-color:#f2f2f2;">
+      <ion-segment-button class="fw-bold" value="login" color="success" style="background-color:#f2f2f2; color: #1A4640;">
         Login
       </ion-segment-button>
       <ion-segment-button class="fw-bold" value="register" style="background-color: #1A4640;">
@@ -31,7 +31,7 @@
     <h3 class="pb-3 fw-bolder" style="color:#1A4640;">Welcome back</h3>
 
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="w-100">
-      <ion-item lines="full" class="rounded-4">
+      <ion-item lines="full" style="--background: #f2f2f2;" class="rounded-4">
         <ion-label position="floating">Email address</ion-label>
         <ion-input type="text" formControlName="email"></ion-input>
       </ion-item>
@@ -47,7 +47,7 @@
 
       <!-- <app-error-message message="Email is mandatory" *ngIf="form.get('email').touched && form.get('email').errors?.required" ></app-error-message> -->
 
-      <ion-item lines="full" class="rounded-4 mt-4">
+      <ion-item lines="full" class="rounded-4 mt-4" style="--background: #f2f2f2;">
         <ion-label position="floating">Password</ion-label>
         <ion-input type="password" formControlName="password"></ion-input>
       </ion-item>
