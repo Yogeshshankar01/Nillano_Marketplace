@@ -32,7 +32,7 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="w-100">
       <ion-item lines="full" style="--background: #f2f2f2;" class="rounded-4">
-        <ion-label position="floating">Email address</ion-label>
+        <ion-label style="color: #1A4640;" position="floating">Email address</ion-label>
         <ion-input type="text" formControlName="email"></ion-input>
       </ion-item>
 
@@ -48,7 +48,7 @@
       <!-- <app-error-message message="Email is mandatory" *ngIf="form.get('email').touched && form.get('email').errors?.required" ></app-error-message> -->
 
       <ion-item lines="full" class="rounded-4 mt-4" style="--background: #f2f2f2;">
-        <ion-label position="floating">Password</ion-label>
+        <ion-label style="color: #1A4640;" position="floating">Password</ion-label>
         <ion-input type="password" formControlName="password"></ion-input>
       </ion-item>
 

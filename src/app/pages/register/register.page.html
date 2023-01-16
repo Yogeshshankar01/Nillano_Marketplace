@@ -32,18 +32,18 @@
 
     <form class="w-100" [formGroup]="registerForm" (ngSubmit)="register()" >
 
-      <ion-item lines="full" class="rounded-4">
-        <ion-label position="floating">First name</ion-label>
+      <ion-item lines="full" class="rounded-4" style="--background: #f2f2f2;" >
+        <ion-label style="color: #1A4640;" position="floating">First name</ion-label>
         <ion-input type="text" formControlName="first_name" ></ion-input>
       </ion-item>
 
-      <ion-item lines="full" class="rounded-4 mt-4">
-        <ion-label position="floating">Email address</ion-label>
+      <ion-item lines="full" class="rounded-4 mt-4" style="--background: #f2f2f2;" >
+        <ion-label style="color: #1A4640;" position="floating">Email address</ion-label>
         <ion-input type="text" formControlName="email" ></ion-input>
       </ion-item>
 
-      <ion-item lines="full" class="rounded-4 mt-4">
-        <ion-label position="floating">Password</ion-label>
+      <ion-item lines="full" class="rounded-4 mt-4" style="--background: #f2f2f2;">
+        <ion-label style="color: #1A4640;" position="floating">Password</ion-label>
         <ion-input type="password" formControlName="password" ></ion-input>
       </ion-item>
 
