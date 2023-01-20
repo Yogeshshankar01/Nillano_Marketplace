@@ -2,14 +2,14 @@
          
          
             <ion-grid>
-              <ion-text class="ion-text-left m-0" style="color: black;" color="dark">
+              <ion-text class="ion-text-left" style="color: black;" color="dark">
                 <h3 class="m-0">Shop by Category</h3>
               </ion-text>
               <ion-row>
                 
                 <ion-col [id]="category.name" style="color: black; cursor: pointer;" *ngFor="let category of categories" size="12" size-md="12" size-lg="12" class="category-col">
                   
-                  <ion-item class="bg-light">
+                  <ion-item class="bg-light rounded" style="--background:#f2f2f2;">
                     <ion-thumbnail slot="start">
                       <img class="rounded-circle h-100 w-100" src=".././../../assets/images/electronics.jpg" alt="{{category.name}}" />
                     </ion-thumbnail>
