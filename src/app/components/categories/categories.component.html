@@ -9,7 +9,7 @@
                 
                 <ion-col [id]="category.name" style="color: black; cursor: pointer;" *ngFor="let category of categories" size="12" size-md="12" size-lg="12" class="category-col">
                   
-                  <ion-item class="bg-light rounded" style="--background:#f2f2f2;">
+                  <ion-item class="bg-light rounded" style="--background:#f2f2f2; --color: black;">
                     <ion-thumbnail slot="start">
                       <img class="rounded-circle h-100 w-100" src=".././../../assets/images/electronics.jpg" alt="{{category.name}}" />
                     </ion-thumbnail>
@@ -42,6 +42,10 @@
                   </ion-popover>
 
                 </ion-col>
+
+                  <div class="text-right">
+                    <a href="">View all Categories</a>
+                  </div>
                 
               </ion-row>
             </ion-grid>
