@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { WelcomeModule } from 'src/app/components/welcome/welcome.module';
 import { HeaderModule } from 'src/app/components/header/header.module';
 import { CategoriesModule } from 'src/app/components/categories/categories.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { CategoriesModule } from 'src/app/components/categories/categories.modul
     HomePageRoutingModule,
     WelcomeModule,
     HeaderModule,
-    CategoriesModule
+    CategoriesModule,
+    FlexLayoutModule
   ],
   declarations: [HomePage]
 })

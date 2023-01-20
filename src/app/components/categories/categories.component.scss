@@ -16,10 +16,14 @@ ion-col.category {
     object-fit: cover;
     height: 50px;
   }
+  
+  ion-popover::part(backdrop) {
+    background-color: #1A4640;
+  }
 
   @media(max-width:530px){
-    ion-row{
-        flex-wrap: nowrap;
-        overflow-x: scroll;
-    }
+    // ion-row{
+    //     flex-wrap: nowrap;
+    //     overflow-x: scroll;
+    // }
   }
