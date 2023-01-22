@@ -21,6 +21,8 @@ export class FilterComponent {
   }
 
   onCategoryChange() {
+    console.log('cat change')
+    console.log('Selected Cat',this.selectedCategory)
     // logic to update subcategories based on selected category
   }
 
