@@ -7,12 +7,21 @@
       Products
     </ion-title>
   </ion-toolbar>
+  <ion-toolbar style="--background:#1A4640; color: #f2f2f2;">
+    <ion-searchbar></ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon style="color:#f2f2f2;" name="options"></ion-icon>
+        <ion-text class="ms-1"> Filters </ion-text>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content class="ion-padding" >
   <ion-grid>
-    <ion-row>
+    <ion-row class="text-dark">
       <ion-col size="6" class="ion-text-center">
         <ion-select placeholder="Select Category" [(ngModel)]="selectedCategory" (ionChange)="filterProducts()">
           <ion-select-option value="">All</ion-select-option>
@@ -34,7 +43,7 @@
     
     <ion-card class="m-0 mb-3" *ngFor="let product of products">
       <ion-img class="w-100 img" [src]="product.imageUrl"></ion-img>
-      <ion-card-content>
+      <ion-card-content style="background-color:#ffffff;">
         <ion-card-title>{{product.name}}</ion-card-title>
         <ion-card-subtitle>{{product.price}}</ion-card-subtitle>
         <p>{{product.description}}</p>
