@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Filter
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Category</ion-label>
+      <ion-select [(ngModel)]="selectedCategory" (ionChange)="onCategoryChange()">
+        <ion-select-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="selectedCategory">
+      <ion-label>Subcategory</ion-label>
+      <ion-select [(ngModel)]="selectedSubcategory">
+        <ion-select-option *ngFor="let subcategory of subcategories" [value]="subcategory.id">{{subcategory.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Price</ion-label>
+      <ion-select [(ngModel)]="priceRange" (ionChange)="onPriceChange()">
+        <ion-select-option value="low">Low <ion-text>($0 - $50)</ion-text></ion-select-option>
+        <ion-select-option value="medium">Medium <ion-text>($51 - $100)</ion-text></ion-select-option>
+        <ion-select-option value="high">High <ion-text>($100 and above)</ion-text></ion-select-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+  <ion-footer>
+    <ion-button (click)="applyFilter()" expand="block">Apply</ion-button>
+    <ion-button (click)="clearFilter()" color="danger" expand="block">Clear</ion-button>
+  </ion-footer>
+</ion-content>

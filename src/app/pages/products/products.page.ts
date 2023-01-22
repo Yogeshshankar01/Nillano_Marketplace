@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angula
 import Masonry from 'masonry-layout';
 import Isotope from 'isotope-layout';
 import imagesLoaded from 'imagesloaded';
+import { FilterComponent } from 'src/app/components/filter/filter.component';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-products',
@@ -16,7 +18,7 @@ export class ProductsPage implements OnInit {
   selectedCategory: string | undefined;
   selectedPriceRange: string | undefined;
 
-  constructor() { }
+  constructor(private popoverController: PopoverController) { }
 
   ngOnInit() {
     this.getProducts();
@@ -81,6 +83,23 @@ export class ProductsPage implements OnInit {
         
           getCategories1() {
             return [...this.categories1];
+          }
+
+          selectedCategory1:any
+          selectedSubcategory:any
+          priceRange:any
+
+          openFilter() {
+            this.popoverController.create({
+              component: FilterComponent,
+              componentProps: {
+                selectedCategory: this.selectedCategory1,
+                selectedSubcategory: this.selectedSubcategory,
+                priceRange: this.priceRange
+              }
+            }).then((popover:any) => {
+              popover.present();
+            });
           }
 
 }

@@ -24,7 +24,7 @@
   <ion-toolbar style="--background:#1A4640; color: #f2f2f2;">
     <ion-searchbar class="custom"></ion-searchbar>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button (click)="openFilter()">
         <ion-icon style="color:#f2f2f2;" name="options"></ion-icon>
         <ion-text class="ms-1"> Filters </ion-text>
       </ion-button>
@@ -68,15 +68,7 @@
 
  
       </ion-content>
-      
-      <ion-footer>
-        <ion-toolbar>
-          <ion-title>
-            Footer
-          </ion-title>
-        </ion-toolbar>
-      </ion-footer>
-      
+     
       
       
       
