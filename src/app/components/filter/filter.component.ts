@@ -27,6 +27,7 @@ export class FilterComponent {
   }
 
   onPriceChange() {
+    console.log(this.priceRange)
     // logic to update price range
   }
 
