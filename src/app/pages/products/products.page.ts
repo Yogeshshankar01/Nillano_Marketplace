@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import Masonry from 'masonry-layout';
+import Isotope from 'isotope-layout';
 import imagesLoaded from 'imagesloaded';
 
 @Component({
@@ -31,6 +32,7 @@ export class ProductsPage implements OnInit {
   }
 
   filterProducts() {
+    
     this.getProducts();
     this.products = this.products.filter((product: { category: string; price: number; }) => {
       if (this.selectedCategory && product.category !== this.selectedCategory) {
@@ -47,6 +49,7 @@ export class ProductsPage implements OnInit {
           return false;
         }
       }
+      
       return true;
     });
   }
@@ -79,30 +82,5 @@ export class ProductsPage implements OnInit {
           getCategories1() {
             return [...this.categories1];
           }
-        
-          masonry:any
-
-        ngAfterViewInit(){
-
-            const grid = document.querySelector('.grid') as HTMLElement;
-    this.masonry = new Masonry(grid, {
-        itemSelector: '.grid-item'
-    });
-
-    // imagesLoaded( grid ).on( 'progress', () => {
-    //   // layout Masonry after each image loads
-    //   this.masonry.layout();
-    // });
-
-    // window.onload = ()=>{  
-    //   this.masonry.layout()
-    // }
-
-    setTimeout(() => {
-      this.masonry.layout()
-    }, 1000);
-
-
-        }
 
 }

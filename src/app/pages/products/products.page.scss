@@ -1,0 +1,23 @@
+// .grid{
+//     column-count: 2;
+// }
+
+// .grid-items{
+//     display: inline-block;
+// }
+
+.products{
+    column-count: 6;
+    column-gap: 10px;
+    break-inside: avoid;
+
+    ion-card{
+        width: 100%;
+    }
+}
+
+@media(max-width:530px){
+    .products{
+        column-count: 2;
+    }
+}
