@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit,AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/types/AppState';
+import Masonry from 'masonry-layout';
 
 @Component({
   selector: 'app-home',
@@ -313,12 +314,12 @@ export class HomePage implements OnDestroy,OnInit {
   ]
 
   newArrivals = [
-    {name : 'Product one',image:""},
-    {name : 'Product two',image:""},
-    {name : 'Product three',image:""},
-    {name : 'Product four',image:""},
-    {name : 'Product five',image:""},
-    {name : 'Product six',image:""}
+    {name : 'Product one',image:"../../../assets/images/agric-food.jpg",price:50,location:'Accra,Ghana'},
+    {name : 'Product two',image:"../../../assets/images/electronics.jpg",price:345,location:'Madina,Ghana'},
+    {name : 'Product three',image:"../../../assets/images/health-beauty.jpg",price:21,location:'Legon,Ghana'},
+    {name : 'Product four',image:"../../../assets/images/agric-food.jpg",price:200,location:'Kumasi,Ghana'},
+    {name : 'Product five',image:"../../../assets/images/fashion.jpg",price:150,location:'Adenta,Ghana'},
+    {name : 'Product six',image:"../../../assets/images/agric-food.jpg",price:550,location:'Accra,Ghana'}
   ]
 
   title = 'My Title'
@@ -346,6 +347,15 @@ export class HomePage implements OnDestroy,OnInit {
 
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
+  }
+
+  ngAfterViewInit(){
+    setTimeout(() => {
+        let products = document.querySelector('.products1') as HTMLElement;
+        let masonry = new Masonry(products,{
+            itemSelector : '.product-item1'
+          })
+      }, 2000);
   }
 
 }

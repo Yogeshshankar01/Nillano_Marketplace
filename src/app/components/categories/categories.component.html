@@ -18,7 +18,7 @@
 
                   <ion-list class="text-center d-block d-sm-none" style="background: transparent;">
                     <img class="rounded-circle" src=".././../../assets/images/electronics.jpg" alt="{{category.name}}" />
-                    <p class="text-wrap">{{ category.name }}</p>
+                    <p style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" >{{ category.name }}</p>
                   </ion-list>
                   
 
@@ -54,7 +54,7 @@
                       <ion-button color="light" (click)="modal.dismiss()">Close</ion-button>
                     </ion-buttons>
                   </ion-toolbar>
-                  <ion-list>
+                  <ion-list style="background: #fff;">
                     <ion-item  [id]="category.image" *ngFor="let category of categories">
                       <ion-avatar slot="start">
                         <ion-img src=".././../../assets/images/electronics.jpg"></ion-img>
