@@ -42,7 +42,7 @@
                 <ion-col class="product-item" size="6" size-md="4" size-lg="3" *ngFor="let product of newArrivals">
 
                   <ion-card class="m-0" style="background: #f2f2f2;">
-                    <img [src]="product.image" alt="{{ product.name }}">
+                    <img [src]="product.image" class="w-100" alt="{{ product.name }}">
                     <ion-card-header>
                       <ion-card-title style="color: black;">{{ product.name }}</ion-card-title>
                     </ion-card-header>
