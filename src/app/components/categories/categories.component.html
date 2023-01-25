@@ -41,7 +41,47 @@
                 
               </ion-row>
 
-              <ion-button expand="block" style="--background: #1A4640;">View all Categories</ion-button>
+              <ion-button class="d-block d-sm-none" id="open-modal" expand="block" style="--background: #1A4640;">View all Categories</ion-button>
 
             </ion-grid>
+
+            <ion-modal #modal trigger="open-modal">
+              <ng-template>
+                <ion-content>
+                  <ion-toolbar>
+                    <ion-title>All Categories</ion-title>
+                    <ion-buttons slot="end">
+                      <ion-button color="light" (click)="modal.dismiss()">Close</ion-button>
+                    </ion-buttons>
+                  </ion-toolbar>
+                  <ion-list>
+                    <ion-item  [id]="category.image" *ngFor="let category of categories">
+                      <ion-avatar slot="start">
+                        <ion-img src=".././../../assets/images/electronics.jpg"></ion-img>
+                      </ion-avatar>
+                      <ion-label>
+                        <h2>{{category.name}}</h2>
+                        <p>{{category.description}}</p>
+                      </ion-label>
+
+                      <ion-popover side="right" *ngIf="category.Subcategories" [trigger]="category.image" triggerAction="click" >
+                        <ng-template>
+                        <ion-content>
+                          <ion-list>
+                            <ion-item *ngFor="let sub of category.Subcategories" href="#">
+                              <ion-thumbnail slot="start">
+                                <img class="rounded-circle" [alt]="sub.name" src=".././../../assets/images/electronics.jpg" />
+                              </ion-thumbnail>
+                              <ion-label>{{sub.name}}</ion-label>
+                            </ion-item>
+                          </ion-list>
+                        </ion-content>
+                        </ng-template>
+                      </ion-popover>
+
+                    </ion-item>
+                  </ion-list>
+                </ion-content>
+              </ng-template>
+            </ion-modal>
             
