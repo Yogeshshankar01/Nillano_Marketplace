@@ -60,7 +60,7 @@
 
     <ion-col class="product-item" size="6" size-md="3" size-lg="2" *ngFor="let product of products">
     
-    <ion-card>
+    <ion-card class="m-1">
       <ion-img onload="alert('hello')" class="w-100 img" [src]="product.image"></ion-img>
       <ion-card-content style="background-color:#ffffff;">
         <ion-card-title style="color:#1A4640;">{{product.name}}</ion-card-title>

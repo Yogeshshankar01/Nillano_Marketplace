@@ -35,12 +35,12 @@
       </ion-buttons>
     </ion-toolbar>
     
-    <div class="container-fluid" *ngSwitchCase="'buying'">
+    <div class="" *ngSwitchCase="'buying'">
       <!-- Content for Tab 1 -->
       <ion-grid>
-        <ion-row>
+        <ion-row class="m-0" style="align-items: start;">
 
-          <ion-col class="category rounded" size="12" size-md="4" size-lg="3">
+          <ion-col class="category rounded m-0" size="12" size-md="4" size-lg="3">
             <app-categories></app-categories>
             
           </ion-col>
@@ -49,10 +49,10 @@
 
             <ion-grid>
               <ion-img class="newarrival" src="../../../assets/images/newarrival.png"> </ion-img>
-              <ion-row>
+              <ion-row class="m-0 p-0">
                 <ion-col size="6" size-md="4" size-lg="3" *ngFor="let product of newArrivals">
 
-                  <ion-card>
+                  <ion-card class="m-0">
                     <img src="../../../assets/images/agric-food.jpg" alt="{{ product.name }}">
                     <ion-card-header>
                       <ion-card-title>{{ product.name }}</ion-card-title>
