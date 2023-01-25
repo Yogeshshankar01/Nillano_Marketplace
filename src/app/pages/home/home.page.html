@@ -1,19 +1,7 @@
 
 <app-header></app-header>
 
-<ion-content [fullscreen]="true" style="--background: #f2f2f2;">
-
-  <!-- <ion-grid>
-    <ion-row>
-      <ion-col size="4" *ngFor="let category of categories">
-        <ion-card>
-          <ion-card-content>
-            {{category.name}}
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>   -->  
+<ion-content style="--background: #f2f2f2;">
 
   <ion-segment class="p-2" [(ngModel)]="selectedTab" (ionChange)="segmentChanged($event)" >
     <ion-segment-button class="rounded-4 overflow-hidden tab fw-bold" value="buying"  [ngClass]="{'active-tab': selectedTab === 'buying'}">
@@ -50,8 +38,8 @@
 
             <ion-grid>
               <ion-img class="newarrival" src="../../../assets/images/newarrival.png"> </ion-img>
-              <ion-row class="products1" class="m-0 p-0">
-                <ion-col class="product-item1" size="6" size-md="4" size-lg="3" *ngFor="let product of newArrivals">
+              <ion-row id="newarrivals" class="m-0 p-0">
+                <ion-col class="product-item" size="6" size-md="4" size-lg="3" *ngFor="let product of newArrivals">
 
                   <ion-card class="m-0" style="background: #f2f2f2;">
                     <img [src]="product.image" alt="{{ product.name }}">
@@ -80,6 +68,13 @@
       <h1>Renting</h1>
     </div>
   </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button style="--background : #1A4640;">
+      <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-badge color="danger" class="position-absolute top-0 left-0 border border-light rounded-circle">5</ion-badge>
+    </ion-fab>
 
   
 </ion-content>

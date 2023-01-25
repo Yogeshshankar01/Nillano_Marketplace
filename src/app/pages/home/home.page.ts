@@ -350,12 +350,17 @@ export class HomePage implements OnDestroy,OnInit {
   }
 
   ngAfterViewInit(){
-    setTimeout(() => {
-        let products = document.querySelector('.products1') as HTMLElement;
-        let masonry = new Masonry(products,{
-            itemSelector : '.product-item1'
-          })
-      }, 2000);
+    window.addEventListener('load',()=>{
+
+        setTimeout(() => {
+            let products = document.querySelector('#newarrivals') as HTMLElement;
+            let masonry = new Masonry(products,{
+                itemSelector : '.product-item'
+              })
+          }, 2000);
+
+    })
+    
   }
 
 }
