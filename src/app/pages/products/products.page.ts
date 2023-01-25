@@ -1,9 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import Masonry from 'masonry-layout';
-import Isotope from 'isotope-layout';
 import imagesLoaded from 'imagesloaded';
 import { FilterComponent } from 'src/app/components/filter/filter.component';
-import { PopoverController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, PopoverController, ToastController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
+import { filterProducts, getProducts } from 'src/app/store/products/products.action';
+import { AppState } from 'src/app/types/AppState';
+import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
+import { ProductsserviceService } from 'src/app/services/productsservice/productsservice.service';
 
 @Component({
   selector: 'app-products',
@@ -14,7 +18,7 @@ export class ProductsPage implements OnInit {
           
   
   products:any = [];
-  categories:any = [];
+  categoriesAndSubcategories:any = [];
   // selectedCategory: string | undefined;
   // selectedPriceRange: string | undefined;
 
@@ -22,24 +26,84 @@ export class ProductsPage implements OnInit {
   selectedSubcategory:any
   priceRange:any
 
-  constructor(private popoverController: PopoverController) { }
+  masonry:any
+
+  constructor(private popoverController: PopoverController, private store : Store<AppState>, private productsService:ProductsserviceService, private toastController : ToastController) {
+    
+   }
 
   ngOnInit() {
-    this.getProducts();
-    this.getCategories();
-  }
 
-  getProducts() {
-    this.products = this.getProducts1();
-  }
+    this.store.dispatch(getProducts())
 
-  async getCategories() {
-    this.categories = await this.getCategories1();
+    this.productsService.getCategoriesAndSubCategoies().subscribe(
+      (res)=>{
+        this.categoriesAndSubcategories = res
+      },
+      (err)=>{
+
+        console.log(err)
+
+}    )
+
+    this.store.select('products').subscribe(res=>{
+
+      if(res.process) {
+        this.store.dispatch(startLoading())
+      }
+
+      if(res.success){
+        this.store.dispatch(endLoading())
+        console.log(res.products)
+        this.products = res.products
+        
+        setTimeout(() => {
+          let products = document.querySelector('.products') as HTMLElement
+            let masonry = new Masonry(products,{
+              itemSelector : '.product-item'
+            })
+        }, 2000);
+        
+      }
+
+      if(res.failure) {
+
+        this.store.dispatch(endLoading())
+        
+        this.toastController.create({
+          message: res.message ? res.message : "Sorry, we're unable to retrieve products at the moment. We're working to fix the issue. Please try again later.",
+          header:"Product Retrieval Error",
+          color:'danger',
+          position : 'bottom',
+          cssClass: 'flex-contianer',
+          buttons: [
+            {
+              text: 'Retry',
+              handler: () => {
+                this.store.dispatch(getProducts())
+                this.productsService.getCategoriesAndSubCategoies().subscribe(
+                  (res)=>{
+                    this.categoriesAndSubcategories = res
+                  },
+                  (err)=>{
+            
+                    console.log(err)
+            
+            }    )
+              }
+            }
+          ]
+        }).then(toast=>toast.present())
+
+
+      }
+
+    })
   }
 
   filterProducts() {
     
-    this.getProducts();
+    // this.getProducts();
     this.products = this.products.filter((product: { category: string; price: number; }) => {
       if (this.selectedCategory && product.category != this.selectedCategory) {
         return false;
@@ -59,43 +123,38 @@ export class ProductsPage implements OnInit {
       return true;
     });
   }
-          
-          private products1 = [
-            { id: 'p1', name: 'Product 1 Product 1 Product 1', price: 19.99, imageUrl: '../../../assets/images/electronics.jpg', category: '1' },
-            { id: 'p2', name: 'Product 2', price: 69.99, imageUrl: '../../../assets/images/agric-food.jpg', category: '2' },
-            { id: 'p3', name: 'Product 3', price: 509.99, imageUrl: '../../../assets/images/fashion.jpg', category: '3' },
-            { id: 'p4', name: 'Product 4', price: 49.99, imageUrl: '../../../assets/images/toys-games.jpg', category: '1' },
-            { id: 'p1', name: 'Product 1 Product 1 Product 1', price: 19.99, imageUrl: '../../../assets/images/electronics.jpg', category: '2' },
-            { id: 'p2', name: 'Product 2', price: 69.99, imageUrl: '../../../assets/images/agric-food.jpg', category: '3' },
-            { id: 'p3', name: 'Product 3', price: 509.99, imageUrl: '../../../assets/images/fashion.jpg', category: '1' },
-            { id: 'p4', name: 'Product 4', price: 49.99, imageUrl: '../../../assets/images/toys-games.jpg', category: '2' },
-            { id: 'p1', name: 'Product 1 Product 1 Product 1', price: 19.99, imageUrl: '../../../assets/images/electronics.jpg', category: '3' },
-            { id: 'p2', name: 'Product 2', price: 69.99, imageUrl: '../../../assets/images/agric-food.jpg', category: '1' },
-            { id: 'p3', name: 'Product 3', price: 509.99, imageUrl: '../../../assets/images/fashion.jpg', category: '2' },
-            { id: 'p4', name: 'Product 4', price: 49.99, imageUrl: '../../../assets/images/toys-games.jpg', category: '3' }
-          ];
-        
-          getProducts1() {
-            return [...this.products1];
-          }
-        
-          private categories1 = [
-            { id: '1', name: 'Electronics' },
-            { id: '2', name: 'Clothes' },
-            { id: '3', name: 'Books' }
-          ];
-        
-          getCategories1() {
-            return [...this.categories1];
-          }
+  
+  
+  loadMoreProducts(event:any) {
+
+    setTimeout(() => {
+
+    // const nextBatch = this.getProducts1()
+
+    // this.products.push(...nextBatch);
+    // event.target.complete();
+
+    // this.masonry.reload()
+
+    (event as InfiniteScrollCustomEvent).target.complete();
+      
+    }, 5000);
+    
+    // Call the function that retrieves the next batch of products from the database
+    // this.getMoreProducts().then(() => {
+    //   event.target.complete();
+    // });
+  }
 
           openFilter() {
+            
             this.popoverController.create({
               component: FilterComponent,
               componentProps: {
                 selectedCategory: this.selectedCategory,
                 selectedSubcategory: this.selectedSubcategory,
-                priceRange: this.priceRange
+                priceRange: this.priceRange,
+                categoriesAndSubcategories: this.categoriesAndSubcategories
               }
             }).then((popover:any) => {
               console.log({cat:this.selectedCategory,sub:this.selectedSubcategory,price:this.priceRange})
@@ -108,11 +167,25 @@ export class ProductsPage implements OnInit {
                   this.filterProducts()
 
                   console.log({cat:this.selectedCategory,sub:this.selectedSubcategory,price:this.priceRange})
+                  
+                  this.store.dispatch(filterProducts({filters:{category:this.selectedCategory,subcategory:this.selectedSubcategory,priceRange:this.priceRange}}))
                   // Filter your products here using the selected values of category, subcategory and price
                 }
               });
               popover.present();
             });
+          }
+
+          ngAfterViewInit(){
+
+            // window.addEventListener('load',()=>{
+            //   let products = document.querySelector('.products') as HTMLElement
+            // this.masonry = new Masonry(products,{
+            //   itemSelector : '.product-item'
+            // })
+            // })
+
+            
           }
 
 }

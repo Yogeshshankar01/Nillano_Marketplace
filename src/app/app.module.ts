@@ -17,7 +17,8 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,CommonModule, ...AppStoreModule,
+  imports: [ 
+    BrowserModule, IonicModule.forRoot(), AppRoutingModule,CommonModule, ...AppStoreModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: !isDevMode(), // Restrict extension to log-only mode

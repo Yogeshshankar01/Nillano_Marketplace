@@ -61,3 +61,13 @@ ion-col.a {
   object-fit: cover;
   height: 50px;
 }
+
+.newarrival{
+  width: 25%;
+}
+
+@media(max-width:500px){
+  .newarrival{
+    width: 45%;
+  }
+}

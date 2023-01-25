@@ -1,20 +1,11 @@
-// .grid{
-//     column-count: 2;
-// }
 
-// .grid-items{
-//     display: inline-block;
-// }
+  .toast-container {
+    display: flex;
+    flex-direction: column !important;
+  }
 
-.products{
-    column-count: 6;
-    column-gap: 10px;
-    break-inside: avoid;
 
-    ion-card{
-        width: 100%;
-    }
-}
+
 
 ion-searchbar.custom {
     --background: #f2f2f2;

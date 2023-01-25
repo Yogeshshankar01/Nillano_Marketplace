@@ -15,7 +15,7 @@
     <ion-item>
       <ion-label>Category</ion-label>
       <ion-select [(ngModel)]="selectedCategory" (ionChange)="onCategoryChange()">
-        <ion-select-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</ion-select-option>
+        <ion-select-option *ngFor="let category of categoriesAndSubcategories" [value]="category.id">{{category.name}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item *ngIf="selectedCategory">

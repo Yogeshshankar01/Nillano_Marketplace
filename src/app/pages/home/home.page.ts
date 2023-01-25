@@ -312,6 +312,15 @@ export class HomePage implements OnDestroy,OnInit {
 }
   ]
 
+  newArrivals = [
+    {name : 'Product one',image:""},
+    {name : 'Product two',image:""},
+    {name : 'Product three',image:""},
+    {name : 'Product four',image:""},
+    {name : 'Product five',image:""},
+    {name : 'Product six',image:""}
+  ]
+
   title = 'My Title'
 
   welcomeMessage = false

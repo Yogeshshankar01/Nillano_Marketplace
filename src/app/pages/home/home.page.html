@@ -17,14 +17,24 @@
 
   <ion-segment class="p-2" [(ngModel)]="selectedTab" (ionChange)="segmentChanged($event)" >
     <ion-segment-button class="rounded-4 overflow-hidden tab fw-bold" value="buying"  [ngClass]="{'active-tab': selectedTab === 'buying'}">
-      <ion-label>Buying</ion-label>
+      <ion-label>Buy</ion-label>
     </ion-segment-button>
     <ion-segment-button class="rounded-4 overflow-hidden tab fw-bold" value="renting"  [ngClass]="{'active-tab': selectedTab === 'renting'}">
-      <ion-label>Renting</ion-label>
+      <ion-label>Rent</ion-label>
     </ion-segment-button>
   </ion-segment>
 
   <div [ngSwitch]="selectedTab">
+
+    <ion-toolbar class="px-4" style="--background:#1A4640;">
+      <ion-searchbar class="custom" placeholder="Search for products or rentals" ></ion-searchbar>
+      <ion-buttons slot="end">
+        <ion-button>
+          <ion-icon style="color:#f2f2f2;" name="options"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+    
     <div class="container-fluid" *ngSwitchCase="'buying'">
       <!-- Content for Tab 1 -->
       <ion-grid>
@@ -35,7 +45,30 @@
             
           </ion-col>
 
-          <ion-col class="a rounded" size="12" size-md="8" size-lg="9" >Column 2</ion-col>
+          <ion-col class="a rounded" size="12" size-md="8" size-lg="9" >
+
+            <ion-grid>
+              <ion-img class="newarrival" src="../../../assets/images/newarrival.png"> </ion-img>
+              <ion-row>
+                <ion-col size="6" size-md="4" size-lg="3" *ngFor="let product of newArrivals">
+
+                  <ion-card>
+                    <img src="../../../assets/images/agric-food.jpg" alt="{{ product.name }}">
+                    <ion-card-header>
+                      <ion-card-title>{{ product.name }}</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <ion-button expand="full" >View Product</ion-button>
+                    </ion-card-content>
+                  </ion-card>
+                
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            
+
+          </ion-col>
+
         </ion-row>
       </ion-grid>
       

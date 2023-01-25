@@ -8,21 +8,38 @@ import { NavParams, PopoverController } from '@ionic/angular';
 })
 export class FilterComponent {
 
+  categoriesAndSubcategories:any
+
   selectedCategory: any;
   selectedSubcategory: any;
   priceRange: any;
-  categories = [{ id: 1, name: 'Category 1' }, { id: 2, name: 'Category 2' }];
-  subcategories = [{ id: 1, name: 'Subcategory 1' }, { id: 2, name: 'Subcategory 2' }];
+  
+  subcategories:any;
 
   constructor(private navParams: NavParams, private popoverController: PopoverController) {
     this.selectedCategory = navParams.get('selectedCategory');
     this.selectedSubcategory = navParams.get('selectedSubcategory');
     this.priceRange = navParams.get('priceRange');
+    this.categoriesAndSubcategories = navParams.get('categoriesAndSubcategories');
+
+    if(this.selectedCategory){
+      let category = this.categoriesAndSubcategories.find((cat:any) => cat.id === this.selectedCategory);
+
+      this.subcategories = category.Subcategories
+    } 
+    // console.log(this.categoriesAndSubcategories)
+
   }
 
   onCategoryChange() {
     console.log('cat change')
     console.log('Selected Cat',this.selectedCategory)
+
+    this.selectedSubcategory = undefined
+
+    let category = this.categoriesAndSubcategories.find((cat:any) => cat.id === this.selectedCategory);
+
+    this.subcategories = category.Subcategories
     // logic to update subcategories based on selected category
   }
 
@@ -33,6 +50,10 @@ export class FilterComponent {
 
   applyFilter() {
     // logic to apply filter and dismiss popover
+    // this.selectedCategory = this.selectedCategory ? this.selectedCategory:''
+    // this.selectedSubcategory = this.selectedSubcategory ? this.selectedSubcategory:''
+    // this.priceRange = this.priceRange ? this.priceRange:''
+
     this.popoverController.dismiss({
       selectedCategory: this.selectedCategory,
       selectedSubcategory: this.selectedSubcategory,

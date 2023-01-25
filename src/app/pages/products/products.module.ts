@@ -9,6 +9,7 @@ import { ProductsPageRoutingModule } from './products-routing.module';
 import { ProductsPage } from './products.page';
 import { SlicePipe } from '@angular/common';
 import { FilterModule } from 'src/app/components/filter/filter.component.module';
+import { LoadingModule } from 'src/app/components/loading/loading.component.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +17,8 @@ import { FilterModule } from 'src/app/components/filter/filter.component.module'
     IonicModule,
     ProductsPageRoutingModule,
     SlicePipe,
-    FilterModule
+    FilterModule,
+    LoadingModule
   ],
   declarations: [ProductsPage]
 })

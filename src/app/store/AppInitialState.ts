@@ -15,5 +15,12 @@ export const AppInitialState:AppState = {
         registering : false,
         registrationFail : false,
         message : null
+    },
+    products:{
+        process : false,
+        success : false,
+        failure : false,
+        products : [],
+        message : null
     }
 }
