@@ -18,7 +18,7 @@
       <!-- Content for Tab 1 -->
 
       <ion-toolbar style="--background:#1A4640;">
-        <ion-searchbar class="custom" style="--background: #f2f2f2; color: #1A4640;" placeholder="Search for products or rentals" ></ion-searchbar>
+        <ion-searchbar class="custom" style="--background: #f2f2f2; color: #1A4640;" placeholder="Search for products or sellers" ></ion-searchbar>
         <ion-buttons slot="end">
           <ion-button>
             <ion-icon style="color:#f2f2f2;" name="options"></ion-icon>
@@ -29,7 +29,7 @@
       <ion-grid>
         <ion-row class="m-0" style="align-items: start;">
 
-          <ion-col class="category rounded m-0" size="12" size-md="4" size-lg="3">
+          <ion-col class="category rounded m-0 sticky-top" size="12" size-md="4" size-lg="3">
             <app-categories></app-categories>
             
           </ion-col>
@@ -42,12 +42,30 @@
                 <ion-col class="product-item" size="6" size-md="4" size-lg="3" *ngFor="let product of newArrivals">
 
                   <ion-card class="m-0" style="background: #f2f2f2;">
+        
                     <img [src]="product.image" class="w-100" alt="{{ product.name }}">
+
                     <ion-card-header>
                       <ion-card-title style="color: black;">{{ product.name }}</ion-card-title>
                     </ion-card-header>
                     <ion-card-content>
-                      <p>{{product.price | currency}}</p>
+
+                      <div class="price">
+
+                        <div class="d-flex justify-content-between" *ngIf="product.discount">
+                        <div style="width: 70%;">
+                        <span class="text-decoration-line-through me-2" *ngIf="product.discount">{{product.price | currency : 'GH₵'}}</span> <br>
+                        <span class="discounted-price" *ngIf="product.discount">{{product.discountPrice | currency : 'GH₵'}}</span>
+                        </div>
+                        <span style="width: 30%;">
+                          <ion-badge class="w-100 h-100 d-flex align-items-center justify-content-center" style="--background:#1A4640;">10%</ion-badge>
+                        </span>
+                      </div>
+
+                        <span class="original-price" *ngIf="!product.discount">{{product.price | currency : 'GH₵'}}</span>
+                        
+                    </div>
+                      
                       <p>{{product.location}}</p>
                     </ion-card-content>
                   </ion-card>

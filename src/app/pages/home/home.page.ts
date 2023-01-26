@@ -314,12 +314,12 @@ export class HomePage implements OnDestroy,OnInit {
   ]
 
   newArrivals = [
-    {name : 'Product one',image:"../../../assets/images/agric-food.jpg",price:50,location:'Accra,Ghana'},
-    {name : 'Product two',image:"../../../assets/images/electronics.jpg",price:345,location:'Madina,Ghana'},
-    {name : 'Product three',image:"../../../assets/images/health-beauty.jpg",price:21,location:'Legon,Ghana'},
-    {name : 'Product four',image:"../../../assets/images/agric-food.jpg",price:200,location:'Kumasi,Ghana'},
-    {name : 'Product five',image:"../../../assets/images/fashion.jpg",price:150,location:'Adenta,Ghana'},
-    {name : 'Product six',image:"../../../assets/images/agric-food.jpg",price:550,location:'Accra,Ghana'}
+    {name : 'Product one',image:"../../../assets/images/agric-food.jpg",price:50,location:'Accra,Ghana',discount:0,discountPrice:300},
+    {name : 'Product two',image:"../../../assets/images/electronics.jpg",price:345,location:'Madina,Ghana',discount:10,discountPrice:300},
+    {name : 'Product three',image:"../../../assets/images/health-beauty.jpg",price:21,location:'Legon,Ghana',discount:10,discountPrice:300},
+    {name : 'Product four',image:"../../../assets/images/agric-food.jpg",price:200,location:'Kumasi,Ghana',discount:10,discountPrice:300},
+    {name : 'Product five',image:"../../../assets/images/fashion.jpg",price:150,location:'Adenta,Ghana',discount:10,discountPrice:300},
+    {name : 'Product six',image:"../../../assets/images/agric-food.jpg",price:550,location:'Accra,Ghana',discount:10,discountPrice:300}
   ]
 
   title = 'My Title'

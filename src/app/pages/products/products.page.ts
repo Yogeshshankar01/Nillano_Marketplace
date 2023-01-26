@@ -101,6 +101,11 @@ export class ProductsPage implements OnInit {
     })
   }
 
+  ionViewWillLeave() {
+    this.toastController.dismiss();
+  }
+  
+
   filterProducts() {
     
     // this.getProducts();
