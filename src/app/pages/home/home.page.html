@@ -63,7 +63,7 @@
                       </div>
 
                         <span class="original-price" *ngIf="!product.discount">{{product.price | currency : 'GH₵'}}</span>
-                        
+
                     </div>
                       
                       <p>{{product.location}}</p>
@@ -87,12 +87,47 @@
     </div>
   </div>
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab (click)="setOpen(true)" slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button style="--background : #1A4640;">
       <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
     </ion-fab-button>
     <ion-badge color="danger" class="position-absolute top-0 left-0 border border-light rounded-circle">5</ion-badge>
     </ion-fab>
+
+    <ion-modal [isOpen]="isModalOpen">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Chats</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false)">Close</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+
+          <ion-item *ngFor="let chat of chats">
+            <ion-avatar slot="start">
+              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <ion-label>
+              {{chat.name}}
+              <p>Your product is nice</p>
+            </ion-label>
+            <ion-badge slot="end" style="--background:#33887d;">2</ion-badge>
+          </ion-item>       
+
+        </ion-content>
+
+        <ion-footer>
+          <ion-item>
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-label>Your messages are secured</ion-label>
+        </ion-item>
+        </ion-footer>
+
+      </ng-template>
+    </ion-modal>
 
   
 </ion-content>

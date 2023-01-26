@@ -317,9 +317,34 @@ export class HomePage implements OnDestroy,OnInit {
     {name : 'Product one',image:"../../../assets/images/agric-food.jpg",price:50,location:'Accra,Ghana',discount:0,discountPrice:300},
     {name : 'Product two',image:"../../../assets/images/electronics.jpg",price:345,location:'Madina,Ghana',discount:10,discountPrice:300},
     {name : 'Product three',image:"../../../assets/images/health-beauty.jpg",price:21,location:'Legon,Ghana',discount:10,discountPrice:300},
-    {name : 'Product four',image:"../../../assets/images/agric-food.jpg",price:200,location:'Kumasi,Ghana',discount:10,discountPrice:300},
-    {name : 'Product five',image:"../../../assets/images/fashion.jpg",price:150,location:'Adenta,Ghana',discount:10,discountPrice:300},
+    {name : 'Product four',image:"../../../assets/images/agric-food.jpg",price:200,location:'Kumasi,Ghana',discount:0,discountPrice:300},
+    {name : 'Product five',image:"../../../assets/images/fashion.jpg",price:150,location:'Adenta,Ghana',discount:0,discountPrice:300},
     {name : 'Product six',image:"../../../assets/images/agric-food.jpg",price:550,location:'Accra,Ghana',discount:10,discountPrice:300}
+  ]
+  
+  isModalOpen = false;
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
+
+  chats = [
+    {name : "Lawson Shoes"},
+    {name : "ShoeShopper"},
+    {name : "MarketMaverick"},
+    {name : "Seller456"},
+    {name : "TradeMaster"},
+    {name : "Shopaholic789"},
+    {name : "LawsonLuxe"},
+    {name : "StepUpStyle"},
+    {name : "Lawson Shoes"},
+    {name : "ShoeShopper"},
+    {name : "MarketMaverick"},
+    {name : "Seller456"},
+    {name : "TradeMaster"},
+    {name : "Shopaholic789"},
+    {name : "LawsonLuxe"},
+    {name : "StepUpStyle"}
   ]
 
   title = 'My Title'
