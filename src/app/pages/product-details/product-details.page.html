@@ -159,7 +159,7 @@
         <ion-list class="ion-no-padding" >
 
           <div *ngFor="let comment of comments">
-          <ion-item>
+          <ion-item lines="none">
             <ion-avatar slot="start">
               <img src="https://ionicframework.com/docs/img/demos/avatar.svg">
             </ion-avatar>
@@ -170,7 +170,7 @@
             <ion-badge slot="end">{{ comment.rating }} <ion-icon name="star"></ion-icon></ion-badge>
           </ion-item>
 
-          <ion-item>
+          <ion-item lines="none">
             <ion-label>
               <p> <span class="me-1"> 2022-12-14 </span> <span> Reply </span> </p>
             </ion-label>
