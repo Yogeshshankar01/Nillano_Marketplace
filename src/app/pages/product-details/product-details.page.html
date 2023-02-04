@@ -9,12 +9,12 @@
 
 <ion-content class="ion-padding">
   
-  <ion-row>
-    <ion-col size="12" size-md="6">
+  <ion-row class="m-0 p-0">
+    <ion-col class="m-0 p-0" size="12" size-md="6">
 
-      <ion-row class="overflow-hidden" style="height: 400px;">
+      <ion-row class="m-0 p-0 overflow-hidden" style="height: 300px;">
 
-        <ion-col class="h-100" size="9">
+        <ion-col class="h-100 product-image-col" size="9" >
           <ion-img class="main h-100 rounded-5" [src]="selectedMainImage"></ion-img>
         </ion-col>
 
@@ -28,7 +28,7 @@
               </ion-button>
             </ion-buttons>
             
-          <ion-img class="w-100 mt-1 rounded-3" src="{{image}}" (click)="changeMainImage(image)" *ngFor="let image of product.images"></ion-img>
+          <ion-img class="w-100 mt-2 rounded-3" src="{{image}}" (click)="changeMainImage(image)" *ngFor="let image of product.images"></ion-img>
 
           <ion-buttons style="position: absolute; bottom: 0%; left: 0%;" class="w-100 d-flex justify-content-center">
             <ion-button class="text-light border-1 border border-light rounded-circle" style="background-color: #1a4640;" (click)="scrollDown()">
@@ -60,7 +60,7 @@
       </ion-item>
       
 
-      <div class="mt-2">
+      <div class="mt-2 text-dark">
         <div class="lh-sm product-description" style="max-height: 120px; overflow-y: scroll;">
           <h4 class="">Description:</h4> 
           {{product.description}} 
@@ -87,7 +87,7 @@
           </ion-label>
         </ion-item>
 
-        <ion-item class="my-2" lines="none">
+        <ion-item class="my-2 ion-no-padding" lines="none">
           
           <ion-label class="h-100 d-flex align-items-center ">
             Quantity:
@@ -136,7 +136,7 @@
 
   <div class="rounded">
 
-    <h3 class="fw-bolder m-0">Listed By:</h3>
+    <h3 class="fw-bolder m-0 text-dark">Listed By:</h3>
   
     <ion-item class="ion-no-padding m-0">
       <ion-avatar slot="start">
@@ -152,7 +152,7 @@
 
     <ion-card>
       <ion-card-header style="background-color: #1a4640;">
-        <ion-card-title class="text-light">Product Comments and Feedback</ion-card-title>
+        <ion-card-title class="text-light text-center">Comments and Feedback</ion-card-title>
         <p class="text-light text-center fst-italic">900 comments</p>
       </ion-card-header>
       <ion-card-content class="ion-no-padding">
