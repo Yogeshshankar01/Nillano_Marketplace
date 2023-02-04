@@ -1,0 +1,23 @@
+ion-img.main {
+    width: auto;
+    object-fit: cover;
+  }
+
+.products-thumb::-webkit-scrollbar,.product-description::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f2f2f2;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #1a4640;
+    }
+  
+    .btn{
+        --bs-btn-border-width: 0px;
+    }
+    

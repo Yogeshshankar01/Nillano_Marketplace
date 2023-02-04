@@ -10,6 +10,7 @@ import { ProductsPage } from './products.page';
 import { SlicePipe } from '@angular/common';
 import { FilterModule } from 'src/app/components/filter/filter.component.module';
 import { LoadingModule } from 'src/app/components/loading/loading.component.module';
+import { MenuModule } from 'src/app/components/menu/menu.component.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -18,7 +19,8 @@ import { LoadingModule } from 'src/app/components/loading/loading.component.modu
     ProductsPageRoutingModule,
     SlicePipe,
     FilterModule,
-    LoadingModule
+    LoadingModule,
+    MenuModule
   ],
   declarations: [ProductsPage]
 })

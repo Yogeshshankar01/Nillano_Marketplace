@@ -3,5 +3,6 @@ export interface productsState{
     success : Boolean,
     failure : Boolean,
     products : [],
-    message : any
+    message : any,
+    filter:Boolean
 }

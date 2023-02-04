@@ -22,6 +22,8 @@ export class FilterComponent {
     this.priceRange = navParams.get('priceRange');
     this.categoriesAndSubcategories = navParams.get('categoriesAndSubcategories');
 
+    console.log(this.categoriesAndSubcategories)
+
     if(this.selectedCategory){
       let category = this.categoriesAndSubcategories.find((cat:any) => cat.id === this.selectedCategory);
 

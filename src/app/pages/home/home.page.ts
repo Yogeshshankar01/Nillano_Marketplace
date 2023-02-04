@@ -2,6 +2,11 @@ import { Component, OnDestroy, OnInit,AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/types/AppState';
 import Masonry from 'masonry-layout';
+import { Router } from '@angular/router';
+import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
+import { ToastController } from '@ionic/angular';
+import { getProducts } from 'src/app/store/products/products.action';
+import { ProductsserviceService } from 'src/app/services/productsservice/productsservice.service';
 
 @Component({
   selector: 'app-home',
@@ -321,6 +326,8 @@ export class HomePage implements OnDestroy,OnInit {
     {name : 'Product five',image:"../../../assets/images/fashion.jpg",price:150,location:'Adenta,Ghana',discount:0,discountPrice:300},
     {name : 'Product six',image:"../../../assets/images/agric-food.jpg",price:550,location:'Accra,Ghana',discount:10,discountPrice:300}
   ]
+
+  products:any = []
   
   isModalOpen = false;
 
@@ -357,9 +364,10 @@ export class HomePage implements OnDestroy,OnInit {
     this.selectedTab = event.detail.value;
   }
 
-  constructor(private store:Store<AppState>) {}
+  constructor(private store:Store<AppState>,private router:Router,private toastController : ToastController,private productsService:ProductsserviceService) {}
 
   ngOnInit() {
+
     this.store.select('register')
     .subscribe(
       registerState=>{
@@ -368,23 +376,82 @@ export class HomePage implements OnDestroy,OnInit {
         }
       }
     )
+
+    this.store.dispatch(getProducts())
+
+      // Getting the states of the products at each time
+      this.store.select('products').subscribe(res => {
+
+        // if(!res.filter && !this.getProducts){
+        //   this.store.dispatch(getProducts())
+        //   this.getProducts = true
+        // }
+  
+        if (res.process) {
+          this.store.dispatch(startLoading())
+        }
+  
+        if (res.success) {
+          this.store.dispatch(endLoading())
+        //   console.log(res.products)
+          this.products = res.products
+  
+          setTimeout(() => {
+            let products = document.querySelector('.products') as HTMLElement
+            let masonry = new Masonry(products, {
+              itemSelector: '.product-item'
+            })
+          }, 2000);
+  
+        }
+  
+        if (res.failure) {
+  
+          this.store.dispatch(endLoading())
+  
+          this.toastController.create({
+            message: res.message ? res.message : "Sorry, we're unable to retrieve products at the moment. We're working to fix the issue. Please try again later.",
+            header: "Product Retrieval Error",
+            color: 'danger',
+            position: 'bottom',
+            cssClass: 'flex-contianer',
+            buttons: [
+              {
+                text: 'Retry',
+                handler: () => {
+                  this.store.dispatch(getProducts())
+                }
+              }
+            ]
+          }).then(toast => toast.present())
+  
+  
+        }
+  
+      })
+
   }
 
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
   }
 
+  openfilter() {
+    this.router.navigate(['/products'], { queryParams: { openFilter: true } });
+  }
+  
+
   ngAfterViewInit(){
-    window.addEventListener('load',()=>{
+    // window.addEventListener('load',()=>{
 
-        setTimeout(() => {
-            let products = document.querySelector('#newarrivals') as HTMLElement;
-            let masonry = new Masonry(products,{
-                itemSelector : '.product-item'
-              })
-          }, 2000);
+    //     setTimeout(() => {
+    //         let products = document.querySelector('#newarrivals') as HTMLElement;
+    //         let masonry = new Masonry(products,{
+    //             itemSelector : '.product-item'
+    //           })
+    //       }, 2000);
 
-    })
+    // })
     
   }
 
