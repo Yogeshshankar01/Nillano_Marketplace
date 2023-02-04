@@ -166,7 +166,7 @@
         <p class="text-light text-center fst-italic">900 comments</p>
       </ion-card-header>
       <ion-card-content class="ion-no-padding">
-        <ion-list class="ion-no-padding"  style="max-height: 500px; overflow-y: scroll;" >
+        <ion-list class="ion-no-padding"  style="max-height: 400px; overflow-y: scroll;" >
 
           <div *ngFor="let comment of comments">
           <ion-item lines="none">
@@ -210,7 +210,7 @@
       </ion-card-content>
       
       <ion-item class="card-footer text-dark" style="--background: #fdfdfd;" lines="none">
-        <ion-input type="text" placeholder="Enter your comment here"></ion-input>
+        <ion-input type="text" placeholder="Enter your comment here" autofocus="true"></ion-input>
         <ion-button style="--background: #1a4640;">
           <ion-icon name="send"></ion-icon>
         </ion-button>
