@@ -17,20 +17,12 @@
     </ion-toolbar>
   </ion-header>
 
-<ion-content class="ion-padding">
-
-  <!-- <ion-item class="ion-no-padding" lines="none">
-    <ion-icon name="pin" slot="start"></ion-icon>
-    <ion-label>
-      <h2>Ghana,Accra,ACP Estate, Central university</h2>
-    </ion-label>
-  </ion-item> -->
-  
+<ion-content class="ion-padding">  
   
   <ion-row class="m-0 p-0">
     <ion-col class="m-0 p-0" size="12" size-md="6">
 
-      <ion-row class="m-0 p-0 overflow-hidden" style="height: 300px;">
+      <ion-row class="m-0 p-0 overflow-hidden product-images">
 
         <ion-col class="h-100 product-image-col" size="9" >
           <ion-img class="main h-100 rounded-5" [src]="selectedMainImage"></ion-img>
@@ -40,19 +32,19 @@
 
           <div class="h-100 products-thumb" style="overflow-y: scroll;">
 
-            <ion-buttons style="position: absolute; top: 0%; left: 0%;" class="w-100 d-flex justify-content-center">
+            <!-- <ion-buttons style="position: absolute; top: 0%; left: 0%;" class="w-100 d-flex justify-content-center">
               <ion-button class="text-light rounded-circle" style="background-color: #1a4640;" (click)="scrollUp()" >
                 <ion-icon name="chevron-up-outline"></ion-icon>
               </ion-button>
-            </ion-buttons>
+            </ion-buttons> -->
             
           <ion-img class="w-100 mt-2 rounded-3" src="{{image}}" (click)="changeMainImage(image)" *ngFor="let image of product.images"></ion-img>
 
-          <ion-buttons style="position: absolute; bottom: 0%; left: 0%;" class="w-100 d-flex justify-content-center">
+          <!-- <ion-buttons style="position: absolute; bottom: 0%; left: 0%;" class="w-100 d-flex justify-content-center">
             <ion-button class="text-light rounded-circle" style="background-color: #1a4640;" (click)="scrollDown()">
               <ion-icon name="chevron-down-outline"></ion-icon>
             </ion-button>
-          </ion-buttons>
+          </ion-buttons> -->
 
           </div>
 
@@ -136,9 +128,9 @@
         <div class="share-container border-bottom d-flex justify-content-between align-items-center">
           <p>Share on:</p>
           <div class="social-icons">
-            <i class="fa-brands fa-whatsapp fa-1x me-2"></i>
-            <i class="fa-brands fa-facebook fa-1x me-2"></i>
-            <i class="fa-brands fa-twitter fa-1x me-2"></i>
+            <i class="fa-brands fa-whatsapp fa-2x me-2"></i>
+            <i class="fa-brands fa-facebook fa-2x me-2"></i>
+            <i class="fa-brands fa-twitter fa-2x me-2"></i>
           </div>
         </div>
         
@@ -152,19 +144,43 @@
 
   </ion-row>
 
-  <div class="rounded">
+  <div class="mt-2 fs-6 d-flex justify-content-center align-items-center ">
+    <ion-icon name="location-outline" size="large" class="me-2" ></ion-icon>
+        <span>Ghana,Accra,ACP Estate, Central university</span>
+  </div>
+
+  <div class="rounded mt-2">
 
     <h3 class="fw-bolder m-0 text-dark">Listed By:</h3>
-  
-    <ion-item class="ion-no-padding m-0">
-      <ion-avatar slot="start">
-        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-      <ion-label>
-        <h3> Alfred Lawson </h3>
-        <p>200 following | 2000 followers</p>
-      </ion-label>
-    </ion-item>
+
+    <ion-row>
+
+      <ion-col size="12" size-md="6">
+
+        <ion-item lines="none" class="ion-no-padding m-0">
+          <ion-avatar slot="start">
+            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+          </ion-avatar>
+          <ion-label>
+            <h3> Alfred Lawson </h3>
+            <p>200 following | 2000 followers</p>
+          </ion-label>
+        </ion-item>
+
+      </ion-col>
+
+      <ion-col size="12" size-md="6">
+
+        <ion-button class="w-100" color="dark" shape="round">
+          <ion-icon class="me-2" name="chatbubbles"></ion-icon>
+          Chat Seller
+        </ion-button>
+
+      </ion-col>
+
+    </ion-row>
+
+    
   
     </div>
 

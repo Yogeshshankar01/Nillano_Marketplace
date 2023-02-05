@@ -20,4 +20,15 @@ ion-img.main {
     .btn{
         --bs-btn-border-width: 0px;
     }
-    
+
+    .product-images{
+        height: 400px;
+
+        @media(max-width:500px){
+            height:300px;
+        }
+    }
+
+    // @media(max-width:500px){
+
+    // }
