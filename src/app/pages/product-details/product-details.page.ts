@@ -67,6 +67,14 @@ scrollDown() {
   });
 }
 
+relatedProducts = [
+  { id: 1, name: 'Product 1', image: 'assets/product1.png',price:200 },
+  { id: 2, name: 'Product 2', image: 'assets/product2.png',price:200 },
+  { id: 3, name: 'Product 3', image: 'assets/product3.png',price:200 },
+  { id: 4, name: 'Product 4', image: 'assets/product4.png',price:200 },
+  { id: 5, name: 'Product 5', image: 'assets/product5.png',price:200 }
+];
+
 comments = [
   {
     user: {

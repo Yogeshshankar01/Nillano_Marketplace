@@ -241,6 +241,23 @@
       </ion-item>
       
     </ion-card>
+
+    <div class="my-5 rounded overflow-hidden " style="border-left: 1px solid #1A4640 ;  border-right: 1px solid #1A4640 ; " >
+      <h3 class="text-light m-0 p-2" style="background-color: #1A4640;" >Other products by Seller:</h3>
+      <ion-list lines="none" style="background-color: #1A4640;" >
+        <ion-item *ngFor="let product of relatedProducts">
+          <ion-thumbnail slot="start">
+            <img src="../../../assets/images/electronics.jpg">
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.price }}</p>
+          </ion-label>
+          <ion-button slot="end" [routerLink]="['/product-details', product.id]" style="--background:#1A4640;" class="text-center" >View</ion-button>
+        </ion-item>
+      </ion-list>
+    </div>
+    
     
 
 </ion-content>
