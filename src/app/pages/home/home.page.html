@@ -1,104 +1,130 @@
 <ion-menu type="push" contentId="home-content">
- 
-<app-menu class="h-100"></app-menu>
-  
+
+  <app-menu class="h-100"></app-menu>
+
 </ion-menu>
 
 <div class="ion-page" id="home-content">
-<app-header></app-header>
+  <app-header></app-header>
 
-<ion-content style="--background: #f2f2f2;">
+  <ion-content style="--background: #f2f2f2;">
 
-  <ion-segment class="p-2" [(ngModel)]="selectedTab" (ionChange)="segmentChanged($event)" >
-    <ion-segment-button class="rounded-4 overflow-hidden tab fw-bold" value="buying"  [ngClass]="{'active-tab': selectedTab === 'buying'}">
-      <ion-label>Buy</ion-label>
-    </ion-segment-button>
-    <ion-segment-button class="rounded-4 overflow-hidden tab fw-bold" value="renting"  [ngClass]="{'active-tab': selectedTab === 'renting'}">
-      <ion-label>Rent</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+    <ion-segment class="p-2" [(ngModel)]="selectedTab" (ionChange)="segmentChanged($event)">
+      <ion-segment-button class="rounded-4 overflow-hidden tab fw-bold" value="buying"
+        [ngClass]="{'active-tab': selectedTab === 'buying'}">
+        <ion-label>Buy</ion-label>
+      </ion-segment-button>
+      <ion-segment-button class="rounded-4 overflow-hidden tab fw-bold" value="renting"
+        [ngClass]="{'active-tab': selectedTab === 'renting'}">
+        <ion-label>Rent</ion-label>
+      </ion-segment-button>
+    </ion-segment>
 
-  <div [ngSwitch]="selectedTab">
-    
-    <div class="" *ngSwitchCase="'buying'">
-      <!-- Content for Tab 1 -->
+    <div [ngSwitch]="selectedTab">
 
-      <ion-toolbar style="--background:#1A4640;">
-        <ion-searchbar class="custom" style="--background: #f2f2f2; color: #1A4640;" placeholder="Search for products or sellers" ></ion-searchbar>
-        <ion-buttons slot="end">
-          <ion-button (click)="openfilter()">
-            <ion-icon style="color:#f2f2f2;" name="options"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
+      <div class="" *ngSwitchCase="'buying'">
+        <!-- Content for Tab 1 -->
 
-      <ion-grid>
-        <ion-row class="m-0" style="align-items: start;">
+        <ion-toolbar style="--background:#1A4640;">
+          <ion-searchbar class="custom" style="--background: #f2f2f2; color: #1A4640;"
+            placeholder="Search for products or sellers"></ion-searchbar>
+          <ion-buttons slot="end">
+            <ion-button (click)="openfilter()">
+              <ion-icon style="color:#f2f2f2;" name="options"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
 
-          <ion-col class="category rounded m-0 sticky-top" size="12" size-md="4" size-lg="3">
-            <app-categories></app-categories>
-            
-          </ion-col>
+        <ion-grid>
+          <ion-row class="m-0" style="align-items: start;">
 
-          <ion-col class="a rounded" size="12" size-md="8" size-lg="9" >
+            <ion-col class="category rounded m-0 sticky-top" size="12" size-md="4" size-lg="3">
+              <app-categories></app-categories>
 
-            <ion-grid>
-              <!-- <ion-img class="newarrival" src="../../../assets/images/newarrival.png"> </ion-img> -->
-              <h3 class="fw-bolder">Products : {{products.length}} results</h3>
-              <ion-row class="products m-0 p-0">
-                <ion-col class="product-item" size="6" size-md="4" size-lg="3" *ngFor="let product of products">
+            </ion-col>
 
-                  <ion-card class="m-0" style="background: #f2f2f2;">
-        
-                    <img [src]="product.image" class="w-100" alt="{{ product.name }}">
+            <ion-col class="a rounded" size="12" size-md="8" size-lg="9">
 
-                    <ion-card-header class="p-2 pb-0">
-                      <ion-card-title class="fs-5" style="color: #1A4640; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ product.name }}</ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content class="p-2 pt-0">
+              <ion-grid>
+                <!-- <ion-img class="newarrival" src="../../../assets/images/newarrival.png"> </ion-img> -->
+                <h3 class="fw-bolder">Products : {{products.length}} results</h3>
+                <ion-row class="products m-0 p-0">
+                  <ion-col class="product-item" size="6" size-md="4" size-lg="3" [routerLink]="['/product-details']"
+                    *ngFor="let product of products">
 
-                      <div class="price">
+                    <ion-card class="m-0" style="background: #f2f2f2;">
 
-                        <div class="d-flex justify-content-between" *ngIf="product.discount">
-                        <div style="width: 70%;">
-                        <span class="text-decoration-line-through me-2" *ngIf="product.discount">{{product.price | currency : 'GH₵'}}</span> <br>
-                        <span class="discounted-price" *ngIf="product.discount">{{product.discountPrice | currency : 'GH₵'}}</span>
+                      <img [src]="product.image" class="w-100" alt="{{ product.name }}">
+
+                      <ion-card-header class="p-2 pb-0">
+                        <ion-card-title class="fs-5"
+                          style="color: #1A4640; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{
+                          product.name }}</ion-card-title>
+                      </ion-card-header>
+                      <ion-card-content class="p-2 pt-0">
+
+                        <div class="price">
+
+                          <div class="d-flex justify-content-between" *ngIf="product.discount">
+                            <div style="width: 70%;">
+                              <span class="text-decoration-line-through me-2" *ngIf="product.discount">{{product.price |
+                                currency : 'GH₵'}}</span> <br>
+                              <span class="discounted-price" *ngIf="product.discount">{{product.discountPrice | currency
+                                : 'GH₵'}}</span>
+                            </div>
+                            <span style="width: 30%;">
+                              <ion-badge class="w-100 h-100 d-flex align-items-center justify-content-center"
+                                style="--background:#1A4640;">10%</ion-badge>
+                            </span>
+                          </div>
+
+                          <span class="original-price" *ngIf="!product.discount">{{product.price | currency :
+                            'GH₵'}}</span>
+
                         </div>
-                        <span style="width: 30%;">
-                          <ion-badge class="w-100 h-100 d-flex align-items-center justify-content-center" style="--background:#1A4640;">10%</ion-badge>
-                        </span>
-                      </div>
 
-                        <span class="original-price" *ngIf="!product.discount">{{product.price | currency : 'GH₵'}}</span>
+                        <p>{{product.location}}</p>
+                      </ion-card-content>
+                    </ion-card>
 
-                    </div>
-                      
-                      <p>{{product.location}}</p>
-                    </ion-card-content>
-                  </ion-card>
-                
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-            
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
 
-          </ion-col>
 
-        </ion-row>
-      </ion-grid>
-      
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+
+      </div>
+
+      <div *ngSwitchCase="'renting'" class="ion-padding" >
+        <!-- Content for Tab 2 -->
+
+        <div class="text-center">
+
+          <h1>Coming Soon!</h1>
+          <p>Our rental side is under construction, but we're working hard to bring it to you soon.</p>
+
+          <img class="w-100" src="../../../assets/images/construction.png" />
+
+          <p>In the meantime, you can still view our products and place an order with us.</p>
+          <ion-icon name="briefcase" size="large"></ion-icon>
+          <p>Thank you for your patience.</p>
+
+        </div>
+
+
+      </div>
+
     </div>
-    <div *ngSwitchCase="'renting'">
-      <!-- Content for Tab 2 -->
-      <h1>Renting</h1>
-    </div>
-  </div>
 
-  <ion-fab (click)="setOpen(true)" slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button style="--background : #1A4640;">
-      <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-badge color="danger" class="position-absolute top-0 left-0 border border-light rounded-circle">5</ion-badge>
+    <ion-fab (click)="setOpen(true)" slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button style="--background : #1A4640;">
+        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-badge color="danger" class="position-absolute top-0 left-0 border border-light rounded-circle">5</ion-badge>
     </ion-fab>
 
     <ion-modal [isOpen]="isModalOpen">
@@ -122,22 +148,22 @@
               <p>Your product is nice</p>
             </ion-label>
             <ion-badge slot="end" style="--background:#33887d;">2</ion-badge>
-          </ion-item>       
+          </ion-item>
 
         </ion-content>
 
         <ion-footer>
           <ion-item class="ion-text-center" lines="none">
             <div class="w-100 d-flex align-items-center justify-content-center">
-          <ion-icon class="pe-2" style="color: #1A4640;" name="lock-closed-outline"></ion-icon>
-          <ion-label style="color: #1A4640;" class="ion-text-light">Your messages are secured</ion-label>
-          </div>
-        </ion-item>
+              <ion-icon class="pe-2" style="color: #1A4640;" name="lock-closed-outline"></ion-icon>
+              <ion-label style="color: #1A4640;" class="ion-text-light">Your messages are secured</ion-label>
+            </div>
+          </ion-item>
         </ion-footer>
 
       </ng-template>
     </ion-modal>
 
-  
-</ion-content>
+
+  </ion-content>
 </div>
