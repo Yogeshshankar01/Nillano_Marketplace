@@ -1,8 +1,8 @@
 <ion-menu type="push" contentId="product-details-content">
   <app-menu class="h-100"></app-menu>
-  </ion-menu>
-  
-  <div class="ion-page" id="product-details-content">
+</ion-menu>
+
+<div class="ion-page" id="product-details-content">
   <ion-header>
     <ion-toolbar style="--background:#1A4640; color: #f2f2f2; border-bottom: 1px solid;">
       <ion-buttons slot="start">
@@ -17,248 +17,273 @@
     </ion-toolbar>
   </ion-header>
 
-<ion-content class="ion-padding">  
-  
-  <ion-row class="m-0 p-0">
-    <ion-col class="m-0 p-0" size="12" size-md="6">
+  <ion-content class="ion-padding">
 
-      <ion-row class="m-0 p-0 overflow-hidden product-images">
+    <ion-row class="m-0 p-0">
+      <ion-col class="m-0 p-0" size="12" size-md="6">
 
-        <ion-col class="h-100 product-image-col" size="9" >
-          <ion-img class="main h-100 rounded-5" [src]="selectedMainImage"></ion-img>
-        </ion-col>
+        <ion-row class="m-0 p-0 overflow-hidden product-images">
 
-        <ion-col size="3" class="h-100 p-0" style="overflow: hidden;">
+          <ion-col class="h-100 product-image-col" size="9">
+            <ion-img class="main h-100 rounded-5" [src]="selectedMainImage"></ion-img>
+          </ion-col>
 
-          <div class="h-100 products-thumb" style="overflow-y: scroll;">
+          <ion-col size="3" class="h-100 p-0" style="overflow: hidden;">
 
-            <!-- <ion-buttons style="position: absolute; top: 0%; left: 0%;" class="w-100 d-flex justify-content-center">
+            <div class="h-100 products-thumb" style="overflow-y: scroll;">
+
+              <!-- <ion-buttons style="position: absolute; top: 0%; left: 0%;" class="w-100 d-flex justify-content-center">
               <ion-button class="text-light rounded-circle" style="background-color: #1a4640;" (click)="scrollUp()" >
                 <ion-icon name="chevron-up-outline"></ion-icon>
               </ion-button>
             </ion-buttons> -->
-            
-          <ion-img class="w-100 mt-2 rounded-3" src="{{image}}" (click)="changeMainImage(image)" *ngFor="let image of product.images"></ion-img>
 
-          <!-- <ion-buttons style="position: absolute; bottom: 0%; left: 0%;" class="w-100 d-flex justify-content-center">
+              <ion-img class="w-100 mt-2 rounded-3" src="{{image}}" (click)="changeMainImage(image)"
+                *ngFor="let image of product.images"></ion-img>
+
+              <!-- <ion-buttons style="position: absolute; bottom: 0%; left: 0%;" class="w-100 d-flex justify-content-center">
             <ion-button class="text-light rounded-circle" style="background-color: #1a4640;" (click)="scrollDown()">
               <ion-icon name="chevron-down-outline"></ion-icon>
             </ion-button>
           </ion-buttons> -->
 
+            </div>
+
+          </ion-col>
+
+        </ion-row>
+
+
+      </ion-col>
+
+
+      <ion-col class="overflow-hidden" style="height: 400px;" size="12" size-md="6">
+
+        <ion-item class="ion-no-padding">
+          <ion-label>{{product.name}}</ion-label>
+          <button slot="end" type="button" class="btn position-relative" (click)="toggleLike()">
+            <i [class.fa-solid]="isLiked" [class.text-danger]="isLiked" [class.fa-regular]="!isLiked"
+              class="fa-heart fa-2x"></i>
+            <span class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-primary">
+              {{likes}}
+            </span>
+          </button>
+
+        </ion-item>
+
+
+        <div class="mt-2 text-dark">
+          <div class="lh-sm product-description" style="max-height: 120px; overflow-y: scroll;">
+            <h4 class="">Description:</h4>
+            {{product.description}}
           </div>
+
+          <ion-item lines="inset" class="fw-bolder my-2" style="color:#1a4640;">
+            <ion-label>
+
+              <h3 *ngIf="!product.discount_percent" class="fw-bolder"> {{product.price | currency : 'GH₵'}} </h3>
+
+              <div *ngIf="product.discount_percent" class="w-100 d-flex">
+                <div>
+                  <h3 class="fw-bolder text-decoration-line-through"> {{product.price | currency : 'GH₵'}} </h3>
+                  <h3 class="fw-bolder"> {{product.discount_price | currency : 'GH₵'}} </h3>
+                </div>
+
+                <div class="d-flex align-items-center bg-danger rounded text-light ms-2 p-2"
+                  style="background-color: #1a4640 !important;">
+                  <span>{{product.discount_percent}}%</span>
+                </div>
+
+              </div>
+
+            </ion-label>
+            <ion-label slot="end">
+              <p class="fw-bold"> IN STOCK </p>
+            </ion-label>
+          </ion-item>
+
+          <ion-item class="my-2 ion-no-padding" lines="none">
+
+            <ion-label class="h-100 d-flex align-items-center ">
+              Quantity:
+              <ion-button fill="clear" class="decrement-button ion-no-padding" (click)="decreaseQuantity()">
+                <ion-icon name="remove-circle-outline"></ion-icon>
+              </ion-button>
+              <span class="quantity-label bg-dark text-light p-2 rounded">{{quantityCount}}</span>
+              <ion-button fill="clear" class="increment-button ion-no-padding" (click)="increaseQuantity()">
+                <ion-icon name="add-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-label>
+            <ion-button slot="end" class="add-to-cart-button h-100" style="--background: #1a4640;">
+              <ion-icon class="me-2" name="cart"></ion-icon>
+              Add to Cart
+            </ion-button>
+
+          </ion-item>
+
+          <div>
+            <ion-button (click)="presentOrderModal()" class="order-now-button w-100" style="--background: #1A4640;">
+              <ion-icon class="me-2" name="card-outline"></ion-icon>
+              ORDER Now!
+            </ion-button>
+
+          </div>
+
+
+          <div class="share-container border-bottom d-flex justify-content-between align-items-center">
+            <p>Share on:</p>
+            <div class="social-icons">
+              <i class="fa-brands fa-whatsapp fa-2x me-2"></i>
+              <i class="fa-brands fa-facebook fa-2x me-2"></i>
+              <i class="fa-brands fa-twitter fa-2x me-2"></i>
+            </div>
+          </div>
+
+
+        </div>
+
+
+      </ion-col>
+
+
+
+    </ion-row>
+
+    <div class="mt-2 fs-6 d-flex justify-content-center align-items-center text-dark ">
+      <ion-icon name="location-outline" style="color: #202428;" size="large" class="me-2"></ion-icon>
+      <span>{{product.location}}</span>
+    </div>
+
+    <div class="rounded mt-2">
+
+      <h3 class="fw-bolder m-0 text-dark">Listed By:</h3>
+
+      <ion-row>
+
+        <ion-col size="12" size-md="6">
+
+          <ion-item lines="none" class="ion-no-padding m-0">
+            <ion-avatar slot="start">
+              <img alt="Silhouette of a person's head" [src]="product.user?.user_profile" />
+            </ion-avatar>
+            <ion-label>
+              <h3> {{product.user?.first_name}} </h3>
+              <p>{{product.user?.following.length}} following | {{product.user?.followers.length}} followers</p>
+            </ion-label>
+          </ion-item>
+
+        </ion-col>
+
+        <ion-col size="12" size-md="6">
+
+          <ion-button class="text-light w-100" style="--background:#202428;" shape="round">
+            <ion-icon class="me-2" name="chatbubbles"></ion-icon>
+            Chat Seller
+          </ion-button>
 
         </ion-col>
 
       </ion-row>
-      
-
-    </ion-col>
-
-
-    <ion-col class="overflow-hidden" style="height: 400px;" size="12" size-md="6">
-      
-      <ion-item class="ion-no-padding">
-        <ion-label>{{product.name}}</ion-label>
-        <button slot="end" type="button" class="btn position-relative" (click)="toggleLike()">
-          <i [class.fa-solid]="isLiked" [class.text-danger]="isLiked" [class.fa-regular]="!isLiked" class="fa-heart fa-2x"></i>
-          <span class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-primary">
-            {{likes}}
-          </span>
-        </button>
-
-      </ion-item>
-      
-
-      <div class="mt-2 text-dark">
-        <div class="lh-sm product-description" style="max-height: 120px; overflow-y: scroll;">
-          <h4 class="">Description:</h4> 
-          {{product.description}} 
-        </div>
-
-        <ion-item lines="inset" class="fw-bolder my-2" style="color:#1a4640;">
-          <ion-label>
-          
-          <div class="w-100 d-flex">
-            <div>
-          <h3 class="fw-bolder text-decoration-line-through"> {{product.price | currency : 'GH₵'}} </h3>
-          <h3 class="fw-bolder"> {{product.price | currency : 'GH₵'}} </h3>
-          </div>
-
-          <div class="d-flex align-items-center bg-danger rounded text-light ms-2 p-2" style="background-color: #1a4640 !important;" >
-          <span>20%</span>
-          </div>
-
-          </div>
-
-          </ion-label>
-          <ion-label slot="end">
-          <p class="fw-bold"> IN STOCK </p>
-          </ion-label>
-        </ion-item>
-
-        <ion-item class="my-2 ion-no-padding" lines="none">
-          
-          <ion-label class="h-100 d-flex align-items-center ">
-            Quantity:
-            <ion-button fill="clear" class="decrement-button ion-no-padding" (click)="decreaseQuantity()" >
-              <ion-icon name="remove-circle-outline"></ion-icon>
-            </ion-button>
-            <span class="quantity-label bg-dark text-light p-2 rounded">{{quantityCount}}</span>
-            <ion-button fill="clear" class="increment-button ion-no-padding" (click)="increaseQuantity()">
-              <ion-icon name="add-circle-outline"></ion-icon>
-            </ion-button>
-          </ion-label>
-          <ion-button slot="end" class="add-to-cart-button h-100" style="--background: #1a4640;" > 
-            <ion-icon class="me-2" name="cart"></ion-icon> 
-            Add to Cart
-          </ion-button>
-
-        </ion-item>
-
-        <div>
-          <ion-button class="buy-now-button w-100" style="--background: #1a4640;" > 
-            <ion-icon class="me-2" name="card-outline"></ion-icon>
-            Buy Now!
-          </ion-button>
-  
-        </div>
-
-
-        <div class="share-container border-bottom d-flex justify-content-between align-items-center">
-          <p>Share on:</p>
-          <div class="social-icons">
-            <i class="fa-brands fa-whatsapp fa-2x me-2"></i>
-            <i class="fa-brands fa-facebook fa-2x me-2"></i>
-            <i class="fa-brands fa-twitter fa-2x me-2"></i>
-          </div>
-        </div>
-        
-        
-      </div>
-      
-      
-    </ion-col>
 
 
 
-  </ion-row>
-
-  <div class="mt-2 fs-6 d-flex justify-content-center align-items-center text-dark ">
-    <ion-icon name="location-outline" style="color: #202428;" size="large" class="me-2" ></ion-icon>
-        <span>Ghana,Accra,ACP Estate, Central university</span>
-  </div>
-
-  <div class="rounded mt-2">
-
-    <h3 class="fw-bolder m-0 text-dark">Listed By:</h3>
-
-    <ion-row>
-
-      <ion-col size="12" size-md="6">
-
-        <ion-item lines="none" class="ion-no-padding m-0">
-          <ion-avatar slot="start">
-            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-          </ion-avatar>
-          <ion-label>
-            <h3> Alfred Lawson </h3>
-            <p>200 following | 2000 followers</p>
-          </ion-label>
-        </ion-item>
-
-      </ion-col>
-
-      <ion-col size="12" size-md="6">
-
-        <ion-button class="text-light w-100" style="--background:#202428;" shape="round">
-          <ion-icon class="me-2" name="chatbubbles"></ion-icon>
-          Chat Seller
-        </ion-button>
-
-      </ion-col>
-
-    </ion-row>
-
-    
-  
     </div>
 
     <ion-card>
       <ion-card-header style="background-color: #1a4640;">
         <ion-card-title class="text-light text-center">Comments and Feedback</ion-card-title>
-        <p class="text-light text-center fst-italic">900 comments</p>
+        <p *ngIf="product.Comments?.length > 1" class="text-light text-center fst-italic">{{product.Comments?.length}}
+          comments</p>
+        <p *ngIf="product.Comments?.length < 2" class="text-light text-center fst-italic">{{product.Comments?.length}}
+          comment</p>
       </ion-card-header>
       <ion-card-content class="ion-no-padding">
-        <ion-list class="ion-no-padding"  style="max-height: 400px; overflow-y: scroll;" >
+        <ion-list class="ion-no-padding" style="max-height: 400px; min-height: max-content; overflow-y: scroll;">
 
-          <div *ngFor="let comment of comments">
-          <ion-item lines="none">
-            <ion-avatar slot="start">
-              <img src="https://ionicframework.com/docs/img/demos/avatar.svg">
-            </ion-avatar>
-            <ion-label text-wrap>
-              <h2>{{ comment.user.name }}</h2>
-              <p>{{ comment.text }}</p>
-            </ion-label>
-            <ion-badge slot="end">{{ comment.rating }} <ion-icon name="star"></ion-icon></ion-badge>
-          </ion-item>
+          <div *ngFor="let comment of product.Comments">
+            <ion-item lines="none">
+              <ion-avatar slot="start">
+                <img [src]="comment.user.user_profile">
+              </ion-avatar>
+              <ion-label text-wrap>
+                <h2>{{ comment.user.first_name }}</h2>
+                <p>{{ comment.comment }}</p>
+              </ion-label>
+              <ion-badge slot="end">{{ comment.rating }} <ion-icon name="star"></ion-icon></ion-badge>
+            </ion-item>
 
-          <ion-item lines="none">
-            <ion-label>
-              <p> <span class="me-1"> 2022-12-14 </span> <span> Reply </span> </p>
-            </ion-label>
-            <ion-label slot="end">
-              <span class="me-2">
-                <i class="fa-regular fa-heart"></i>
-                <ion-badge>{{likes}}</ion-badge>
+            <ion-item lines="none">
+              <ion-label>
+                <p> <span class="me-1"> {{comment.createdAt | date}} {{comment.createdAt | date : 'shortTime'}} </span>
+                  <!-- <span> Reply </span>  -->
+                </p>
+              </ion-label>
+              <ion-label slot="end">
+                <span class="me-2">
+                  <i class="fa-regular fa-heart"></i>
+                  <ion-badge>{{likes}}</ion-badge>
                 </span>
                 <span>
                   <i class="fa-regular fa-thumbs-down"></i>
                   <ion-badge color="danger">0</ion-badge>
-                  </span>
-                  
-            </ion-label>
-          </ion-item>
+                </span>
 
-          <ion-item>
+              </ion-label>
+            </ion-item>
 
-            <ion-label>
-              <p>View replies (10)</p>
-            </ion-label>
+            <ion-item>
+
+              <!-- <ion-label>
+                <p>View replies (10)</p>
+              </ion-label> -->
 
             </ion-item>
 
-        </div>
+          </div>
         </ion-list>
       </ion-card-content>
-      
-      <ion-item class="card-footer text-dark" style="--background: #fdfdfd;" lines="none">
-        <ion-input type="text" placeholder="Enter your comment here" autofocus="true"></ion-input>
-        <ion-button style="--background: #1a4640;">
-          <ion-icon name="send"></ion-icon>
-        </ion-button>
-      </ion-item>
-      
+
+      <div class="card-footer text-dark">
+
+        <button class="w-100 mt-2 h-100 btn text-light" style="background: #1a4640;" (click)="presentCommentModal()">
+          <!-- <ion-icon name="send"></ion-icon> -->
+          Add comments
+        </button>
+      </div>
+
     </ion-card>
 
-    <div class="my-5 rounded overflow-hidden " style="border-left: 1px solid #1A4640 ;  border-right: 1px solid #1A4640 ; " >
-      <h3 class="text-light m-0 p-2" style="background-color: #1A4640;" >Other products by Seller:</h3>
-      <ion-list lines="none" style="background-color: #1A4640;" >
+    <div class="my-5 rounded overflow-hidden "
+      style="border-left: 1px solid #1A4640 ;  border-right: 1px solid #1A4640 ; ">
+      <h3 class="text-light m-0 p-2" style="background-color: #1A4640;">Other products by Seller:</h3>
+
+      <ion-list *ngIf="relatedProducts?.length >= 1" lines="none" style="background-color: #1A4640;">
         <ion-item *ngFor="let product of relatedProducts">
           <ion-thumbnail slot="start">
-            <img src="../../../assets/images/electronics.jpg">
+            <img [src]="product.image">
           </ion-thumbnail>
           <ion-label>
             <h2>{{ product.name }}</h2>
-            <p>{{ product.price }}</p>
+            <p *ngIf="!product.discount_percent">{{ product.price | currency : 'GH₵' }}</p>
+            <p *ngIf="product.discount_percent" class="text-decoration-line-through">{{ product.price | currency : 'GH₵'
+              }}</p>
+            <p *ngIf="product.discount_percent">{{ product.discount_price | currency : 'GH₵' }}</p>
           </ion-label>
-          <ion-button slot="end" [routerLink]="['/product-details', product.id]" style="--background:#1A4640;" class="text-center" >View</ion-button>
+          <ion-button slot="end" [routerLink]="['/product-details']" [queryParams]="{ product: product.id }" style="--background:#1A4640;"
+            class="text-center">View</ion-button>
         </ion-item>
       </ion-list>
-    </div>
-    
-    
 
-</ion-content>
+      <ion-list *ngIf="relatedProducts?.length < 1">
+
+        <ion-item>
+          No more products from this seller
+        </ion-item>
+
+      </ion-list>
+    </div>
+
+
+
+  </ion-content>
 </div>

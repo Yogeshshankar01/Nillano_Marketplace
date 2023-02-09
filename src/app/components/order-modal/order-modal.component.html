@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Order Details
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+    <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input [(ngModel)]="name" name="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input [(ngModel)]="email" name="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Phone</ion-label>
+      <ion-input [(ngModel)]="phone" name="phone"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Address</ion-label>
+      <ion-textarea [(ngModel)]="address" name="address"></ion-textarea>
+    </ion-item>
+
+    <h1 class="text-center"> Your Order </h1>
+
+    <ion-item class="ion-text-center">
+      <ion-label>
+        <h1> Product </h1>
+        <p *ngFor="let item of selectedItem">{{item.name}} x {{ item.quantity }}</p>
+      </ion-label>
+      <ion-label>
+        <h1> Price </h1>
+        <p *ngFor="let item of selectedItem">{{item.price * item.quantity | currency : 'GH₵' }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item class="ion-text-center">
+      <ion-label>
+        Subtotal:
+      </ion-label>
+      <ion-label>
+        {{ subtotal | currency : 'GH₵' }}
+      </ion-label>
+    </ion-item>
+    <ion-item class="ion-text-center">
+      <ion-label>
+        Delivery:
+      </ion-label>
+      <ion-label>
+        {{ delivery | currency : 'GH₵' }}
+      </ion-label>
+
+    </ion-item>
+    <ion-item class="ion-text-center">
+      <ion-label>Total:</ion-label>
+      <ion-label>
+        {{ total | currency : 'GH₵' }} </ion-label>
+    </ion-item>
+
+    <ion-item color="dark" class="ion-text-center">
+      <ion-label text-wrap>
+        <ion-icon class="me-2" name="lock-closed"></ion-icon>
+        Your money is secured with us, choose your payment option.
+      </ion-label>
+    </ion-item>
+
+    <ion-item style="cursor: pointer;" class="option mt-3" id="cash" (click)="selectOption('cash')">
+      <ion-icon name="cash" slot="start"></ion-icon>
+      Cash on delivery
+    </ion-item>
+
+    <ion-item style="cursor: pointer;" class="option" id="mobile" (click)="selectOption('mobile')">
+      <ion-icon name="card" slot="start"></ion-icon>
+      Mobile Money
+    </ion-item>
+
+    <ion-button class="rounded-3 mt-3" style="--background : #1a4640;" expand="full" (click)="makePayment()">
+      <ion-icon class="me-2" name="bag-check"></ion-icon> Place Order
+    </ion-button>
+
+  </form>
+</ion-content>

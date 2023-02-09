@@ -8,6 +8,9 @@ import { ProductDetailsPageRoutingModule } from './product-details-routing.modul
 
 import { ProductDetailsPage } from './product-details.page';
 import { MenuModule } from 'src/app/components/menu/menu.component.module';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { CommentModalModule } from 'src/app/components/comment-modal/comment.component.module';
+import { OrderModalModule } from 'src/app/components/order-modal/order.module';
 
 @NgModule({
   imports: [
@@ -15,7 +18,12 @@ import { MenuModule } from 'src/app/components/menu/menu.component.module';
     FormsModule,
     IonicModule,
     ProductDetailsPageRoutingModule,
-    MenuModule
+    MenuModule,
+    CommentModalModule,
+    OrderModalModule
+  ],
+  providers:[
+    SocialSharing
   ],
   declarations: [ProductDetailsPage]
 })

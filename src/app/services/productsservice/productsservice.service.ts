@@ -28,6 +28,22 @@ export class ProductsserviceService {
     })
   }
 
+  getProduct(productID:Number):Observable<{message:string,product:[]}>{
+    return new Observable(observer=>{
+
+      this.http.get<{product:any}>(`${environment.server}/products/product/${productID}`)
+    .pipe(take(1))
+    .subscribe(async(res)=>{
+      observer.next({message:"Products Provided",product:res.product})
+      observer.complete()
+    },(err)=>{
+      observer.error({message:err.error.message})
+      observer.complete()
+    })
+
+    })
+  }
+
   filterProducts(filters:any):Observable<{message:string,products:[]}>{
     return new Observable(observer=>{
 
@@ -47,8 +63,10 @@ export class ProductsserviceService {
   }
 
   constructor(private http:HttpClient) { 
-    // this.getCategoriesAndSubCategoies().subscribe(res=>{
+    // this.getProduct(10).subscribe(res=>{
     //   console.log(res)
+    // },err=>{
+    //   console.log(err)
     // })
   }
 }

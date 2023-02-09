@@ -1,0 +1,45 @@
+.cover-image {
+    width: 100%;
+    height: 200px;
+    position: relative;
+
+    ion-buttons{
+        position: absolute;
+        top: 3%;
+        left: 3%;
+        background-color: #000;
+        color: white;
+    }
+  }
+  .cover-image img {
+    width: 100%;
+  }
+  .profile-info {
+    // padding: 16px;
+    position: absolute;
+    bottom: -20%;
+    left: 5%;
+  }
+  ion-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    border: 4px solid white;
+  }
+  h2 {
+    font-size: 22px;
+    margin-top: 16px;
+  }
+  p {
+    margin-top: 8px;
+    font-size: 14px;
+  }
+
+  ion-list{
+    background : transparent;
+    
+    ion-list-header{
+        color:white;
+        font-size: 1.5em;
+    }
+  }

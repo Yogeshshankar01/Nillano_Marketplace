@@ -1,0 +1,87 @@
+
+<ion-content>
+
+  <div class="cover-image">
+    <div class="h-100 overflow-hidden">
+    <img [src]="coverImageUrl" />
+    </div>
+    <div class="profile-info">
+      <ion-avatar>
+        <img [src]="profileImageUrl" />
+      </ion-avatar>
+      </div>
+
+      <ion-buttons class="rounded-circle" slot="start">
+        <ion-back-button defaultHref="/home"></ion-back-button>
+      </ion-buttons>
+      
+  </div>
+
+  <ion-row class="mt-4 px-2">
+
+    <ion-col size="12" class="ion-text-center" size-md="6">
+
+      <h2>{{ username }}</h2>
+        <p>{{ email }}</p>
+        <p>Followers: {{ followers }} | Following: {{ following }}</p>
+
+        <ion-button style="--background:#1A4640;" >
+          Edit Profile
+        </ion-button>
+
+    </ion-col>
+
+    <ion-col size="12" size-md="6" style="background:#1A4640;">
+
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Shop</ion-label>
+        </ion-list-header>
+
+        <ion-item (click)="presentBalanceModal()">
+          <ion-icon slot="start" name="cash"></ion-icon>
+          <ion-label>My Balance</ion-label>
+        </ion-item>
+    
+        <ion-item button detail="true" detail-icon="caret-forward-outline" >
+          <ion-icon slot="start" name="shirt"></ion-icon>
+          <ion-label>My Products</ion-label>
+        </ion-item>
+    
+        <ion-item button detail="true" detail-icon="caret-forward-outline" >
+          <ion-icon slot="start" name="cart"></ion-icon>
+          <ion-label>Shop Orders</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Account</ion-label>
+        </ion-list-header>
+    
+        <ion-item button detail="true" detail-icon="caret-forward-outline" >
+          <ion-icon slot="start" name="cart"></ion-icon>
+          <ion-label>Order History</ion-label>
+        </ion-item>
+    
+        <ion-item button detail="true" detail-icon="caret-forward-outline" >
+          <ion-icon slot="start" name="mail"></ion-icon>
+          <ion-label>Messages</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon slot="start" name="log-out-outline"></ion-icon>
+          <ion-label>Logout</ion-label>
+        </ion-item>
+
+      </ion-list>
+    
+      
+
+    </ion-col>
+
+  </ion-row>
+
+ 
+
+</ion-content>

@@ -49,8 +49,7 @@
                 <!-- <ion-img class="newarrival" src="../../../assets/images/newarrival.png"> </ion-img> -->
                 <h3 class="fw-bolder">Products : {{products.length}} results</h3>
                 <ion-row class="products m-0 p-0">
-                  <ion-col class="product-item" size="6" size-md="4" size-lg="3" [routerLink]="['/product-details']"
-                    *ngFor="let product of products">
+                  <ion-col class="product-item" size="6" size-md="4" size-lg="3" [routerLink]="['/product-details']" [queryParams]="{ product: product.id }" *ngFor="let product of products">
 
                     <ion-card class="m-0" style="background: #f2f2f2;">
 

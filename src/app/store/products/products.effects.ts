@@ -19,7 +19,7 @@ export class ProductsEffect {
                 return this.productService.getProducts()
                     .pipe(
                         map((products) => productActions.getProductsSuccess({message:products.message,products:products.products})),
-                        catchError((error) => of(productActions.getProductsFailure(error)))
+                        catchError((error) => of(productActions.getProductsFailure({error:error.message})))
                     );
             })
         ),{dispatch: true}
@@ -31,7 +31,7 @@ export class ProductsEffect {
             switchMap((filters) => this.productService.filterProducts(filters.filters).pipe(take(1))
                     .pipe(
                         map((products) => productActions.filterProductsSuccess({message:products.message,products:products.products})),
-                        catchError((error) => of(productActions.filterProductsFailure({error})))
+                        catchError((error) => of(productActions.filterProductsFailure({error:error.message})))
                     )
             )
         )
