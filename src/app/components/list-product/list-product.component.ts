@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ModalController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-list-product',
@@ -30,22 +30,44 @@ export class ListProductComponent implements OnInit {
   }
 
   createProductForm = this.fb.group({
-      name: [''],
-      description: [''],
-      price: [''],
+      name: ['',Validators.required],
+      description: ['',Validators.required],
+      price: ['',Validators.required],
       discount_percent: [''],
       discount_price: [''],
-      quantity: [''],
-      image: [''],
-      images: [''],
-      category_id: [''],
-      subcategory_id: [''],
-      location: [''],
+      quantity: ['',Validators.required],
+      image: ['',Validators.required],
+      images: ['',Validators.required],
+      category_id: ['',Validators.required],
+      subcategory_id: ['',Validators.required],
+      location: ['',Validators.required],
       Campus: [''],
-      user_id: [''],
+      user_id: ['',Validators.required],
   })
 
+  get createProductFormControls(){
+    return this.createProductForm.controls
+  }
+
+  submitted=false
+
   submitProduct(){
+    this.submitted = true
+
+    this.toastController.create({
+      message:"Please fill in the required fields",
+      duration:3000,
+      header:"Validation Error",
+      color:'danger',
+      position : 'top'
+    }).then((toast)=>{
+      toast.present()
+    })
+
+    if(this.createProductForm.invalid){
+      return
+    }
+
     console.log(this.createProductForm.value)
   }
 
@@ -75,7 +97,7 @@ export class ListProductComponent implements OnInit {
 		this.files.splice(this.files.indexOf(event), 1);
 	}
 
-  constructor(private fb : FormBuilder,private modalCtrl : ModalController) { }
+  constructor(private fb : FormBuilder,private modalCtrl : ModalController,private toastController:ToastController) { }
 
   dismissModal(){
     this.modalCtrl.dismiss()
