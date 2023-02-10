@@ -30,7 +30,7 @@
 
     <ion-item class="mt-2" >
       <ion-label>Has discount?</ion-label>
-      <ion-checkbox (click)="setDiscount()" ></ion-checkbox>
+      <ion-checkbox style="--background:white;" (click)="setDiscount()" ></ion-checkbox>
     </ion-item>
     
     <ion-item class="mt-2"  *ngIf="hasDiscount">
@@ -77,7 +77,7 @@
 
     <ion-item class="mt-2" >
       <ion-label>Is the product in any campus?</ion-label>
-      <ion-checkbox (click)="setCampus()" ></ion-checkbox>
+      <ion-checkbox style="--background:white;" (click)="setCampus()" ></ion-checkbox>
     </ion-item>
 
     <ion-item class="mt-2"  *ngIf="campus">
