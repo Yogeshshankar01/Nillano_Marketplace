@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      List Product
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="createProductForm" (ngSubmit)="submitProduct()" >
+    <ion-item>
+      <ion-label position="floating">Product Name</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item class="mt-2">
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea formControlName="description"></ion-textarea>
+    </ion-item>
+
+    <ion-item class="mt-2" >
+      <ion-label position="floating">Price(GH₵)</ion-label>
+      <ion-input type="number" formControlName="price"></ion-input>
+    </ion-item>    
+
+    <ion-item class="mt-2" >
+      <ion-label>Has discount?</ion-label>
+      <ion-checkbox (click)="setDiscount()" ></ion-checkbox>
+    </ion-item>
+    
+    <ion-item class="mt-2"  *ngIf="hasDiscount">
+      <ion-label position="floating">Discount Percentage</ion-label>
+      <ion-input type="number" formControlName="discount_percent"></ion-input>
+    </ion-item>
+    
+
+    <!-- <input type="file" ng2FileSelect [uploader]="uploader"/> -->
+
+    <div class="form-group custom-dropzone text-center my-3 bg-success text-light" style="flex-wrap: nowrap; height: max-content;" ngx-dropzone [accept]="'image/*'" (change)="onSelectMainImage($event)">
+
+      <ngx-dropzone-label> <ion-icon class="my-2" size="large" name="add"></ion-icon> <br> Click to upload main image of product <br> OR <br> Drag here!</ngx-dropzone-label>
+
+      <ngx-dropzone-image-preview class="main-image mx-auto" [removable]="true" (removed)="onRemoveMainImage(f)" ngProjectAs="ngx-dropzone-preview" *ngFor="let f of mainImage" [file]="f">
+      </ngx-dropzone-image-preview>
+
+    </div>
+
+    <div class="form-group custom-dropzone bg-primary rounded-3 border-0 text-dark row my-3" style="flex-wrap: nowrap; height: auto !important;" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+
+      <ngx-dropzone-label> <i class="fa-solid fa-2x my-2 fa-boxes-stacked"></i> <br> Click to upload other images of product <br> OR <br> Drag here!</ngx-dropzone-label>
+
+    </div>
+
+    <div class="row" >
+
+      <div class="col-md-3 col-6 text-center" *ngFor="let f of files">
+        <ngx-dropzone-image-preview [removable]="true" (removed)="onRemove(f)" ngProjectAs="ngx-dropzone-preview"  [file]="f">
+        </ngx-dropzone-image-preview>
+      </div>
+      
+    </div>
+
+    <ion-item class="mt-2" >
+      <ion-label position="floating">Quantity available</ion-label>
+      <ion-input type="number" formControlName="quantity"></ion-input>
+    </ion-item>
+
+    <ion-item class="mt-2" >
+      <ion-label position="floating">Location of Product</ion-label>
+      <ion-input type="text" formControlName="location"></ion-input>
+    </ion-item>
+
+    <ion-item class="mt-2" >
+      <ion-label>Is the product in any campus?</ion-label>
+      <ion-checkbox (click)="setCampus()" ></ion-checkbox>
+    </ion-item>
+
+    <ion-item class="mt-2"  *ngIf="campus">
+      <ion-label position="floating">Which Campus?</ion-label>
+      <ion-input type="text" formControlName="Campus"></ion-input>
+    </ion-item>
+
+    <ion-item class="mt-2" >
+      <ion-label position="floating">Category</ion-label>
+      <ion-select formControlName="category_id">
+        <ion-select-option >category</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="mt-2" >
+      <ion-label position="floating">Subcategory</ion-label>
+      <ion-select formControlName="subcategory_id">
+        <ion-select-option>sub</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+  <!-- <ion-button expand="full" type="submit" style="--background:#1a4640;" [disabled]="!createProductForm.valid"> <ion-icon name="add" class="me-2"></ion-icon> Post Product</ion-button> -->
+
+  <button class="btn d-block w-100 py-3 text-light mt-2" style="background:#1a4640;">
+    <ion-icon name="add" class="me-2"></ion-icon> Post Product
+  </button>
+
+</form>
+</ion-content>
