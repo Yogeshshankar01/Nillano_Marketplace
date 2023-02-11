@@ -8,6 +8,7 @@ import { MyProductsPageRoutingModule } from './my-products-routing.module';
 
 import { MyProductsPage } from './my-products.page';
 import { ListProductModule } from 'src/app/components/list-product/list-product.component.module';
+import { EditProductModule } from 'src/app/components/editproduct/editproduct.component.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ListProductModule } from 'src/app/components/list-product/list-product.
     FormsModule,
     IonicModule,
     MyProductsPageRoutingModule,
-    ListProductModule
+    ListProductModule,
+    EditProductModule
   ],
   declarations: [MyProductsPage]
 })

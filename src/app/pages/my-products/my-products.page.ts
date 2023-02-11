@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
+import { EditproductComponent } from 'src/app/components/editproduct/editproduct.component';
 import { ListProductComponent } from 'src/app/components/list-product/list-product.component';
 
 @Component({
@@ -9,7 +10,7 @@ import { ListProductComponent } from 'src/app/components/list-product/list-produ
 })
 export class MyProductsPage implements OnInit {
 
-  constructor(private modalCtrl : ModalController) { }
+  constructor(private modalCtrl : ModalController,private actionSheetController : ActionSheetController) { }
 
   async presentListProductModal(){
     const modal = await this.modalCtrl.create({
@@ -18,6 +19,41 @@ export class MyProductsPage implements OnInit {
     });
     return await modal.present();
   }
+
+  async presentEditProductModal(product:any){
+    
+    const modal = await this.modalCtrl.create({
+      component: EditproductComponent,
+      showBackdrop: true,
+      componentProps : {product}
+    });
+    return await modal.present();
+  }
+
+  async presentDeleteProductActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Are you sure you want to delete this product?',
+      subHeader: 'This action cannot be undone.',
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        icon: 'close',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }, {
+        text: 'Delete',
+        icon: 'trash',
+        role: 'destructive',
+        handler: () => {
+          console.log('Delete clicked');
+          // Place your logic for deleting the product here
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+  
 
   products = [
     {

@@ -41,10 +41,10 @@
       </ion-label>
       
       <ion-buttons slot="end">
-      <ion-button (click)="editProduct(product)">
-        <ion-icon name="create"></ion-icon>
+      <ion-button (click)="presentEditProductModal(product)">
+        <ion-icon name="create-outline"></ion-icon>
       </ion-button>
-      <ion-button (click)="editProduct(product)">
+      <ion-button (click)="presentDeleteProductActionSheet()">
         <ion-icon name="trash"></ion-icon>
       </ion-button>
       </ion-buttons>
