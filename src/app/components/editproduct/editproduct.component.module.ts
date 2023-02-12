@@ -15,7 +15,7 @@ import { EditproductComponent } from './editproduct.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
   ],
   exports: [
     EditproductComponent

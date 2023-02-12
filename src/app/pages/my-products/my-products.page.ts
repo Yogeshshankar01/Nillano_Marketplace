@@ -65,7 +65,7 @@ export class MyProductsPage implements OnInit {
       "discount_price": 674.991,
       "quantity": 2,
       "image": "../../../assets/images/electronics.jpg",
-      "images": "[\"https://example.com/iphone11-1.jpg\",\"https://example.com/iphone11-2.jpg\"]",
+      "images": "[\"https://images.pexels.com/photos/267320/pexels-photo-267320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\",\"https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\",\"https://images.pexels.com/photos/1159670/pexels-photo-1159670.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\"]",
       "category_id": 1,
       "subcategory_id": 5,
       "location": "Ikeja",
