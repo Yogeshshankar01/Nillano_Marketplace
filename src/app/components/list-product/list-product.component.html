@@ -45,7 +45,7 @@
     </ion-item>
 
     <div class="container mt-3 overflow-hidden ">
-      <h3>Main Image:</h3>
+      <h3 class="text-dark">Main Image:</h3>
       <ion-img class="w-100" *ngIf="mainImage" [src]="mainImage.img"></ion-img>
       <input type="file" (change)="onSelectMainImage($event)" hidden id="mainImage" />
 
@@ -62,7 +62,7 @@
     </div>
 
     <div class="container mt-3 overflow-hidden ">
-      <h3>Other images of product:</h3>
+      <h3 class="text-dark">Other images of product:</h3>
       <ion-row class="otherimages">
         <ion-col class="otherImagesPreview" size="6" *ngFor="let images of otherImages; let i = index;">
           <ion-img class="w-100" [src]="images.img"></ion-img>
