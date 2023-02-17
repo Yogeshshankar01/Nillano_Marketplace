@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons class="rounded-circle" slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>
+      Order History
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div>
+    <!-- <h3>Sort:</h3> -->
+    
+    <ion-row>
+
+      <ion-col size="6">
+        <ion-item>
+          <ion-select interface="action-sheet" placeholder="Select Date">
+            <ion-select-option value="Today">Today</ion-select-option>
+            <ion-select-option value="Last Week">Last Week</ion-select-option>
+            <ion-select-option value="This Week">This Week</ion-select-option>
+            <ion-select-option value="This Month">This Month</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-item>
+          <ion-select interface="action-sheet" placeholder="Select status">
+            <ion-select-option value="In Transit">In Transit</ion-select-option>
+            <ion-select-option value="Completed">Completed</ion-select-option>
+            <ion-select-option value="Pending">Pending</ion-select-option>
+            <ion-select-option value="Delivered">Delivered</ion-select-option>
+            <ion-select-option value="Cancelled">Cancelled</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12">
+        <button class="btn btn-dark d-block mx-auto d-flex align-items-center justify-content-center"> <ion-icon class="me-1" name="filter-outline"></ion-icon> Sort</button>
+      </ion-col>
+
+    </ion-row>
+  </div>
+
+  <div class="border mt-3" *ngFor="let order of orders">
+
+    <ion-item lines="none">
+      <ion-thumbnail slot="start">
+        <img alt="Silhouette of mountains" src="../../../../assets/images/shoes 1.jpg" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>Order #{{ order.id }}</h2>
+        <p>Date: {{ order.date | date:'MMM d, y h:mm a' }}</p>
+        <p>Total: ${{ order.total | number:'1.2-2' }}</p>
+        <p>Status: <b [class.text-success]="order.status=='Completed'" [class.text-warning]="order.status=='Pending'" [class.text-primary]="order.status=='In Transit'" [class.text-info]="order.status=='Delivered'" [class.text-danger]="order.status=='Cancelled'" > {{ order.status }} </b> </p>
+      </ion-label>
+      <ion-button style="--background:black;" slot="end" (click)="toggleOrderDetails(order.id)">
+        <ion-icon name="chevron-down-outline" *ngIf="showDetails!=order.id"></ion-icon>
+        <ion-icon name="chevron-up-outline" *ngIf="showDetails==order.id"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-item *ngIf="showDetails==order.id">
+      <ion-label>
+        <ion-row class="ion-text-center">
+          <ion-col size="6"><h3>Item</h3></ion-col>
+          <ion-col size="6"><h3>Quantity</h3></ion-col>
+
+          <ion-col size="6">
+            <p>{{order.item.name}}</p>
+          </ion-col>
+
+          <ion-col size="6">
+            <p>{{order.item.quantity}}</p>
+          </ion-col>
+
+        </ion-row>
+          
+      </ion-label>
+    </ion-item>
+
+    <button *ngIf="order.status == 'Delivered'" class="btn btn-success my-3 d-block mx-auto d-flex align-items-center justify-content-center">
+      <ion-icon class="me-1" name="shield-checkmark"></ion-icon> Confirm Product Receipt
+    </button>
+    
+  </div>
+
+</ion-content>

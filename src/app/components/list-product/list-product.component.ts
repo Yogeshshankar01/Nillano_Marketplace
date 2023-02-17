@@ -4,6 +4,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import Masonry from 'masonry-layout';
+import { ProductsserviceService } from 'src/app/services/productsservice/productsservice.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/types/AppState';
+import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
+import { listProduct } from 'src/app/store/listProduct/list.actions';
+import { getUserProducts } from 'src/app/store/userProducts/userproducts.actions';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-list-product',
@@ -144,14 +151,7 @@ export class ListProductComponent implements OnInit {
 
     });
 
-    this.http.post(`${environment.server}/products/trial`, formData).subscribe(
-      res => {
-        console.log(res)
-      },
-      err => {
-        console.log(err)
-      }
-    )
+    this.store.dispatch(listProduct({formData}))
 
   }
 
@@ -259,12 +259,83 @@ export class ListProductComponent implements OnInit {
 
   }
 
-  constructor(private fb: FormBuilder, private modalCtrl: ModalController, private toastController: ToastController, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private modalCtrl: ModalController, private toastController: ToastController, private productsService:ProductsserviceService,private store : Store<AppState>) { }
 
   dismissModal() {
     this.modalCtrl.dismiss()
   }
 
-  ngOnInit() { }
+  categoriesAndSubcategories:any
+
+  subCategory:any
+
+  selectSubCategory(){
+    this.createProductForm.get('subcategory_id').setValue('')
+    this.subCategory = false
+    let index = Number(this.createProductForm.get('category_id').value)
+    index--
+    this.subCategory = this.categoriesAndSubcategories[index].Subcategories
+    // console.log(this.subCategory)
+  }
+
+  ngOnInit() {
+
+     // Getting all avialable categories and subcategories
+     this.productsService.getCategoriesAndSubCategoies().subscribe(
+      (res) => {
+
+        this.categoriesAndSubcategories = res
+
+      },
+      (err) => {
+
+        console.log(err)
+
+      })
+
+    this.store.select('addProduct')
+    .subscribe(
+      res=>{
+
+        if(res.process && this.submitted){
+          this.modalCtrl.dismiss()
+          this.store.dispatch(startLoading())
+        }
+
+        if(res.success && this.submitted){
+          this.store.dispatch(endLoading())
+          this.store.dispatch(getUserProducts())
+
+          this.toastController.create({
+            message: res.message,
+            duration: 5000,
+            header: "Product Listed",
+            color: 'primary',
+            position: 'bottom',
+          }).then((toast) => {
+            toast.present()
+          })
+
+        }
+
+        if(res.failure && this.submitted){
+          this.store.dispatch(endLoading())
+
+          this.toastController.create({
+            message: res.message,
+            duration: 5000,
+            header: "Product Listing Error",
+            color: 'danger',
+            position: 'bottom',
+          }).then((toast) => {
+            toast.present()
+          })
+
+        }
+
+      }
+    )
+
+   }
 
 }

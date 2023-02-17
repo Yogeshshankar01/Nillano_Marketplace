@@ -2,6 +2,12 @@
 
   <app-menu class="h-100"></app-menu>
 
+  <ion-footer *ngIf="isLoggedIn">
+    <ion-toolbar (click)="logout()" class="text-center" style="cursor: pointer;" >
+      <div class="d-flex align-items-center justify-content-center"> <ion-icon class="me-2" size="large" name="log-out-outline"></ion-icon> Logout </div>
+    </ion-toolbar>
+  </ion-footer>
+
 </ion-menu>
 
 <div class="ion-page" id="home-content">
@@ -53,31 +59,31 @@
 
                     <ion-card class="m-0" style="background: #f2f2f2;">
 
-                      <img [src]="product.image" class="w-100" alt="{{ product.name }}">
+                      <img [src]="product.image.url" class="w-100" alt="{{ product.name }}">
 
                       <ion-card-header class="p-2 pb-0">
-                        <ion-card-title class="fs-5"
+                        <ion-card-title class="fs-6"
                           style="color: #1A4640; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{
                           product.name }}</ion-card-title>
                       </ion-card-header>
-                      <ion-card-content class="p-2 pt-0">
+                      <ion-card-content class="p-2 mt-1 pt-0">
 
                         <div class="price">
 
-                          <div class="d-flex justify-content-between" *ngIf="product.discount">
+                          <div class="d-flex justify-content-between" *ngIf="product.discount_percent">
                             <div style="width: 70%;">
-                              <span class="text-decoration-line-through me-2" *ngIf="product.discount">{{product.price |
+                              <span class="text-decoration-line-through me-2">{{product.price |
                                 currency : 'GH₵'}}</span> <br>
-                              <span class="discounted-price" *ngIf="product.discount">{{product.discountPrice | currency
+                              <span class="discounted-price">{{product.discount_price | currency
                                 : 'GH₵'}}</span>
                             </div>
                             <span style="width: 30%;">
                               <ion-badge class="w-100 h-100 d-flex align-items-center justify-content-center"
-                                style="--background:#1A4640;">10%</ion-badge>
+                                style="--background:#1A4640;">{{product.discount_percent}}%</ion-badge>
                             </span>
                           </div>
 
-                          <span class="original-price" *ngIf="!product.discount">{{product.price | currency :
+                          <span class="original-price" *ngIf="!product.discount_percent">{{product.price | currency :
                             'GH₵'}}</span>
 
                         </div>
@@ -104,7 +110,7 @@
         <div class="text-center text-dark">
 
           <h1>Coming Soon!</h1>
-          <p>Our rental side is under construction, but we're working hard to bring it to you soon.</p>
+          <p>Our rental phase is under construction, but we're working hard to bring it to you soon.</p>
 
           <img class="w-100" src="../../../assets/images/construction.png" />
 

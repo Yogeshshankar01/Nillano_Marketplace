@@ -8,6 +8,8 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
 
 import { ProfilePage } from './profile.page';
 import { BalanceModule } from 'src/app/components/balance/balance.component.module';
+import { EditProfileModule } from 'src/app/components/editprofile/editprofile.component.module';
+import { DisplayImageModalModule } from 'src/app/components/display-image-modal/display-image.component.module';
 
 @NgModule({
   imports: [
@@ -15,7 +17,9 @@ import { BalanceModule } from 'src/app/components/balance/balance.component.modu
     FormsModule,
     IonicModule,
     ProfilePageRoutingModule,
-    BalanceModule
+    BalanceModule,
+    EditProfileModule,
+    DisplayImageModalModule
   ],
   declarations: [ProfilePage]
 })

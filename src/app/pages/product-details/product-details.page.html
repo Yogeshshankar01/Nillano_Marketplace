@@ -1,5 +1,10 @@
 <ion-menu type="push" contentId="product-details-content">
   <app-menu class="h-100"></app-menu>
+  <ion-footer *ngIf="isLoggedIn">
+    <ion-toolbar (click)="logout()" class="text-center" style="cursor: pointer;" >
+      <div class="d-flex align-items-center justify-content-center"> <ion-icon class="me-2" size="large" name="log-out-outline"></ion-icon> Logout </div>
+    </ion-toolbar>
+  </ion-footer>
 </ion-menu>
 
 <div class="ion-page" id="product-details-content">
@@ -18,6 +23,12 @@
   </ion-header>
 
   <ion-content class="ion-padding">
+
+    <div id="likeEffect" class="d-none align-items-center justify-content-center" style="height:100%; width: 100%; z-index: 99999; position: absolute; left:0%; top: 0%; background-color: #1a464028;">
+
+      <i class="fa-solid fa-heart fa-10x animate__animated animate__rubberBand" style="color: #1A4640;" ></i>
+
+    </div>
 
     <ion-row class="m-0 p-0">
       <ion-col class="m-0 p-0" size="12" size-md="6">
@@ -38,8 +49,8 @@
               </ion-button>
             </ion-buttons> -->
 
-              <ion-img class="w-100 mt-2 rounded-3" src="{{image}}" (click)="changeMainImage(image)"
-                *ngFor="let image of product.images"></ion-img>
+              <ion-img class="w-100 mt-2 rounded-3" src="{{image.url}}" style="cursor: pointer;" (click)="changeMainImage(image)"
+                *ngFor="let image of otherImages"></ion-img>
 
               <!-- <ion-buttons style="position: absolute; bottom: 0%; left: 0%;" class="w-100 d-flex justify-content-center">
             <ion-button class="text-light rounded-circle" style="background-color: #1a4640;" (click)="scrollDown()">
@@ -64,7 +75,7 @@
           <button slot="end" type="button" class="btn position-relative" (click)="toggleLike()">
             <i [class.fa-solid]="isLiked" [class.text-danger]="isLiked" [class.fa-regular]="!isLiked"
               class="fa-heart fa-2x"></i>
-            <span class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-primary">
+            <span class="position-absolute top-50 start-90 translate-middle badge rounded-pill bg-primary">
               {{likes}}
             </span>
           </button>
@@ -162,9 +173,9 @@
 
         <ion-col size="12" size-md="6">
 
-          <ion-item lines="none" class="ion-no-padding m-0">
+          <ion-item button lines="none" class="ion-no-padding m-0">
             <ion-avatar slot="start">
-              <img alt="Silhouette of a person's head" [src]="product.user?.user_profile" />
+              <img alt="Silhouette of a person's head" [src]="product.user?.user_profile.url" />
             </ion-avatar>
             <ion-label>
               <h3> {{product.user?.first_name}} </h3>
@@ -260,7 +271,7 @@
       <ion-list *ngIf="relatedProducts?.length >= 1" lines="none" style="background-color: #1A4640;">
         <ion-item *ngFor="let product of relatedProducts">
           <ion-thumbnail slot="start">
-            <img [src]="product.image">
+            <img [src]="product.image.url">
           </ion-thumbnail>
           <ion-label>
             <h2>{{ product.name }}</h2>

@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { Observable, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -16,12 +18,10 @@ login({email,password}:{email:string,password:string}):Observable<{message:strin
     this.http.post<{accessToken:string,message:string,success:boolean}>(`${environment.server}/users/login`,{email,password})
     .pipe(take(1))
     .subscribe(async(res)=>{
-      console.log(res)
       localStorage.setItem("access_token",res.accessToken)
       observer.next({message:res.message})
       observer.complete()
     },(err)=>{
-      console.log(err)
       observer.error({message:err.error.message})
       observer.complete()
     })
@@ -35,16 +35,26 @@ login({email,password}:{email:string,password:string}):Observable<{message:strin
       this.http.post<{accessToken:string,message:string,success:boolean}>(`${environment.server}/users/register`,{email,password,first_name})
       .pipe(take(1))
       .subscribe(async(res)=>{
-        console.log(res)
         observer.next({message:res.message})
         observer.complete()
       },(err)=>{
-        console.log(err)
         observer.error({message:err.error.message})
         observer.complete()
       })
 
     })
+  }
+
+  async logout(){
+    // Remove any user data or tokens from storage
+    localStorage.removeItem('access_token');
+
+    if(this.router.url == '/home'){
+      location.reload()
+    }
+
+    this.navController.navigateRoot('/home');
+
   }
 
 
@@ -55,14 +65,7 @@ login({email,password}:{email:string,password:string}):Observable<{message:strin
   }
 
 
-  constructor(private http:HttpClient) {
-    // this.recoverPassword({email:'latifm8360@gmail.com'}).subscribe(
-    //   res=>console.log(res),
-    //   err=>console.log(err)
-    // )
-    // this.register({email:'latifm8360@gmail.com',password:'123456',first_name:'Abdul-Latif'}).subscribe(
-    //   res=>console.log(res),
-    //   err=>console.log(err)
-    // )
+  constructor(private http:HttpClient,private navController:NavController,private router:Router) {
+    
    }
 }

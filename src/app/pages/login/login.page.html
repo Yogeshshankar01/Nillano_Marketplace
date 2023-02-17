@@ -32,32 +32,34 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="w-100">
       <ion-item lines="full" style="--background: #f2f2f2;" class="rounded-4">
-        <ion-label style="color: #1A4640;" position="floating">Email address</ion-label>
+        <ion-label style="color: #1A4640;" position="floating">
+          Email address 
+          <small class="text-danger fw-bolder p-2" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')">
+            **Email is required
+          </small>
+    
+          <small class="text-danger fw-bolder p-2" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.hasError('email')">
+            Email is not valid
+          </small>
+        </ion-label>
         <ion-input type="text" formControlName="email"></ion-input>
       </ion-item>
-
-      <div class="text-danger fw-bolder p-2" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')">
-        Email is required
-      </div>
-
-      <div class="text-danger fw-bolder p-2" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.hasError('email')">
-        Email is not valid
-      </div>
       
 
       <!-- <app-error-message message="Email is mandatory" *ngIf="form.get('email').touched && form.get('email').errors?.required" ></app-error-message> -->
 
       <ion-item lines="full" class="rounded-4 mt-4" style="--background: #f2f2f2;">
-        <ion-label style="color: #1A4640;" position="floating">Password</ion-label>
+        <ion-label style="color: #1A4640;" position="floating">
+          Password
+          <small class="text-danger fw-bolder p-2" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')">
+            **Password is required
+          </small>
+          <small class="text-danger fw-bolder p-2" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')">
+            Password must have at least 8 characters
+          </small>
+        </ion-label>
         <ion-input type="password" formControlName="password"></ion-input>
       </ion-item>
-
-      <div class="text-danger fw-bolder p-2" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')">
-        Password is required
-      </div>
-      <div class="text-danger fw-bolder p-2" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')">
-        Password must have at least 8 characters
-      </div>
       
 
       <div class="form-group text-end mt-3">

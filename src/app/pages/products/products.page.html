@@ -28,9 +28,9 @@
 </ion-header>
 
 
-<ion-content class="ion-padding" >
+<ion-content style="--padding-top:5%;">
   
-  <ion-label class="search-results">
+  <ion-label class="search-results m-2 mb-3">
     Search Results: {{products.length}}
   </ion-label>
   
@@ -42,13 +42,34 @@
     <ion-col class="product-item" [routerLink]="['/product-details']" [queryParams]="{ product: product.id }"     size="6" size-md="3" size-lg="2" *ngFor="let product of products"  >
     
     <ion-card class="m-1">
-      <ion-img onload="alert('hello')" class="w-100 img" [src]="product.image"></ion-img>
+      <ion-img onload="alert('hello')" class="w-100 img" [src]="product.image.url"></ion-img>
       <ion-card-content class="p-2" style="background-color:#ffffff;">
-        <ion-card-title class="fs-5" style="color: #1A4640; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        <ion-card-title class="fs-6" style="color: #1A4640; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
           {{product.name}}
         </ion-card-title>
         
-        <ion-card-subtitle>{{product.price | currency : 'GH₵'}}</ion-card-subtitle>
+        <ion-card-subtitle class="mt-1">
+          <div class="price">
+
+            <div class="d-flex justify-content-between" *ngIf="product.discount_percent">
+              <div style="width: 70%;">
+                <span class="text-decoration-line-through me-2">{{product.price |
+                  currency : 'GH₵'}}</span> <br>
+                <span class="discounted-price">{{product.discount_price | currency
+                  : 'GH₵'}}</span>
+              </div>
+              <span style="width: 30%;">
+                <ion-badge class="w-100 h-100 d-flex align-items-center justify-content-center"
+                  style="--background:#1A4640;">{{product.discount_percent}}%</ion-badge>
+              </span>
+            </div>
+
+            <span class="original-price" *ngIf="!product.discount_percent">{{product.price | currency :
+              'GH₵'}}</span>
+
+          </div>
+        </ion-card-subtitle>
+
         <p>{{product.location}}</p>
       </ion-card-content>
     </ion-card>

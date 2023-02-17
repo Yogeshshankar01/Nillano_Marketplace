@@ -8,8 +8,54 @@ import { environment } from 'src/environments/environment';
 })
 export class ProductsserviceService {
 
+  listProduct(formData:FormData):Observable<{message:string}>{
+    return new Observable((observer)=>{
+      this.http.post<{message:string}>(`${environment.server}/products/list-product`,formData)
+      .pipe(take(1))
+      .subscribe(async(res)=>{
+        observer.next({message:res.message})
+        observer.complete()
+      },(err)=>{
+        observer.error({message:err.error.message})
+        observer.complete()
+      })
+  
+    })
+  }
+
+  editProduct(formData:FormData):Observable<{message:string}>{
+    return new Observable((observer)=>{
+      this.http.post<{message:string}>(`${environment.server}/products/edit-product`,formData)
+      .pipe(take(1))
+      .subscribe(async(res)=>{
+        observer.next({message:res.message})
+        observer.complete()
+      },(err)=>{
+        observer.error({message:err.error.message})
+        observer.complete()
+      })
+  
+    })
+  }
+
   getCategoriesAndSubCategoies():Observable<any>{
     return this.http.get(`${environment.server}/products/categories`)
+  }
+
+  getUserProducts():Observable<{message:string,products:[]}>{
+    return new Observable(observer=>{
+
+      this.http.get<{products:any}>(`${environment.server}/products/user-products`)
+    .pipe(take(1))
+    .subscribe(async(res)=>{
+      observer.next({message:"Products Provided",products:res.products})
+      observer.complete()
+    },(err)=>{
+      observer.error({message:err.error.message})
+      observer.complete()
+    })
+
+    })
   }
 
   getProducts():Observable<{message:string,products:[]}>{
@@ -50,11 +96,9 @@ export class ProductsserviceService {
       this.http.get<{products:any}>(`${environment.server}/products/filter`,{ params: filters})
     .pipe(take(1))
     .subscribe(async(res)=>{
-      console.log(res)
       observer.next({message:"Products Provided",products:res.products})
       observer.complete()
     },(err)=>{
-      console.log(err)
       // observer.error({message:err.error.message})
       observer.complete()
     })
@@ -62,11 +106,24 @@ export class ProductsserviceService {
     })
   }
 
+
+  removeProduct(productID:Number):Observable<{message:string}>{
+    return new Observable(observer=>{
+
+      this.http.get<{message:any}>(`${environment.server}/products/delete-product/${productID}`)
+    .pipe(take(1))
+    .subscribe(async(res)=>{
+      observer.next({message:res.message})
+      observer.complete()
+    },(err)=>{
+      observer.error({message:err.error.message})
+      observer.complete()
+    })
+
+    })
+  }
+
   constructor(private http:HttpClient) { 
-    // this.getProduct(10).subscribe(res=>{
-    //   console.log(res)
-    // },err=>{
-    //   console.log(err)
-    // })
+    
   }
 }

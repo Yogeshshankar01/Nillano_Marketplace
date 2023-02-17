@@ -33,11 +33,19 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),canLoad : [AuthGuard]
   },
   {
     path: 'my-products',
-    loadChildren: () => import('./pages/my-products/my-products.module').then( m => m.MyProductsPageModule)
+    loadChildren: () => import('./pages/my-products/my-products.module').then( m => m.MyProductsPageModule),canLoad : [AuthGuard]
+  },
+  {
+    path: 'order-history',
+    loadChildren: () => import('./pages/order-history/order-history/order-history.module').then( m => m.OrderHistoryPageModule)
+  },
+  {
+    path: 'my-orders',
+    loadChildren: () => import('./pages/my-orders/my-orders/my-orders.module').then( m => m.MyOrdersPageModule)
   },
 ];
 

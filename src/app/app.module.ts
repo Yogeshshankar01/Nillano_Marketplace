@@ -11,12 +11,13 @@ import { AppStoreModule } from './store/AppStoreModule';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { LoadingModule } from './components/loading/loading.component.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { CommonModule } from '@angular/common';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,],
   imports: [ 
     BrowserModule, IonicModule.forRoot(), AppRoutingModule,CommonModule, ...AppStoreModule,
     StoreDevtoolsModule.instrument({
@@ -36,7 +37,11 @@ import { CommonModule } from '@angular/common';
     //   registrationStrategy: 'registerWhenStable:30000'
     // })
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

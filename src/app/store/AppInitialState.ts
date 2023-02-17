@@ -30,5 +30,24 @@ export const AppInitialState:AppState = {
         failure : false,
         product : [],
         message : null,
-    }
+    },
+    addProduct:{
+        process : false,
+        success : false,
+        failure : false,
+        message : null
+    },
+    userProducts : {
+        process : false,
+        success : false,
+        failure : false,
+        message : null,
+        products : []
+    },
+    editProduct:{
+        process : false,
+        success : false,
+        failure : false,
+        message : null
+    },
 }

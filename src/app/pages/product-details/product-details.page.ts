@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ActionSheetController, ModalController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
 import { getProduct } from 'src/app/store/product/product.actions';
@@ -8,6 +8,11 @@ import { AppState } from 'src/app/types/AppState';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { CommentModalComponent } from 'src/app/components/comment-modal/comment-modal.component';
 import { OrderModalComponent } from 'src/app/components/order-modal/order-modal.component';
+import { UserprofileService } from 'src/app/services/userprofile/userprofile.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { take } from 'rxjs';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-product-details',
@@ -16,190 +21,310 @@ import { OrderModalComponent } from 'src/app/components/order-modal/order-modal.
 })
 export class ProductDetailsPage implements OnInit {
 
-product:any = {}
+  isLoggedIn = false
 
-selectedMainImage: string | undefined
+  product: any = {}
 
-isLiked = false
+  selectedMainImage: string | undefined
 
-likes:Number | undefined
+  otherImages: any = []
 
-toggleLike() {
-  this.isLiked = !this.isLiked;
-  this.likes = (this.likes === 20) ? 21 : 20;
-}
+  isLiked = false
 
-quantityCount:number = 1
+  likes: Number | undefined
 
-increaseQuantity(){
-  if(this.quantityCount >= this.product.quantity){
-    this.quantityCount = this.quantityCount
+  toggleLike() {
 
-    this.toastController.create({
-      message:"You have reached the maximum quantity of this product.",
-      duration:3000,
-      color:'dark',
-      position : 'bottom'
-    }).then((toast)=>{
-      toast.present()
-    })
+    this.store.dispatch(startLoading())
 
-    return
+    this.http.put<{ status: number, message: string }>(`${environment.server}/products/like/${this.productId}`, null)
+      .pipe(take(1))
+      .subscribe(
+        res => {
+
+          this.store.dispatch(endLoading())
+
+          if (res.status == 1) {
+
+            let likeEffect = document.getElementById('likeEffect') as HTMLElement
+
+            likeEffect.classList.remove('d-none')
+            likeEffect.classList.add('d-flex')
+
+            setTimeout(() => {
+
+              likeEffect.classList.remove('d-flex')
+              likeEffect.classList.add('d-none')
+
+              this.toastController.create({
+                message: res.message,
+                duration: 3000,
+                color: 'primary',
+                position: 'top'
+              }).then((toast) => {
+                toast.present()
+              })
+
+            }, 1000);
+
+          } else {
+            this.toastController.create({
+              message: res.message,
+              duration: 3000,
+              color: 'primary',
+              position: 'top'
+            }).then((toast) => {
+              toast.present()
+            })
+          }
+
+          this.store.dispatch(getProduct({ productID: Number(this.productId) }))
+
+        },
+        err => {
+
+          this.store.dispatch(endLoading())
+
+          err.error.message && this.toastController.create({
+            message: err.error.message=="No authorization header" ? "Please log in to like product" : err.error.message,
+            duration: 3000,
+            color: 'danger',
+            position: 'top'
+          }).then((toast) => {
+            toast.present()
+          })
+
+          !err.error.message && this.toastController.create({
+            message: "Sorry! unable to like product. Try again.",
+            duration: 3000,
+            color: 'danger',
+            position: 'top'
+          }).then((toast) => {
+            toast.present()
+          })
+
+        }
+      )
+
   }
-  this.quantityCount++
-}
 
-decreaseQuantity(){
+  async logout() {
 
-  if(this.quantityCount >=2){
 
-    this.quantityCount--
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Confirm Log out',
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        icon: 'close',
+        handler: () => {
+          // do nothing
+        }
+      }, {
+        text: 'Confirm',
+        icon: 'log-out-outline',
+        role: 'destructive',
+        handler: () => {
+
+          this.store.dispatch(startLoading())
+
+          this.authService.logout()
+
+        }
+      }]
+    });
+    await actionSheet.present();
 
   }
 
-  else{
+  quantityCount: number = 1
 
-    this.quantityCount = 1
+  increaseQuantity() {
+    if (this.quantityCount >= this.product.quantity) {
+      this.quantityCount = this.quantityCount
 
-  this.toastController.create({
-    message:"You have reached the minimum order of this product.",
-    duration:3000,
-    color:'dark',
-    position : 'bottom'
-  }).then((toast)=>{
-    toast.present()
-  })
+      this.toastController.create({
+        message: "You have reached the maximum quantity of this product.",
+        duration: 3000,
+        color: 'dark',
+        position: 'bottom'
+      }).then((toast) => {
+        toast.present()
+      })
 
-}
+      return
+    }
+    this.quantityCount++
+  }
 
-}
+  decreaseQuantity() {
 
-changeMainImage(image: string) {
-  this.selectedMainImage = image;
-}
+    if (this.quantityCount >= 2) {
 
-scrollUp() {
-  let imagesCol = document.querySelector(".products-thumb") as HTMLElement;
-  imagesCol.scrollBy({
-    top: -20,
-    left: 0,
-    behavior: 'smooth'
-  });
-}
+      this.quantityCount--
 
-scrollDown() {
-  let imagesCol = document.querySelector(".products-thumb") as HTMLElement;
-  imagesCol.scrollBy({
-    top: 20,
-    left: 0,
-    behavior: 'smooth'
-  });
-}
+    }
 
-relatedProducts:any
-productId : number | undefined
+    else {
+
+      this.quantityCount = 1
+
+      this.toastController.create({
+        message: "You have reached the minimum order of this product.",
+        duration: 3000,
+        color: 'dark',
+        position: 'bottom'
+      }).then((toast) => {
+        toast.present()
+      })
+
+    }
+
+  }
+
+  changeMainImage(image: any) {
+    this.selectedMainImage = image.url;
+  }
+
+  scrollUp() {
+    let imagesCol = document.querySelector(".products-thumb") as HTMLElement;
+    imagesCol.scrollBy({
+      top: -20,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  scrollDown() {
+    let imagesCol = document.querySelector(".products-thumb") as HTMLElement;
+    imagesCol.scrollBy({
+      top: 20,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  relatedProducts: any
+  productId: number | undefined
 
 
-  constructor(private store:Store<AppState>,private activeRoute:ActivatedRoute, private router : Router , private toastController:ToastController,private socialSharing: SocialSharing,private modalCtrl: ModalController) { }
+  constructor(private store: Store<AppState>, private activeRoute: ActivatedRoute, private router: Router, private toastController: ToastController, private socialSharing: SocialSharing, private modalCtrl: ModalController, private userProfile: UserprofileService, private http: HttpClient, private actionSheetController: ActionSheetController, private authService: AuthService) { }
 
   async presentCommentModal() {
     const modal = await this.modalCtrl.create({
       component: CommentModalComponent,
       showBackdrop: true,
-      initialBreakpoint : 0.4
+      initialBreakpoint: 0.4
     });
     return await modal.present();
   }
 
-  selectedItem:any
+  selectedItem: any
 
   async presentOrderModal() {
     this.selectedItem = [{
-      name : this.product.name,
-      price : this.product.discount_price ? this.product.discount_price : this.product.price,
+      name: this.product.name,
+      price: this.product.discount_price ? this.product.discount_price : this.product.price,
       quantity: this.quantityCount
     }]
     const modal = await this.modalCtrl.create({
       component: OrderModalComponent,
       showBackdrop: true,
-      initialBreakpoint : 1,
+      initialBreakpoint: 1,
       componentProps: {
         selectedItem: this.selectedItem
       }
     });
     return await modal.present();
   }
-  
 
   ngOnInit() {
 
-    console.log(this.product)
+    if (localStorage.getItem("access_token")) {
+      this.isLoggedIn = true
+    }
+    else {
+      this.isLoggedIn = false
+    }
 
     this.activeRoute.queryParams.subscribe(params => {
 
-      if(!params['product']) {
+      if (!params['product']) {
         this.toastController.create({
-        message:"Your product does not have an id",
-        duration:3000,
-        header:"Product Error",
-        color:'danger',
-        position : 'bottom'
-      }).then((toast)=>{
-        toast.present()
-        toast.onDidDismiss().then(() => {
-          this.router.navigate(['products'])
-        });
-      })
-    }
-    else{
-      this.productId = params['product'];
-      this.store.dispatch(getProduct({productID:Number(this.productId)}))
-    }
+          message: "Your product does not have an id",
+          duration: 3000,
+          header: "Product Error",
+          color: 'danger',
+          position: 'bottom'
+        }).then((toast) => {
+          toast.present()
+          toast.onDidDismiss().then(() => {
+            this.router.navigate(['products'])
+          });
+        })
+      }
+      else {
+        this.productId = params['product'];
+        this.store.dispatch(getProduct({ productID: Number(this.productId) }))
+      }
 
     });
 
     this.store.select('product')
-    .subscribe(
-      prod=>{
-        if(prod.process){
-          this.store.dispatch(startLoading())
+      .subscribe(
+        async prod => {
+          if (prod.process) {
+            this.store.dispatch(startLoading())
+          }
+          if (prod.success) {
+            this.store.dispatch(endLoading())
+
+            this.product = JSON.parse(JSON.stringify(prod.product))
+            this.selectedMainImage = this.product.image.url
+
+            this.otherImages = [this.product.image, ...this.product.images]
+
+            this.likes = this.product.Likes.length
+
+            this.relatedProducts = this.product.user.products
+
+            let currentUserId: number
+
+            this.userProfile.myProfile().subscribe(
+              async res => {
+                currentUserId = await res.profile.id
+                console.log(currentUserId)
+                this.isLiked = this.product.Likes.some((like: { user_id: number; }) => like.user_id === currentUserId);
+              },
+              err => {
+                console.log(err)
+              }
+            )
+
+
+          }
+          if (prod.failure) {
+            this.store.dispatch(endLoading())
+            console.log(prod.message)
+
+            this.toastController.create({
+              message: prod.message,
+              duration: 3000,
+              header: "Product Error",
+              color: 'danger',
+              position: 'bottom'
+            }).then((toast) => {
+              toast.present()
+              toast.onDidDismiss().then(() => {
+                this.router.navigate(['products'])
+              });
+            })
+
+          }
         }
-        if(prod.success){
-          this.store.dispatch(endLoading())
+      )
 
-          this.product = JSON.parse(JSON.stringify(prod.product))
-          this.selectedMainImage = this.product.image
-          this.product.images = JSON.parse(this.product.images);
-
-          this.likes = this.product.Likes.length
-
-          this.relatedProducts = this.product.user.products
-
-          console.log(this.product)
-
-        }
-        if(prod.failure){
-          this.store.dispatch(endLoading())
-          console.log(prod.message)
-
-          this.toastController.create({
-            message: prod.message,
-            duration:3000,
-            header:"Product Error",
-            color:'danger',
-            position : 'bottom'
-          }).then((toast)=>{
-            toast.present()
-            toast.onDidDismiss().then(() => {
-              this.router.navigate(['products'])
-            });
-          })
-
-        }
-      }
-    )
-
-    console.log(this.productId)
+    // console.log(this.productId)
 
   }
 

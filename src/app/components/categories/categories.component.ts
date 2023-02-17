@@ -42,7 +42,7 @@ categories:any = []
   ngOnInit() {
     this.productsservice.getCategoriesAndSubCategoies().subscribe(
       categories=>{
-        // console.log(categories)
+        console.log(categories)
         this.categories = categories
       }
     )

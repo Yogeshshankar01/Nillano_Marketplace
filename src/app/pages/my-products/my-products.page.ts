@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController, ToastController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
+import { take } from 'rxjs';
 import { EditproductComponent } from 'src/app/components/editproduct/editproduct.component';
 import { ListProductComponent } from 'src/app/components/list-product/list-product.component';
+import { ProductsserviceService } from 'src/app/services/productsservice/productsservice.service';
+import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
+import { getUserProducts } from 'src/app/store/userProducts/userproducts.actions';
+import { AppState } from 'src/app/types/AppState';
 
 @Component({
   selector: 'app-my-products',
@@ -10,9 +16,9 @@ import { ListProductComponent } from 'src/app/components/list-product/list-produ
 })
 export class MyProductsPage implements OnInit {
 
-  constructor(private modalCtrl : ModalController,private actionSheetController : ActionSheetController) { }
+  constructor(private modalCtrl: ModalController, private actionSheetController: ActionSheetController, private store: Store<AppState>, private toastController: ToastController, private productsService: ProductsserviceService) { }
 
-  async presentListProductModal(){
+  async presentListProductModal() {
     const modal = await this.modalCtrl.create({
       component: ListProductComponent,
       showBackdrop: true,
@@ -20,17 +26,17 @@ export class MyProductsPage implements OnInit {
     return await modal.present();
   }
 
-  async presentEditProductModal(product:any){
-    
+  async presentEditProductModal(product: any) {
+
     const modal = await this.modalCtrl.create({
       component: EditproductComponent,
       showBackdrop: true,
-      componentProps : {product}
+      componentProps: { product }
     });
     return await modal.present();
   }
 
-  async presentDeleteProductActionSheet() {
+  async presentDeleteProductActionSheet(productID: Number) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Are you sure you want to delete this product?',
       subHeader: 'This action cannot be undone.',
@@ -39,64 +45,93 @@ export class MyProductsPage implements OnInit {
         role: 'cancel',
         icon: 'close',
         handler: () => {
-          console.log('Cancel clicked');
+          // do nothing
         }
       }, {
         text: 'Delete',
         icon: 'trash',
         role: 'destructive',
         handler: () => {
-          console.log('Delete clicked');
-          // Place your logic for deleting the product here
+
+          this.store.dispatch(startLoading())
+          // logic for deleting the product here
+          this.productsService.removeProduct(productID)
+            .pipe(take(1))
+            .subscribe(
+              res => {
+                this.store.dispatch(endLoading())
+                this.toastController.create({
+                  message: res.message,
+                  duration: 5000,
+                  header: "Product Deleted",
+                  color: 'primary',
+                  position: 'bottom',
+                }).then((toast) => {
+                  toast.present()
+                })
+
+                this.store.dispatch(getUserProducts())
+              },
+              err => {
+                this.store.dispatch(endLoading())
+                this.toastController.create({
+                  message: err.message,
+                  duration: 5000,
+                  header: "Error deleting product",
+                  color: 'danger',
+                  position: 'bottom',
+                }).then((toast) => {
+                  toast.present()
+                })
+              }
+            )
+
         }
       }]
     });
     await actionSheet.present();
   }
-  
 
-  products = [
-    {
-      "id": 1,
-      "name": "Apple iPhone 11",
-      "description": "The iPhone 11 is a powerful smartphone with a dual-camera system and an A13 Bionic chip.",
-      "price": 749.99,
-      "discount_percent": 10,
-      "discount_price": 674.991,
-      "quantity": 2,
-      "image": "../../../assets/images/electronics.jpg",
-      "images": "[\"https://images.pexels.com/photos/267320/pexels-photo-267320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\",\"https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\",\"https://images.pexels.com/photos/1159670/pexels-photo-1159670.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\"]",
-      "category_id": 1,
-      "subcategory_id": 5,
-      "location": "Ikeja",
-      "Campus": "Yaba",
-      "user_id": 1,
-      "createdAt": "2023-02-09T01:42:51.159Z",
-      "updatedAt": "2023-02-09T01:42:51.159Z"
-  },
-  {
-    "id": 2,
-    "name": "Skin care Product",
-    "description": "The Samsung Galaxy S20 is a powerful smartphone with a triple-camera system and a Snapdragon 865 chip.",
-    "price": 200.99,
-    "discount_percent": 20,
-    "discount_price": 160.792,
-    "quantity": 2,
-    "image": "../../../assets/images/health-beauty.jpg",
-    "images": "[\"https://example.com/galaxys20-1.jpg\",\"../../../assets/images/agric-food.jpg\"]",
-    "category_id": 3,
-    "subcategory_id": 21,
-    "location": "Ikeja",
-    "Campus": "Yaba",
-    "user_id": 2,
-    "createdAt": "2023-02-09T01:42:51.159Z",
-    "updatedAt": "2023-02-09T01:42:51.159Z"
-}
-  ]
 
-  editProduct(product:any){}
+  products: any
+
+  editProduct(product: any) { }
 
   ngOnInit() {
+
+    this.store.dispatch(getUserProducts())
+
+    this.store.select('userProducts')
+      .subscribe(
+        products => {
+
+          if (products.process) {
+            this.store.dispatch(startLoading())
+          }
+
+          if (products.success) {
+            this.store.dispatch(endLoading())
+            this.products = products.products
+          }
+
+          if (products.failure) {
+            this.store.dispatch(endLoading())
+
+            this.toastController.create({
+              message: products.message,
+              duration: 5000,
+              header: "Error",
+              color: 'danger',
+              position: 'bottom',
+            }).then((toast) => {
+              toast.present()
+            })
+
+          }
+
+        }
+      )
+
   }
 
 }
