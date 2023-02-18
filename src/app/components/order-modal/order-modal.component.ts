@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
+import { take } from 'rxjs';
+import { UserprofileService } from 'src/app/services/userprofile/userprofile.service';
 
 @Component({
   selector: 'app-order-modal',
@@ -8,18 +10,16 @@ import { ModalController, ToastController } from '@ionic/angular';
 })
 export class OrderModalComponent implements OnInit {
 
-  @Input()
-  name!: string;
-  @Input()
+  first_name!: string;
+  last_name!: string;
   email!: string;
-  @Input()
   phone!: string;
-  @Input()
   address!: string;
+  terms!: boolean;
 
-  subtotal = 0;
-  delivery = 0;
-  total = 0;
+  paymentOption!:string
+
+  amountPayable:any
 
   @Input() selectedItem: any
   
@@ -30,44 +30,85 @@ export class OrderModalComponent implements OnInit {
 
   submitOrder() {
     // Implement logic to submit the order details
+    this.submitted = true
+
+    if(!this.first_name || !this.last_name || !this.email || !this.phone || !this.address || !this.terms){
+
+    this.toastController.create({
+      message: "Please fill in the required fields before proceeding",
+      duration: 3000,
+      header: "Validation Error",
+      color: 'danger',
+      position: 'top'
+    }).then((toast) => {
+      toast.present()
+    })
+
+    return
+
   }
 
-  constructor(private modalCtrl: ModalController, private toastController : ToastController) { }
+  let formData = {
+    first_name:this.first_name,
+    last_name:this.last_name,
+    email:this.email,
+    phone:this.phone,
+    address:this.address,
+    terms:this.terms,
+    amountPayable:this.amountPayable,
+    paymentMethod:this.paymentOption,
+    productId : this.selectedItem.id
+  }
+
+  if(formData.paymentMethod == "Cash"){
+    console.log("Cash logic")
+  }
+
+  if(formData.paymentMethod == "Mobile"){
+    console.log("Mobile logic")
+  }
+
+  }
+
+  submitted = false
+
+  constructor(private modalCtrl: ModalController, private toastController : ToastController,private usersProfileService:UserprofileService) { }
 
   ngOnInit() {
 
-    this.subtotal = this.selectedItem.reduce((acc: number, item: { price: number; quantity: number; }) => acc + item.price * item.quantity, 0);
-    this.delivery = 5;
-    this.total = this.subtotal + this.delivery;
+    this.amountPayable = this.selectedItem.quantity * this.selectedItem.price
+
+    this.usersProfileService.myProfile()
+    .pipe(take(1))
+    .subscribe(
+      res=>{
+        // console.log(res)
+        this.first_name = res.profile.first_name
+        this.last_name = res.profile.last_name
+        this.email = res.profile.email
+        this.phone = res.profile.phone_number
+        this.address = res.profile.address
+
+      }
+    )
+  
   }
 
-  selectedOption:any
-
-  selectOption(option: string) {
-
-    document.querySelectorAll('.option').forEach((e)=>{
-      e.hasAttribute("color") ? e.removeAttribute("color") : ''
-    })
-
-    var opt = document.getElementById(option) as HTMLElement
-    opt.setAttribute("color","warning")
-    this.selectedOption = option;
-  }
 
   makePayment() {
     // code to make payment here
-    if (!this.selectedOption) {
-      this.toastController.create({
-        message:"Please select a payment option before placing the order",
-        duration:3000,
-        color:'secondary',
-        position : 'top'
-      }).then((toast)=>{
-        toast.present()
-      })
-      return;
-    }
-    this.dismissModal();
+    // if (!this.selectedOption) {
+    //   this.toastController.create({
+    //     message:"Please select a payment option before placing the order",
+    //     duration:3000,
+    //     color:'secondary',
+    //     position : 'top'
+    //   }).then((toast)=>{
+    //     toast.present()
+    //   })
+    //   return;
+    // }
+    // this.dismissModal();
   }
 
 }

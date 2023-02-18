@@ -1,4 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { take } from 'rxjs';
+import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
+import { AppState } from 'src/app/types/AppState';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-my-orders',
@@ -7,98 +13,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyOrdersPage implements OnInit {
 
-  orders = [
-    {
-      id: 1,
-      date: new Date('2022-01-01T08:00:00.000Z'),
-      total: 50.00,
-      status: 'Pending',
-      item: {
-          name: 'Product 1',
-          quantity: 1,
-          price: 10.00
-        },
-        user_info:{
-          name:'Alfred Lawson',
-          email:'lawson@gmail.com',
-          phone:'+23354256454',
-          address_1:'Central university Campus',
-          address_2:'Madina'
-        }
-    },
-    {
-      id: 2,
-      date: new Date('2022-01-02T10:00:00.000Z'),
-      total: 100.00,
-      status: 'In Transit',
-      item: {
-          name: 'Product 3',
-          quantity: 1,
-          price: 50.00
-        },
-        user_info:{
-          name:'Alfred Lawson',
-          email:'lawson@gmail.com',
-          phone:'+23354256454',
-          address_1:'Central university Campus',
-          address_2:'Madina'
-        }
-    },
-    {
-      id: 3,
-      date: new Date('2022-01-01T08:00:00.000Z'),
-      total: 50.00,
-      status: 'Cancelled',
-      item: {
-          name: 'Product 1',
-          quantity: 1,
-          price: 10.00
-        },
-        user_info:{
-          name:'Alfred Lawson',
-          email:'lawson@gmail.com',
-          phone:'+23354256454',
-          address_1:'Central university Campus',
-          address_2:'Madina'
-        }
-    },
-    {
-      id: 4,
-      date: new Date('2022-01-01T08:00:00.000Z'),
-      total: 50.00,
-      status: 'Completed',
-      item: {
-          name: 'Product 1',
-          quantity: 1,
-          price: 10.00
-        },
-        user_info:{
-          name:'Alfred Lawson',
-          email:'lawson@gmail.com',
-          phone:'+23354256454',
-          address_1:'Central university Campus',
-          address_2:'Madina'
-        }
-    },
-    {
-      id: 5,
-      date: new Date('2022-01-01T08:00:00.000Z'),
-      total: 50.00,
-      status: 'Delivered',
-      item: {
-          name: 'Product 1',
-          quantity: 1,
-          price: 10.00
-        },
-        user_info:{
-          name:'Alfred Lawson',
-          email:'lawson@gmail.com',
-          phone:'+23354256454',
-          address_1:'Central university Campus',
-          address_2:'Madina'
-        }
-    },
-  ];
+  orders:any
+
+  getOrders(){
+
+    this.store.dispatch(startLoading())
+
+    this.http.get<{message:string,orders:[]}>(`${environment.server}/orders/myorders`)
+    .pipe(take(1))
+    .subscribe(
+      res=>{
+        this.store.dispatch(endLoading())
+        this.orders = res.orders
+        // console.log(this.orders)
+      },
+      err=>{
+        err.error.message && console.log(err.error.message)
+      }
+    )
+
+  }
 
   showDetails:number | undefined
 
@@ -110,9 +44,11 @@ export class MyOrdersPage implements OnInit {
     // implement item deletion logic here
   }
 
-  constructor() { }
+  constructor(private http:HttpClient,private store:Store<AppState>) { }
 
   ngOnInit() {
+
+    this.getOrders()
   }
 
 }

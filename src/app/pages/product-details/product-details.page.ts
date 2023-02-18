@@ -222,11 +222,12 @@ export class ProductDetailsPage implements OnInit {
   selectedItem: any
 
   async presentOrderModal() {
-    this.selectedItem = [{
+    this.selectedItem = {
+      id:this.product.id,
       name: this.product.name,
       price: this.product.discount_price ? this.product.discount_price : this.product.price,
       quantity: this.quantityCount
-    }]
+    }
     const modal = await this.modalCtrl.create({
       component: OrderModalComponent,
       showBackdrop: true,

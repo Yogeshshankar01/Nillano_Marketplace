@@ -52,12 +52,12 @@
 
     <ion-item lines="none">
       <ion-thumbnail slot="start">
-        <img alt="Silhouette of mountains" src="../../../../assets/images/shoes 1.jpg" />
+        <img alt="Silhouette of mountains" [src]="order.product.image.url" />
       </ion-thumbnail>
       <ion-label>
         <h2>Order #{{ order.id }}</h2>
-        <p>Date: {{ order.date | date:'MMM d, y h:mm a' }}</p>
-        <p>Price: ${{ order.total | number:'1.2-2' }}</p>
+        <p>Date: {{ order.createdAt | date:'MMM d, y h:mm a' }}</p>
+        <p>Price: {{ order.price | currency }}</p>
         <p>Status: <b [class.text-success]="order.status=='Completed'" [class.text-warning]="order.status=='Pending'" [class.text-primary]="order.status=='In Transit'" [class.text-info]="order.status=='Delivered'" [class.text-danger]="order.status=='Cancelled'" > {{ order.status }} </b> </p>
       </ion-label>
       <ion-button style="--background:black;" slot="end" (click)="toggleOrderDetails(order.id)">
@@ -65,38 +65,42 @@
         <ion-icon name="chevron-up-outline" *ngIf="showDetails==order.id"></ion-icon>
       </ion-button>
     </ion-item>
+    
+    <div class="animate__animated animate__fadeInDown" *ngIf="showDetails==order.id">
 
-    <ion-item *ngIf="showDetails==order.id">
+    <ion-item>
 
       <ion-label text-wrap>
 
-        <h4 class="lh-lg"> <b> Name: </b> {{order.user_info.name}}</h4>
-      <h4 class="lh-lg"> <b> Email: </b> {{order.user_info.email}}</h4>
-      <h4 class="lh-lg"> <b> Tel: </b> {{order.user_info.phone}}</h4>
-      <h4 class="lh-lg"> <b> Address: </b> {{order.user_info.address_1}} </h4>
+        <h4 class="lh-lg"> <b> Name: </b> {{order.OrderInfos[0].name}}</h4>
+      <h4 class="lh-lg"> <b> Email: </b> {{order.OrderInfos[0].email}}</h4>
+      <h4 class="lh-lg"> <b> Tel: </b> {{order.OrderInfos[0].phone}}</h4>
+      <h4 class="lh-lg"> <b> Address: </b> {{order.OrderInfos[0].address}} </h4>
 
       </ion-label>
       
     </ion-item>
 
-    <ion-item *ngIf="showDetails==order.id">
+    <ion-item>
       <ion-label>
         <ion-row class="ion-text-center">
-          <ion-col size="6"><h3>Item</h3></ion-col>
-          <ion-col size="6"><h3>Quantity</h3></ion-col>
+          <ion-col class="ion-text-start" size="9"><h3>Item</h3></ion-col>
+          <ion-col size="3"><h3>Quantity</h3></ion-col>
 
-          <ion-col size="6">
-            <p>{{order.item.name}}</p>
+          <ion-col class="ion-text-start" size="9">
+            <p class="text-wrap" >{{order.product.name}} </p>
           </ion-col>
 
-          <ion-col size="6">
-            <p>{{order.item.quantity}}</p>
+          <ion-col size="3">
+            <p>{{order.quantity}}</p>
           </ion-col>
 
         </ion-row>
           
       </ion-label>
     </ion-item>
+
+    </div>
 
     <div *ngIf="order.status == 'Pending'" class="my-3 d-flex align-items-center justify-content-between px-2">
       <button class="btn btn-danger d-flex align-items-center justify-content-center">
