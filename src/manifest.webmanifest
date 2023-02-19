@@ -3,10 +3,22 @@
   "short_name": "Niilano",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
-  "display": "standalone",
+  "display": "fullscreens",
   "scope": "./",
   "start_url": "./",
   "icons": [
+    {
+      "src": "assets/images/logo.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/images/logo.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
     {
       "src": "assets/images/logo.png",
       "sizes": "128x128",
