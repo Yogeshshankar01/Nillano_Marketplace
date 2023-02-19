@@ -9,36 +9,36 @@
   "icons": [
     {
       "src": "assets/images/logo1.png",
-      "sizes": "300x102",
+      "sizes": "72x72",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "assets/images/logo.png",
+      "src": "assets/images/logo1.png",
       "sizes": "96x96",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "assets/images/logo.png",
+      "src": "assets/images/logo1.png",
       "sizes": "128x128",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "assets/images/logo.png",
+      "src": "assets/images/logo1.png",
       "sizes": "144x144",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "assets/images/logo.png",
+      "src": "assets/images/logo1.png",
       "sizes": "152x152",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "assets/images/logo.png",
+      "src": "assets/images/logo1.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable any"
