@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { OrderModalComponent } from './order-modal.component';
 
 
-
 @NgModule({
   declarations: [OrderModalComponent],
   imports: [

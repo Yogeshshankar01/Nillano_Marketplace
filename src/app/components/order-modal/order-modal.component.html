@@ -85,13 +85,30 @@
       
     </ion-button> -->
 
-    <div>
+    <div *ngIf="paymentOption=='Cash'">
       
     <button (click)="submitOrder()" style="background : #1a4640;" class="w-50 btn my-3 mx-auto text-light d-flex align-items-center justify-content-center">
       <ion-icon class="me-2" size="large" name="bag-check"></ion-icon> Place Order
     </button>
 
     </div>
+
+    <!-- <div *ngIf="paymentOption=='Mobile'">
+      
+    <angular4-paystack
+    [email]="email"
+    [amount]="amount"
+    [ref]="reference"
+    [channels]="['mobile_money']"
+    [class]="'w-50 bg-warning paystack-button btn my-3 mx-auto text-dark d-flex align-items-center justify-content-center'"
+    (onClose)="paymentCancel()"
+    (callback)="paymentDone($event)"
+    currency="GHS"
+  >
+  <ion-icon class="me-2" size="large" name="bag-check"></ion-icon> Place Order
+  </angular4-paystack>
+0207126289
+  </div> -->
 
   </form>
 </ion-content>

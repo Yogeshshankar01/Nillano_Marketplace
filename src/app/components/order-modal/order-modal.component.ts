@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { take } from 'rxjs';
 import { UserprofileService } from 'src/app/services/userprofile/userprofile.service';
+
 
 @Component({
   selector: 'app-order-modal',
@@ -20,6 +21,9 @@ export class OrderModalComponent implements OnInit {
   paymentOption!:string
 
   amountPayable:any
+  amount!: number;
+
+  reference:any
 
   @Input() selectedItem: any
   
@@ -74,9 +78,25 @@ export class OrderModalComponent implements OnInit {
 
   constructor(private modalCtrl: ModalController, private toastController : ToastController,private usersProfileService:UserprofileService) { }
 
+  paymentDone(event:any){
+
+    console.log(event)
+
+  }
+
+  paymentCancel(){
+    console.log("Payment cancelled")
+  }
+
   ngOnInit() {
 
     this.amountPayable = this.selectedItem.quantity * this.selectedItem.price
+
+    this.amount = parseInt(this.amountPayable) * 100
+
+    console.log(this.amount)
+
+    this.reference = "alfredthis.selectedItem.name"
 
     this.usersProfileService.myProfile()
     .pipe(take(1))
@@ -109,6 +129,10 @@ export class OrderModalComponent implements OnInit {
     //   return;
     // }
     // this.dismissModal();
+  }
+
+  ngAfterViewInit(){
+
   }
 
 }
