@@ -30,7 +30,7 @@
 
 <ion-content style="--padding-top:5%;">
   
-  <ion-label class="search-results m-2 mb-3">
+  <ion-label class="search-results m-2 mb-3 text-dark">
     Search Results: {{products.length}}
   </ion-label>
   
@@ -70,7 +70,8 @@
           </div>
         </ion-card-subtitle>
 
-        <p>{{product.location}}</p>
+        <p class="d-flex align-items-center"> <ion-icon class="text-dark" name="location-outline"></ion-icon> {{product.location}}</p>
+        
       </ion-card-content>
     </ion-card>
 
