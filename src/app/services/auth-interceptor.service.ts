@@ -12,13 +12,21 @@ export class AuthInterceptorService {
     if (token) {
       const authReq = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true'
         }
       });
 
       return next.handle(authReq);
     } else {
-      return next.handle(req);
+
+      const newReq = req.clone({
+        setHeaders: {
+          'ngrok-skip-browser-warning': 'true'
+        }
+      });
+
+      return next.handle(newReq);
     }
   }
 
