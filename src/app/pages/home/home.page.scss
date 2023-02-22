@@ -55,6 +55,8 @@ ion-segment-button.rent{
   background-color: #f2f2f2;
   --color-checked: #f2f2f2;
   color: #212529;
+  --background-hover : #212529;
+  --background-hover-opacity : none;
 }
 
 .active-tab ion-label{
@@ -69,6 +71,50 @@ ion-segment-button.rent{
 
 .newarrival{
   width: 25%;
+}
+
+i.shop-icon{
+  position: absolute;
+  left: 0%;
+  animation: shop 15s infinite;
+  opacity: .5;
+}
+
+@keyframes shop{
+  0%{
+    left: 0%;
+  }
+  10%{
+    left: 10%;
+  }
+  20%{
+    left: 20%;
+  }
+  30%{
+    left: 30%;
+  }
+  40%{
+    left: 40%;
+  }
+  50%{
+    left: 50%;
+  }
+  60%{
+    left: 60%;
+  }
+  70%{
+    left: 70%;
+  }
+  80%{
+    left: 80%;
+  }
+  90%{
+    left: 90%;
+  }
+  100%{
+    right: 0%;
+    transform: rotateY(-180deg);
+  }
 }
 
 @media(max-width:500px){
