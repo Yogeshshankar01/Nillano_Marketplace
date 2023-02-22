@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
 
-    <ion-title> {{selectedTab}} </ion-title>
+    <ion-title style="text-transform: capitalize;"> {{ selectedTab }} </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -71,7 +71,7 @@
 
   <div class="" *ngSwitchCase="'register'">
 
-    <h3 class="pb-3 fw-bold text-center" style="color:#f2f2f2;">Easy steps to register</h3>
+    <h3 class="py-3 fw-bold text-center" style="color:#f2f2f2;">Easy steps to register</h3>
 
     <form class="w-100" [formGroup]="registerForm" (ngSubmit)="register()" >
 
