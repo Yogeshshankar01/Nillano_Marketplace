@@ -35,7 +35,7 @@ export class AuthGuard implements CanLoad,OnDestroy {
 
     if (!token) {
       this.message();
-      this.router.navigateByUrl('login');
+      this.router.navigateByUrl('home');
       return false;
     }
 

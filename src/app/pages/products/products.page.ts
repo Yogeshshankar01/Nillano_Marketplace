@@ -98,7 +98,6 @@ export class ProductsPage implements OnInit {
 
         this.toastController.create({
           message: res.message ? res.message : "Sorry, we're unable to retrieve products at the moment. We're working to fix the issue. Please try again later.",
-          header: "Product Retrieval Error",
           color: 'danger',
           position: 'bottom',
           cssClass: 'flex-contianer',

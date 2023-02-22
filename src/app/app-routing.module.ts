@@ -41,11 +41,11 @@ const routes: Routes = [
   },
   {
     path: 'order-history',
-    loadChildren: () => import('./pages/order-history/order-history/order-history.module').then( m => m.OrderHistoryPageModule)
+    loadChildren: () => import('./pages/order-history/order-history/order-history.module').then( m => m.OrderHistoryPageModule),canLoad : [AuthGuard]
   },
   {
     path: 'my-orders',
-    loadChildren: () => import('./pages/my-orders/my-orders/my-orders.module').then( m => m.MyOrdersPageModule)
+    loadChildren: () => import('./pages/my-orders/my-orders/my-orders.module').then( m => m.MyOrdersPageModule),canLoad : [AuthGuard]
   },
 ];
 

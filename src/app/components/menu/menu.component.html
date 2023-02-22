@@ -14,9 +14,9 @@
 
         <ion-item *ngIf="!user" lines="none" class="my-2" style="--background : transparent;">
           
-          <ion-button slot="start" (click)="redirect('register')" color="light" style="--background:#1A4640;">Sign Up</ion-button>
+          <ion-button class="auth" slot="start" (click)="redirect('register')" >Sign Up</ion-button>
 
-          <ion-button slot="end" (click)="redirect('login')" color="light" style="--background:#1A4640;">Login</ion-button>
+          <ion-button class="auth" slot="end" (click)="redirect('login')" >Login</ion-button>
 
           </ion-item>
 
@@ -41,8 +41,8 @@
     <ion-item (click)="redirect('products')" button detail="true" detail-icon="caret-forward-outline"  routerLink="/sd">
       <ion-icon class="fa-solid fa-circle" slot="start" name="search"></ion-icon>
       <ion-label>
-        <h3>Products</h3>
-        <p>20000 Products</p>
+        <h3>All Products</h3>
+        <p>20000 Available</p>
       </ion-label>
     </ion-item>
 
@@ -54,7 +54,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item button (click)="redirect('order-history')" detail="true" detail-icon="caret-forward-outline" >
+    <ion-item *ngIf="user" button (click)="redirect('order-history')" detail="true" detail-icon="caret-forward-outline" >
       <ion-icon slot="start" name="list"></ion-icon>
       Order History
     </ion-item>
