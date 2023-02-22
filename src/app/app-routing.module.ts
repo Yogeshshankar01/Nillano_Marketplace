@@ -47,6 +47,10 @@ const routes: Routes = [
     path: 'my-orders',
     loadChildren: () => import('./pages/my-orders/my-orders/my-orders.module').then( m => m.MyOrdersPageModule),canLoad : [AuthGuard]
   },
+  {
+    path: 'auth',
+    loadChildren: () => import('./pages/auth/auth.module').then( m => m.AuthPageModule)
+  },
 ];
 
 @NgModule({

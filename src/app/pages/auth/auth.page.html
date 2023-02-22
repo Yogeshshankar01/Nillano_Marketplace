@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons class="rounded-circle" slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title> {{selectedTab}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding"> 
+
+    <ion-segment [(ngModel)]="selectedTab" (ionChange)="onSegmentChange($event)" color="primary" class="my-3">
+      <ion-segment-button [ngClass]="{'active-tab': selectedTab === 'login'}" class="fw-bold login" value="login" color="success" value="login" >
+        Login
+      </ion-segment-button>
+      <ion-segment-button [ngClass]="{'active-tab': selectedTab === 'register'}" value="register" class="fw-bold register" value="register" >
+        Register
+      </ion-segment-button>
+    </ion-segment>
+
+    <img id="login-bg" src="../../../assets/images/login-bg.png" alt="login bg" />
+    
+
+    <div [ngSwitch]="selectedTab">
+
+    <div class="" *ngSwitchCase="'login'">
+
+    <h3 class="py-3 fw-bold text-center" style="color:#f2f2f2;">Welcome back</h3>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="w-100">
+
+      <ion-item class="rounded">
+
+        <ion-label style="color: #1A4640;" position="floating">
+          Email address 
+          <small class="text-danger fw-bolder p-2" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')">
+            **Email is required
+          </small>
+    
+          <small class="text-danger fw-bolder p-2" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.hasError('email')">
+            Email is not valid
+          </small>
+        </ion-label>
+
+        <ion-input type="text" formControlName="email"></ion-input>
+
+      </ion-item>
+      
+
+      <ion-item class="rounded mt-4">
+        <ion-label style="color: #1A4640;" position="floating">
+          Password
+          <small class="text-danger fw-bolder p-2" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')">
+            **Password is required
+          </small>
+          <small class="text-danger fw-bolder p-2" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')">
+            Password must have at least 8 characters
+          </small>
+        </ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      
+
+      <div class="form-group text-end mt-3">
+        <ion-button [disabled]="!loginForm.valid" type="submit" class="rounded-4" style="--background: #1A4640; color: #f2f2f2;">Sign In</ion-button>
+      </div>
+    </form>
+
+  </div>
+
+  <div class="" *ngSwitchCase="'register'">
+
+    <h3 class="pb-3 fw-bold text-center" style="color:#f2f2f2;">Easy steps to register</h3>
+
+    <form class="w-100" [formGroup]="registerForm" (ngSubmit)="register()" >
+
+      <ion-item class="rounded" >
+        <ion-label style="color: #1A4640;" position="floating">First name</ion-label>
+        <ion-input type="text" formControlName="first_name" ></ion-input>
+      </ion-item>
+<!-- style="--background: #f2f2f2;" -->
+      <ion-item class="rounded mt-4"  >
+        <ion-label style="color: #1A4640;" position="floating">Email address</ion-label>
+        <ion-input type="text" formControlName="email" ></ion-input>
+      </ion-item>
+
+      <ion-item class="rounded mt-4" >
+        <ion-label style="color: #1A4640;" position="floating">Password</ion-label>
+        <ion-input type="password" formControlName="password" ></ion-input>
+      </ion-item>
+
+      <div class="form-group text-end mt-3">
+        <ion-button [disabled]="!registerForm.valid" type="submit" class="rounded-4" style="--background: #1A4640; color: #f2f2f2;">Register</ion-button>
+      </div>
+
+    </form>
+
+  </div>
+
+  </div>
+
+</ion-content>
+

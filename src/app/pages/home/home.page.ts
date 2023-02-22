@@ -54,11 +54,6 @@ export class HomePage implements OnDestroy,OnInit {
 
   segmentChanged(event: any) {
 
-    // if(this.toast){
-    //   console.log('segment change')
-    //   this.toast.dismiss()
-    // }
-
     this.selectedTab = event.detail.value;
 
   }

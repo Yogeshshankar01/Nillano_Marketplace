@@ -1,0 +1,36 @@
+ion-content{
+    --background: linear-gradient(180deg, #1A4640 0%, #f2f2f2 100%);
+}
+
+img#login-bg{
+    position: absolute;
+    left: 0%;
+    z-index: 0;
+    bottom: 0%;
+}
+
+ion-segment-button{
+    background-color: #f2f2f2;
+    color: #212529;
+    overflow: hidden;
+}
+
+ion-segment-button.login{
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 1em;
+}
+
+ion-segment-button.register{
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+.active-tab {
+    background-color: #212529;
+    --ion-color-base:#f2f2f2;
+  }
+  
+
+//   .active-tab ion-label{
+//     border-color: #1A4640;
+//   }
