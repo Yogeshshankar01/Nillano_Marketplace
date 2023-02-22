@@ -34,9 +34,27 @@ ion-segment {
   color: #f2f2f2;
 }
 
+ion-segment-button{
+  --background: none;
+  color: #f2f2f2;
+  overflow: hidden;
+  border: 1px solid #f2f2f2;
+}
+
+ion-segment-button.buy{
+  border-top-left-radius: 1em;
+  border-bottom-left-radius: 1em;
+}
+
+ion-segment-button.rent{
+  border-top-right-radius: 1em;
+  border-bottom-right-radius: 1em;
+}
+
 .active-tab {
   background-color: #f2f2f2;
-  color: #1A4640;
+  --color-checked: #f2f2f2;
+  color: #212529;
 }
 
 .active-tab ion-label{

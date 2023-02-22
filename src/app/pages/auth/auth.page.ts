@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MenuController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -22,7 +22,7 @@ export class AuthPage implements OnInit {
 
   loginForm:FormGroup
 
-  selectedTab = 'login'
+  selectedTab:any = 'login'
 
   registerForm:FormGroup
 
@@ -37,13 +37,13 @@ export class AuthPage implements OnInit {
   }
 
   onSegmentChange(event:any) {
-    
-    this.selectedTab = event.detail.value;
+
+    this.router.navigate(['/auth'],{ queryParams : {page:event.detail.value} });
     
   }
   
 
-  constructor(private store : Store<AppState>,private authService:AuthService, private toastController:ToastController,private router:Router) {
+  constructor(private store : Store<AppState>,private authService:AuthService, private toastController:ToastController,private router:Router,private menuController:MenuController,private route: ActivatedRoute) {
 
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -58,7 +58,16 @@ export class AuthPage implements OnInit {
 
    }
 
+   private routeSub!: Subscription;
+
   ngOnInit() {
+
+    this.menuController.close()
+
+    this.routeSub = this.route.queryParams.subscribe(params => {
+      this.selectedTab = params['page'];
+      // Update the view with the new "id" value
+    });
 
     this.store.select('login')
     .subscribe(
@@ -139,6 +148,12 @@ export class AuthPage implements OnInit {
       }
     )
     
+  }
+
+  
+  ngOnDestroy() {
+    // Unsubscribe from the route parameter subscription when the component is destroyed
+    this.routeSub.unsubscribe();
   }
 
 }
