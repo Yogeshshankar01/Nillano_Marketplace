@@ -22,7 +22,7 @@ export class AuthPage implements OnInit {
 
   loginForm:FormGroup
 
-  selectedTab = 'register'
+  selectedTab = 'login'
 
   registerForm:FormGroup
 
