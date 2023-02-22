@@ -226,7 +226,8 @@ export class ProductDetailsPage implements OnInit {
       id:this.product.id,
       name: this.product.name,
       price: this.product.discount_price ? this.product.discount_price : this.product.price,
-      quantity: this.quantityCount
+      quantity: this.quantityCount,
+      sellerId:this.product.user.id
     }
     const modal = await this.modalCtrl.create({
       component: OrderModalComponent,

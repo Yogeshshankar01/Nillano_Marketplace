@@ -29,45 +29,41 @@ export class AuthGuard implements CanLoad,OnDestroy {
   }
 
 
-  canLoad(): Observable<boolean> {
-    return this.store.select('login').pipe(
-      take(1),
-      map(loginState => {
-        const token = localStorage.getItem('access_token');
-        const isLoggedIn = loginState.isLogedIn;
-  
-        if (!token) {
-          this.message();
-          this.router.navigateByUrl('login');
-          return false;
-        }
+  canLoad() {
+
+    const token = localStorage.getItem('access_token');
+
+    if (!token) {
+      this.message();
+      this.router.navigateByUrl('login');
+      return false;
+    }
+
+    // try{
+
+    //   const decoded = jwt_decode(token) as any;
+
+    //   const expirationDate = new Date(0);
+    //   expirationDate.setUTCSeconds(decoded.exp);
+
+    //   if (expirationDate < new Date()) {
+    //     console.log("Token expired");
+    //     // handle token expiration
+    //     this.message();
+    //     this.router.navigateByUrl('login');
+    //     return false;
+    //   }
+    // }
+    // catch{
+    //   this.message();
+    //     this.router.navigateByUrl('login');
+    //     return false;
+    // }
 
 
-        try{
+      return true;
 
-        const decoded = jwt_decode(token) as any;
-
-        const expirationDate = new Date(0);
-        expirationDate.setUTCSeconds(decoded.exp);
-
-        if (expirationDate < new Date()) {
-          console.log("Token expired");
-          // handle token expiration
-          this.message();
-          this.router.navigateByUrl('login');
-          return false;
-        }
-      }
-      catch{
-        this.message();
-          this.router.navigateByUrl('login');
-          return false;
-      }
-
-  
-        return true;
-      })
-    );
+    
   }
   
 

@@ -7,8 +7,11 @@ import { take } from 'rxjs';
 import { BalanceComponent } from 'src/app/components/balance/balance.component';
 import { DisplayImageModalComponent } from 'src/app/components/display-image-modal/display-image-modal.component';
 import { EditProfileComponent } from 'src/app/components/editprofile/editprofile.component';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserprofileService } from 'src/app/services/userprofile/userprofile.service';
+import { checkLogin } from 'src/app/store/checkLogin/checklogin.actions';
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
+import { AppState } from 'src/app/types/AppState';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -22,7 +25,7 @@ export class ProfilePage implements OnInit {
 
   profileImageUrl: any = 'https://ionicframework.com/docs/img/demos/avatar.svg';
 
-  constructor(private modalCtrl: ModalController, private userProfileService: UserprofileService, private actionSheetCtrl: ActionSheetController,private router : Router,private http:HttpClient,private store:Store,private toastController:ToastController) { }
+  constructor(private modalCtrl: ModalController, private userProfileService: UserprofileService, private actionSheetCtrl: ActionSheetController,private router : Router,private http:HttpClient,private store:Store<AppState>,private toastController:ToastController,private actionSheetController:ActionSheetController,private authService:AuthService) { }
 
   viewImage: any
 
@@ -95,7 +98,7 @@ export class ProfilePage implements OnInit {
           toast.present()
         })
 
-        this.getUser()
+        this.store.dispatch(checkLogin())
 
       },
       err=>{
@@ -175,7 +178,7 @@ export class ProfilePage implements OnInit {
                   toast.present()
                 })
         
-                this.getUser()
+                this.store.dispatch(checkLogin())
 
               },
               err=>{
@@ -237,37 +240,67 @@ export class ProfilePage implements OnInit {
     await modal.present();
     await modal.onDidDismiss().then(
       ()=>{
-        this.getUser()
+        this.store.dispatch(checkLogin())
       }
     )
   }
 
   user: any
 
-  getUser() {
-    this.userProfileService.myProfile()
-      .pipe(take(1))
-      .subscribe(
-        res => {
-          this.user = res.profile
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  }
 
 
   redirect(redirect: any) {
     // navigate to the products page
-    const navigationExtras: NavigationExtras = { replaceUrl: true };
-    this.router.navigate([redirect], navigationExtras);
+    // const navigationExtras: NavigationExtras = { replaceUrl: true };
+    this.router.navigate([redirect]);
+  }
+
+  async logout(){
+  
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Confirm Log out',
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        icon: 'close',
+        handler: () => {
+          // do nothing
+        }
+      }, {
+        text: 'Confirm',
+        icon: 'log-out-outline',
+        role: 'destructive',
+        handler: () => {
+
+          this.store.dispatch(startLoading())
+
+          this.authService.logout()
+
+        }
+      }]
+    });
+    await actionSheet.present();
+
   }
 
 
   ngOnInit() {
 
-    this.getUser()
+    this.store.select('checkLogin')
+    .subscribe(
+      res=>{
+
+        if(res.loggedIn){
+          this.user = res.profile
+        }
+
+        if(!res.loggedIn){
+          this.user = false
+        }
+
+      }
+    )
 
   }
 

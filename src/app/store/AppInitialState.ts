@@ -50,4 +50,9 @@ export const AppInitialState:AppState = {
         failure : false,
         message : null
     },
+    checkLogin:{
+        loggedIn : false,
+        process : false,
+        profile : null
+    }
 }

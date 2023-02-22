@@ -8,13 +8,13 @@ import { environment } from 'src/environments/environment';
 })
 export class UserprofileService {
 
-  myProfile():Observable<{message:string,profile:any}>{
+  myProfile():Observable<{profile:any}>{
     return new Observable(observer=>{
 
       this.http.get<{profile:any}>(`${environment.server}/users/user-profile`)
     .pipe(take(1))
     .subscribe(async(res)=>{
-      observer.next({message:"Profile Provided",profile:res.profile})
+      observer.next({profile:res.profile})
       observer.complete()
     },(err)=>{
       observer.error({message:err.error.message})

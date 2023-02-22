@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActionSheetController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
+import { OrdersService } from 'src/app/services/orders/orders.service';
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
 import { AppState } from 'src/app/types/AppState';
 import { environment } from 'src/environments/environment';
@@ -25,9 +27,10 @@ export class MyOrdersPage implements OnInit {
       res=>{
         this.store.dispatch(endLoading())
         this.orders = res.orders
-        // console.log(this.orders)
+        console.log(this.orders)
       },
       err=>{
+        this.store.dispatch(endLoading())
         err.error.message && console.log(err.error.message)
       }
     )
@@ -44,7 +47,177 @@ export class MyOrdersPage implements OnInit {
     // implement item deletion logic here
   }
 
-  constructor(private http:HttpClient,private store:Store<AppState>) { }
+  async acceptOrder(orderId:number){
+
+    const actionSheet = await this.actionSheet.create({
+      header: 'Are you sure you want to accept this order?',
+      subHeader : " Please confirm your acceptance by clicking 'Confirm Order'.",
+      buttons: [
+        {
+          text: 'Confirm',
+          icon: 'checkmark-done',
+          role: 'destructive',
+          handler: () => {
+
+            this.orderService.acceptOrder(orderId)
+            .pipe(take(1))
+            .subscribe(
+              res=>{
+
+                this.toastController.create({
+                  message: res.message,
+                  duration: 3000,
+                  color: 'primary',
+                  position: 'top'
+                }).then((toast) => {
+                  toast.present()
+                })
+
+                this.getOrders()
+
+              },
+              err=>{
+
+                this.toastController.create({
+                  message: err.message,
+                  duration: 3000,
+                  color: 'danger',
+                  position: 'top'
+                }).then((toast) => {
+                  toast.present()
+                })
+
+              }
+            )
+  
+          }
+        },{
+        text: 'Cancel',
+        role: 'cancel',
+        icon: 'close',
+        handler: () => {
+          // do nothing
+        }
+      }]
+    });
+    await actionSheet.present();
+
+  }
+
+  async rejectOrder(orderId:number){
+
+    const actionSheet = await this.actionSheet.create({
+      header: 'Are you sure you want to reject this order?',
+      subHeader : 'This action cannot be undone.',
+      buttons: [
+        {
+          text: 'Confirm',
+          icon: 'checkmark-done',
+          role: 'destructive',
+          handler: () => {
+
+            this.orderService.rejectOrder(orderId)
+            .pipe(take(1))
+            .subscribe(
+              res=>{
+
+                this.toastController.create({
+                  message: res.message,
+                  duration: 3000,
+                  color: 'primary',
+                  position: 'top'
+                }).then((toast) => {
+                  toast.present()
+                })
+
+                this.getOrders()
+
+              },
+              err=>{
+
+                this.toastController.create({
+                  message: err.message,
+                  duration: 3000,
+                  color: 'danger',
+                  position: 'top'
+                }).then((toast) => {
+                  toast.present()
+                })
+
+              }
+            )
+
+          }
+        },{
+        text: 'Cancel',
+        role: 'cancel',
+        icon: 'close',
+        handler: () => {
+          // do nothing
+        }
+      }]
+    });
+    await actionSheet.present();
+
+  }
+
+  async confirmDelivery(orderId:number){
+
+    const actionSheet = await this.actionSheet.create({
+      header: 'Confirm Product is Delivered',
+      buttons: [
+        {
+          text: 'Confirm',
+          icon: 'checkmark-done',
+          role: 'destructive',
+          handler: () => {
+
+            this.orderService.confirmOrderDelivered(orderId)
+            .pipe(take(1))
+            .subscribe(
+              res=>{
+
+                this.toastController.create({
+                  message: res.message,
+                  duration: 3000,
+                  color: 'primary',
+                  position: 'top'
+                }).then((toast) => {
+                  toast.present()
+                })
+
+                this.getOrders()
+
+              },
+              err=>{
+
+                this.toastController.create({
+                  message: err.message,
+                  duration: 3000,
+                  color: 'danger',
+                  position: 'top'
+                }).then((toast) => {
+                  toast.present()
+                })
+
+              }
+            )
+
+          }
+        },{
+        text: 'Cancel',
+        role: 'cancel',
+        icon: 'close',
+        handler: () => {
+          // do nothing
+        }
+      }]
+    });
+    await actionSheet.present();
+
+  }
+
+  constructor(private http:HttpClient,private store:Store<AppState>,private actionSheet:ActionSheetController,private orderService:OrdersService,private toastController:ToastController) { }
 
   ngOnInit() {
 

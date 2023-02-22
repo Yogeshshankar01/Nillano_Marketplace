@@ -1,8 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { MenuController, NavController, ToastController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
+import { checkLogin } from 'src/app/store/checkLogin/checklogin.actions';
+import { endLoading } from 'src/app/store/loading/loading.action';
+import { AppState } from 'src/app/types/AppState';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -46,14 +50,31 @@ login({email,password}:{email:string,password:string}):Observable<{message:strin
   }
 
   async logout(){
+
+    this.menuController.close()
+
     // Remove any user data or tokens from storage
     localStorage.removeItem('access_token');
 
-    if(this.router.url == '/home'){
-      location.reload()
-    }
+    this.toastController.create({
+      message: "Logout Successfull.",
+      duration: 2000,
+      color: 'dark',
+      position: 'bottom'
+    }).then((toast) => {
+      toast.present()
+    })
+
+    this.store.dispatch(checkLogin())
+
+    // if(this.router.url == '/home'){
+    //   location.reload()
+    //   return
+    // }
 
     this.navController.navigateRoot('/home');
+
+    this.store.dispatch(endLoading())
 
   }
 
@@ -65,7 +86,7 @@ login({email,password}:{email:string,password:string}):Observable<{message:strin
   }
 
 
-  constructor(private http:HttpClient,private navController:NavController,private router:Router) {
+  constructor(private http:HttpClient,private navController:NavController,private router:Router,private store:Store<AppState>,private toastController:ToastController,private menuController:MenuController) {
     
    }
 }

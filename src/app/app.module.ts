@@ -15,11 +15,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { CommonModule } from '@angular/common';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { MenuModule } from './components/menu/menu.component.module';
 
 @NgModule({
   declarations: [AppComponent,],
-  imports: [ 
-    BrowserModule, IonicModule.forRoot(), AppRoutingModule,CommonModule, ...AppStoreModule,
+  imports: [
+    BrowserModule, IonicModule.forRoot(), AppRoutingModule, CommonModule, ...AppStoreModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: !isDevMode(), // Restrict extension to log-only mode
@@ -30,18 +31,13 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     LoadingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    // ServiceWorkerModule.register('ngsw-worker.js', {
-    //   enabled: !isDevMode(),
-    //   // Register the ServiceWorker as soon as the application is stable
-    //   // or after 30 seconds (whichever comes first).
-    //   registrationStrategy: 'registerWhenStable:30000'
-    // })
+    MenuModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },{
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
     multi: true
   }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

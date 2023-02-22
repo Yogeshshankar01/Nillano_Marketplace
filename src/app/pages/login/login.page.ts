@@ -5,6 +5,7 @@ import { ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Subscription, take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { checkLogin } from 'src/app/store/checkLogin/checklogin.actions';
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
 import { login } from 'src/app/store/login/login.action';
 import { AppState } from 'src/app/types/AppState';
@@ -54,11 +55,13 @@ export class LoginPage implements OnInit {
 
           this.toastController.create({
             message:loginState.message,
-            duration:5000,
+            duration:1500,
             header:"Login Successful",
             color:'primary',
             position : 'bottom'
           }).then(toast=>toast.present())
+
+          this.store.dispatch(checkLogin())
 
           this.router.navigate(['home'])
 

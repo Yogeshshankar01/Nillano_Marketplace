@@ -1,44 +1,44 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { take } from 'rxjs';
-import { UserprofileService } from 'src/app/services/userprofile/userprofile.service';
+import { MenuController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/types/AppState';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })
-export class MenuComponent implements OnInit, OnDestroy {
+export class MenuComponent implements OnInit {
 
-  constructor(private router: Router, private userProfileService: UserprofileService) { }
+  constructor(private router: Router,private menuController:MenuController,private store:Store<AppState>) { }
 
   user: any
 
-  getUser() {
-    this.userProfileService.myProfile()
-      .pipe(take(1))
-      .subscribe(
-        res => {
-          this.user = res.profile
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  }
-
   ngOnInit() {
-    this.getUser()
+
+    this.store.select('checkLogin')
+    .subscribe(
+      res=>{
+
+        if(res.loggedIn){
+          this.user = res.profile
+        }
+
+        if(!res.loggedIn){
+          this.user = false
+        }
+
+      }
+    )
+
   }
 
   redirect(redirect: any) {
     // navigate to the products page
-    const navigationExtras: NavigationExtras = { replaceUrl: true };
-    this.router.navigate([redirect], navigationExtras);
+    this.menuController.close()
+    this.router.navigate([redirect]);
   }
 
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
 
 }

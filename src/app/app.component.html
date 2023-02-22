@@ -1,4 +1,20 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  
+  <ion-menu type="push" contentId="main-content">
+
+    <app-menu class="h-100"></app-menu>
+  
+    <ion-footer *ngIf="isLoggedIn">
+      <ion-toolbar (click)="logout()" class="text-center" style="cursor: pointer;" >
+        <div class="d-flex align-items-center justify-content-center"> <ion-icon class="me-2" size="large" name="log-out-outline"></ion-icon> Logout </div>
+      </ion-toolbar>
+    </ion-footer>
+  
+  </ion-menu>
+
+  
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+
   <app-loading></app-loading>
+  
 </ion-app>

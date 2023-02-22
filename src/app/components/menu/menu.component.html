@@ -8,7 +8,7 @@
         </ion-avatar>
         <ion-label style="color:#f2f2f2;">
           <h3 class="fw-bold"> {{user.username}} </h3>
-          <!-- <p class="d-flex mt-2 align-items-center text-light text-center "> <span class="me-2"> <b> {{user.following.length}} </b> <br> Following</span> <span class="ps-2" style="border-left: 2px dotted;" > <b> {{user.followers.length}} </b> <br> Followers</span> </p> -->
+          
         </ion-label>
         </ion-item>
 
@@ -20,16 +20,12 @@
 
           </ion-item>
 
-          <!-- <ion-item lines="none" class="my-2" style="--background : #1;">
-            <ion-button class="w-100 h-100" color="light" style="--background:#1A4640;">Register</ion-button>
-            </ion-item> -->
-
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
   
-    <ion-item button routerLink="/home">
+    <ion-item (click)="redirect('home')" button >
       <ion-icon slot="start" name="home"></ion-icon>
       Home
     </ion-item>
@@ -50,7 +46,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item *ngIf="user" button detail="true" detail-icon="caret-forward-outline" routerLink="/sg">
+    <ion-item *ngIf="user" button detail="true" detail-icon="caret-forward-outline" (click)="redirect('n/a')">
       <ion-icon slot="start" name="chatbox-ellipses"></ion-icon>
       <ion-label>
         <h3>Messages</h3>
@@ -58,12 +54,12 @@
       </ion-label>
     </ion-item>
 
-    <ion-item button detail="true" detail-icon="caret-forward-outline" routerLink="/categories">
+    <ion-item button (click)="redirect('order-history')" detail="true" detail-icon="caret-forward-outline" >
       <ion-icon slot="start" name="list"></ion-icon>
-      Categories
+      Order History
     </ion-item>
 
-    <ion-item button routerLink="/cart">
+    <ion-item button (click)="redirect('cart')" routerLink="/cart">
       <ion-icon slot="start" name="cart"></ion-icon>
       <ion-label>
         <h3>Cart</h3>
@@ -71,12 +67,12 @@
       </ion-label>
     </ion-item>
 
-    <ion-item button *ngIf="user" routerLink="/products">
+    <ion-item (click)="redirect('profile')" button *ngIf="user" >
       <ion-icon slot="start" name="person"></ion-icon>
       Profile
     </ion-item>
 
-    <ion-item button *ngIf="user" routerLink="/settings">
+    <ion-item button (click)="redirect('settings')" *ngIf="user" routerLink="/settings">
       <ion-icon slot="start" name="settings"></ion-icon>
       Settings & Support
     </ion-item>

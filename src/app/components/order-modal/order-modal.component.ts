@@ -1,7 +1,12 @@
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
+import { OrdersService } from 'src/app/services/orders/orders.service';
 import { UserprofileService } from 'src/app/services/userprofile/userprofile.service';
+import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
+import { AppState } from 'src/app/types/AppState';
 
 
 @Component({
@@ -11,8 +16,7 @@ import { UserprofileService } from 'src/app/services/userprofile/userprofile.ser
 })
 export class OrderModalComponent implements OnInit {
 
-  first_name!: string;
-  last_name!: string;
+  name!: string;
   email!: string;
   phone!: string;
   address!: string;
@@ -36,7 +40,9 @@ export class OrderModalComponent implements OnInit {
     // Implement logic to submit the order details
     this.submitted = true
 
-    if(!this.first_name || !this.last_name || !this.email || !this.phone || !this.address || !this.terms){
+    this.store.dispatch(startLoading())
+
+    if(!this.name || !this.email || !this.phone || !this.address || !this.terms){
 
     this.toastController.create({
       message: "Please fill in the required fields before proceeding",
@@ -48,24 +54,69 @@ export class OrderModalComponent implements OnInit {
       toast.present()
     })
 
+    this.store.dispatch(endLoading())
+
     return
 
   }
 
   let formData = {
-    first_name:this.first_name,
-    last_name:this.last_name,
-    email:this.email,
+    name:this.name,
+    d_email:this.email,
     phone:this.phone,
     address:this.address,
     terms:this.terms,
-    amountPayable:this.amountPayable,
+    price:this.amountPayable,
+    quantity:this.selectedItem.quantity,
     paymentMethod:this.paymentOption,
-    productId : this.selectedItem.id
+    productId : this.selectedItem.id,
+    sellerId:this.selectedItem.sellerId
   }
 
   if(formData.paymentMethod == "Cash"){
     console.log("Cash logic")
+    console.log(formData)
+
+    this.orderService.orderProduct(formData)
+    .pipe(take(1))
+    .subscribe(
+      res=>{
+
+        this.toastController.create({
+          message: res.message,
+          duration: 3000,
+          header: "Order Successful",
+          color: 'dark',
+          position: 'top'
+        }).then((toast) => {
+          toast.present()
+        })
+
+        this.modalCtrl.dismiss()
+        
+        this.store.dispatch(endLoading())
+
+        this.router.navigate(['order-history'])
+
+      },
+      err=>{
+        
+        err.error.message && this.toastController.create({
+          message: err.error.message,
+          duration: 3000,
+          header: "Order Failed",
+          color: 'danger',
+          position: 'top'
+        }).then((toast) => {
+          toast.present()
+        })
+
+        this.modalCtrl.dismiss()
+        this.store.dispatch(endLoading())
+
+      }
+    )
+
   }
 
   if(formData.paymentMethod == "Mobile"){
@@ -76,7 +127,7 @@ export class OrderModalComponent implements OnInit {
 
   submitted = false
 
-  constructor(private modalCtrl: ModalController, private toastController : ToastController,private usersProfileService:UserprofileService) { }
+  constructor(private modalCtrl: ModalController, private toastController : ToastController,private usersProfileService:UserprofileService,private orderService:OrdersService,private router:Router,private store:Store<AppState>) { }
 
   paymentDone(event:any){
 
@@ -94,7 +145,7 @@ export class OrderModalComponent implements OnInit {
 
     this.amount = parseInt(this.amountPayable) * 100
 
-    console.log(this.amount)
+    // console.log(this.selectedItem)
 
     this.reference = "alfredthis.selectedItem.name"
 
@@ -102,9 +153,23 @@ export class OrderModalComponent implements OnInit {
     .pipe(take(1))
     .subscribe(
       res=>{
-        // console.log(res)
-        this.first_name = res.profile.first_name
-        this.last_name = res.profile.last_name
+
+        if(!res.profile.first_name && !res.profile.last_name){
+          this.name = ""
+        }
+
+        else if(res.profile.first_name && !res.profile.last_name){
+          this.name = `${res.profile.first_name}`
+        }
+
+        else if(!res.profile.first_name && res.profile.last_name){
+          this.name = `${res.profile.last_name}`
+        }
+
+        else if(res.profile.first_name && res.profile.last_name){
+          this.name = `${res.profile.first_name} ${res.profile.last_name}`
+        }
+        
         this.email = res.profile.email
         this.phone = res.profile.phone_number
         this.address = res.profile.address

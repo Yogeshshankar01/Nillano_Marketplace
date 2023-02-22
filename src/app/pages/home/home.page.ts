@@ -67,34 +67,6 @@ export class HomePage implements OnDestroy,OnInit {
   
   }
 
-  async logout(){
-  
-
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Confirm Log out',
-      buttons: [{
-        text: 'Cancel',
-        role: 'cancel',
-        icon: 'close',
-        handler: () => {
-          // do nothing
-        }
-      }, {
-        text: 'Confirm',
-        icon: 'log-out-outline',
-        role: 'destructive',
-        handler: () => {
-
-          this.store.dispatch(startLoading())
-
-          this.authService.logout()
-
-        }
-      }]
-    });
-    await actionSheet.present();
-
-  }
 
   productsStateSubscription: Subscription | undefined;
 
@@ -109,7 +81,7 @@ export class HomePage implements OnDestroy,OnInit {
       this.isLoggedIn = false
     }
 
-    this.productsStateSubscription = this.store.select('register')
+    this.store.select('register')
     .subscribe(
       registerState=>{
         if(registerState.registered){
@@ -121,7 +93,7 @@ export class HomePage implements OnDestroy,OnInit {
     this.store.dispatch(getProducts())
 
       // Getting the states of the products at each time
-      this.store.select('products').subscribe(res => {
+      this.productsStateSubscription = this.store.select('products').subscribe(res => {
 
         // if(!res.filter && !this.getProducts){
         //   this.store.dispatch(getProducts())
@@ -134,7 +106,7 @@ export class HomePage implements OnDestroy,OnInit {
   
         if (res.success) {
           this.store.dispatch(endLoading())
-          console.log(res.products)
+          // console.log(res.products)
           this.products = res.products
   
           setTimeout(() => {

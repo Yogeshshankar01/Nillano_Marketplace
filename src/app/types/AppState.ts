@@ -1,3 +1,4 @@
+import { checkLoginInterface } from "../store/checkLogin/checklogininterface";
 import { editProductStateInterface } from "../store/editProducts/editProductStateInterface";
 import { listProductStateInterface } from "../store/listProduct/list.state";
 import { loadingStateInterface } from "../store/loading/loadingStateInterface";
@@ -15,5 +16,6 @@ export interface AppState{
     product : productState,
     addProduct : listProductStateInterface,
     userProducts : userProductsStateInterface
-    editProduct : editProductStateInterface
+    editProduct : editProductStateInterface,
+    checkLogin : checkLoginInterface
 }

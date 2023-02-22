@@ -9,6 +9,7 @@ import { AppState } from 'src/app/types/AppState';
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
 import { ProductsserviceService } from 'src/app/services/productsservice/productsservice.service';
 import { ActivatedRoute } from '@angular/router';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -37,13 +38,17 @@ export class ProductsPage implements OnInit {
   ngOnInit() {
 
     // Getting all avialable categories and subcategories
-    this.productsService.getCategoriesAndSubCategoies().subscribe(
+    this.productsService.getCategoriesAndSubCategoies()
+    .pipe(take(1))
+    .subscribe(
       (res) => {
         this.categoriesAndSubcategories = res
 
-        console.log(res)
+        // console.log(res)
 
-        this.activatedRoute.queryParams.subscribe(params => {
+        this.activatedRoute.queryParams
+        .pipe(take(1))
+        .subscribe(params => {
           if (params['openFilter']) {
             this.openFilter();
           }
@@ -58,7 +63,9 @@ export class ProductsPage implements OnInit {
 
 
       // Getting the states of the products at each time
-    this.store.select('products').subscribe(res => {
+    this.store.select('products')
+    .pipe(take(1))
+    .subscribe(res => {
 
       if(!res.filter && !this.getProducts){
         this.store.dispatch(getProducts())
@@ -100,7 +107,9 @@ export class ProductsPage implements OnInit {
               text: 'Retry',
               handler: () => {
                 this.store.dispatch(getProducts())
-                this.productsService.getCategoriesAndSubCategoies().subscribe(
+                this.productsService.getCategoriesAndSubCategoies()
+                .pipe(take(1))
+                .subscribe(
                   (res) => {
                     this.categoriesAndSubcategories = res
                   },
@@ -118,10 +127,6 @@ export class ProductsPage implements OnInit {
       }
 
     })
-  }
-
-  ionViewWillLeave() {
-    this.toastController.dismiss();
   }
 
 

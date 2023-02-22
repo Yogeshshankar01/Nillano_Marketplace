@@ -35,14 +35,14 @@ categories:any = []
 
     this.router.navigateByUrl('products')
 
-    console.log({categoryID,SubcategoryID})
+    // console.log({categoryID,SubcategoryID})
 
   }
 
   ngOnInit() {
     this.productsservice.getCategoriesAndSubCategoies().subscribe(
       categories=>{
-        console.log(categories)
+        // console.log(categories)
         this.categories = categories
       }
     )

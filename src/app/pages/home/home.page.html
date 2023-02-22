@@ -1,16 +1,4 @@
-<ion-menu type="push" contentId="home-content">
 
-  <app-menu class="h-100"></app-menu>
-
-  <ion-footer *ngIf="isLoggedIn">
-    <ion-toolbar (click)="logout()" class="text-center" style="cursor: pointer;" >
-      <div class="d-flex align-items-center justify-content-center"> <ion-icon class="me-2" size="large" name="log-out-outline"></ion-icon> Logout </div>
-    </ion-toolbar>
-  </ion-footer>
-
-</ion-menu>
-
-<div class="ion-page" id="home-content">
   <app-header></app-header>
 
   <ion-content style="--background: #f2f2f2;">
@@ -88,7 +76,7 @@
 
                         </div>
 
-                        <p class="d-flex align-items-center"> <ion-icon class="text-dark" name="location-outline"></ion-icon> {{product.location}}</p>
+                        <p class="d-flex align-items-center text-nowrap" style="text-overflow: ellipsis;" > <ion-icon class="text-dark" name="location-outline"></ion-icon> {{product.location}} Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit, laborum!</p>
                         
                       </ion-card-content>
                     </ion-card>
@@ -172,4 +160,3 @@
 
 
   </ion-content>
-</div>
