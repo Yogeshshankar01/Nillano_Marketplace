@@ -26,7 +26,7 @@
 
     <div class="" *ngSwitchCase="'login'">
 
-    <h3 class="py-3 fw-bold text-center" style="color:#f2f2f2;">Welcome back</h3>
+    <h3 class="py-3 fs-6 fw-bold text-center" style="color:#f2f2f2;">Welcome back</h3>
 
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="w-100">
 
@@ -71,7 +71,7 @@
 
   <div class="" *ngSwitchCase="'register'">
 
-    <h3 class="py-3 fw-bold text-center" style="color:#f2f2f2;">Easy steps to register</h3>
+    <h3 class="py-3 fs-6 fw-bold text-center" style="color:#f2f2f2;">Easy steps to register</h3>
 
     <form class="w-100" [formGroup]="registerForm" (ngSubmit)="register()" >
 
@@ -79,13 +79,18 @@
         <ion-label style="color: #1A4640;" position="floating">First name</ion-label>
         <ion-input type="text" formControlName="first_name" ></ion-input>
       </ion-item>
-<!-- style="--background: #f2f2f2;" -->
-      <ion-item class="rounded mt-4"  >
+
+      <ion-item class="rounded mt-3" >
+        <ion-label style="color: #1A4640;" position="floating">Last name</ion-label>
+        <ion-input type="text" formControlName="first_name" ></ion-input>
+      </ion-item>
+      
+      <ion-item class="rounded mt-3"  >
         <ion-label style="color: #1A4640;" position="floating">Email address</ion-label>
         <ion-input type="text" formControlName="email" ></ion-input>
       </ion-item>
 
-      <ion-item class="rounded mt-4" >
+      <ion-item class="rounded mt-3" >
         <ion-label style="color: #1A4640;" position="floating">Password</ion-label>
         <ion-input type="password" formControlName="password" ></ion-input>
       </ion-item>
