@@ -69,6 +69,10 @@ export class HomePage implements OnDestroy,OnInit {
 
   connected!: boolean;
 
+  retry(){
+    this.store.dispatch(getProducts())
+  }
+
   ngOnInit() {
 
     if(localStorage.getItem("access_token")){
@@ -126,7 +130,7 @@ export class HomePage implements OnDestroy,OnInit {
           this.toast = this.toastController.create({
             message: res.message ? res.message : "Sorry, we're unable to retrieve products at the moment. We're working to fix the issue. Please try again later.",
             color: 'danger',
-            duration: 2000,
+            duration: 3000,
             position: 'bottom',
             cssClass: 'flex-contianer',
             buttons: [
