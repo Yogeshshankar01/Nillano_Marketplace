@@ -152,7 +152,7 @@
             following options: </p>
 
           <ion-radio-group [(ngModel)]="interest">
-            <ion-item class="rounded">
+            <ion-item lines="none" class="rounded">
               <ion-icon class="text-dark" name="storefront-outline" size="large" slot="start"></ion-icon>
               <ion-label text-wrap>
                 <h2>Become a seller:</h2>
@@ -161,7 +161,7 @@
               <ion-radio slot="end" value="seller"></ion-radio>
             </ion-item>
 
-            <ion-item class="mt-3 rounded">
+            <ion-item lines="none" class="mt-3 rounded">
               <ion-icon name="cart-outline" class="text-dark" size="large" slot="start"></ion-icon>
               <ion-label text-wrap>
                 <h2>Shop items:</h2>
@@ -184,14 +184,14 @@
           <p class="text-light"> Thank you for choosing to become a seller on Niilano! To start selling your products, please choose a username that you would like to use on our platform. You could use your brand name or any name that you prefer. (e.g Lawson Shoes, Latif Fashion)
           </p>
 
-          <ion-item class="mt-3 rounded w-100">
+          <ion-item lines="none" class="mt-3 rounded w-100">
             <ion-label position="floating">Enter username</ion-label>
-            <ion-input placeholder="Enter username"></ion-input>
+            <ion-input placeholder="Enter username..."></ion-input>
           </ion-item>
 
-          <ion-item class="mt-3 rounded w-100">
+          <ion-item lines="none" class="mt-3 rounded w-100">
             <ion-label position="floating">Bio (A little intro about your brand)</ion-label>
-            <ion-textarea [(ngModel)]="bio" maxlength="300" placeholder="Tell your customers about your brand" [autoGrow]="true">
+            <ion-textarea [(ngModel)]="bio" maxlength="300" placeholder="Tell your customers about your brand..." [autoGrow]="true">
             </ion-textarea>
           </ion-item>
 
