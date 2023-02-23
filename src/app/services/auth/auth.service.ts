@@ -7,6 +7,7 @@ import { Observable, take } from 'rxjs';
 import { checkLogin } from 'src/app/store/checkLogin/checklogin.actions';
 import { endLoading } from 'src/app/store/loading/loading.action';
 import { logout } from 'src/app/store/login/login.action';
+import { registrationDetails } from 'src/app/store/register/registrationDetails';
 import { AppState } from 'src/app/types/AppState';
 import { environment } from 'src/environments/environment';
 
@@ -35,9 +36,10 @@ login({email,password}:{email:string,password:string}):Observable<{message:strin
 }
 
 
-  register({email,password,first_name}:{email:string,password:string,first_name:string}):Observable<{message:string}>{
+  register(registrationDetails:registrationDetails):Observable<{message:string}>{
+    console.log(registrationDetails)
     return new Observable((observer)=>{
-      this.http.post<{accessToken:string,message:string,success:boolean}>(`${environment.server}/users/register`,{email,password,first_name})
+      this.http.post<{accessToken:string,message:string,success:boolean}>(`${environment.server}/users/register`,registrationDetails)
       .pipe(take(1))
       .subscribe(async(res)=>{
         observer.next({message:res.message})

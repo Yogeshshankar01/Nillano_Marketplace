@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuController, ToastController } from '@ionic/angular';
+import { MenuController, ModalController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -20,11 +20,13 @@ export class AuthPage implements OnInit {
 
   interest = 'shop'
 
-  bio:any
+  bio = ""
 
-  knowInterest(){
+  username = ""
 
-    if(!this.interest){
+  knowInterest() {
+
+    if (!this.interest) {
 
       this.toastController.create({
         message: "Please select one option...",
@@ -40,15 +42,30 @@ export class AuthPage implements OnInit {
     let selectOption = document.getElementById('selectOption') as HTMLElement
     let sellerUserName = document.getElementById('sellerUserName') as HTMLElement
 
-    if(this.interest=="seller"){
+    if (this.interest == "seller") {
       selectOption.classList.remove('d-flex')
       selectOption.classList.add('d-none')
       sellerUserName.classList.remove('d-none')
       sellerUserName.classList.remove('d-flex')
+      return
     }
-    
 
-    console.log(this.interest)
+    else {
+      this.isModalOpen = false
+      this.register()
+      return
+    }
+
+  }
+
+  sellerRegistration(){
+
+    this.isModalOpen = false
+
+    this.registerForm.get('bio')?.setValue(this.bio)
+    this.registerForm.get('username')?.setValue(this.username)
+
+    this.register()
   }
 
   loginSubscription: Subscription | undefined
@@ -60,8 +77,8 @@ export class AuthPage implements OnInit {
   registerForm: FormGroup
 
   register() {
-    this.store.dispatch(register({ registrationDetails: { email: this.registerForm.get('email')?.value, password: this.registerForm.get('password')?.value, first_name: this.registerForm.get('first_name')?.value } }))
-    console.log(this.registerForm.value)
+    this.store.dispatch(register({ registrationDetails:this.registerForm.value }))
+    // console.log(this.registerForm.value)
   }
 
 
@@ -83,7 +100,7 @@ export class AuthPage implements OnInit {
   }
 
 
-  constructor(private store: Store<AppState>, private authService: AuthService, private toastController: ToastController, private router: Router, private menuController: MenuController, private route: ActivatedRoute) {
+  constructor(private store: Store<AppState>, private authService: AuthService, private toastController: ToastController, private router: Router, private menuController: MenuController, private route: ActivatedRoute,private modalController:ModalController) {
 
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -92,8 +109,11 @@ export class AuthPage implements OnInit {
 
     this.registerForm = new FormGroup({
       first_name: new FormControl('', [Validators.required]),
+      last_name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)])
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      username: new FormControl(''),
+      bio: new FormControl('')
     });
 
   }
@@ -135,10 +155,10 @@ export class AuthPage implements OnInit {
 
             this.store.dispatch(checkLogin())
 
-            if(this.currentRoute.includes('?')){
-            location.assign(this.currentRoute)
+            if (this.currentRoute.includes('?')) {
+              location.assign(this.currentRoute)
             }
-            else{
+            else {
               this.router.navigate([this.currentRoute])
             }
 
@@ -186,6 +206,8 @@ export class AuthPage implements OnInit {
               position: 'bottom'
             }).then(toast => toast.present())
 
+            this.registerForm.reset()
+
           }
 
           if (registerState.registrationFail) {
@@ -197,6 +219,7 @@ export class AuthPage implements OnInit {
               color: 'danger',
               position: 'bottom'
             }).then(toast => toast.present())
+            this.registerForm.reset()
           }
 
         }

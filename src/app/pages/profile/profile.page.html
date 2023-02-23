@@ -66,6 +66,12 @@
         <ion-card-subtitle>{{user.first_name}} {{user.last_name}}</ion-card-subtitle>
       </ion-card-header>
 
+      <ion-item class="ion-text-center" lines="none">
+        <ion-label text-wrap class="text-secondary">
+          {{user.bio}}
+        </ion-label>
+      </ion-item>
+
 
       <ion-card-content *ngIf="user">
         <p>Joined on {{user.createdAt | date}}</p>

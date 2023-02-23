@@ -7,7 +7,7 @@
           <img alt="Silhouette of a person's head" [src]="user.user_profile.url"/>
         </ion-avatar>
         <ion-label style="color:#f2f2f2;">
-          <h3 class="fw-bold"> {{user.username}} </h3>
+          <h3 class="fw-bold"> {{user.username ? user.username : user.first_name }} </h3>
           
         </ion-label>
         </ion-item>

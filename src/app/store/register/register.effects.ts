@@ -14,7 +14,7 @@ export class registerEffects{
 
     registerEffect$ = createEffect(()=>(
         this.actions$.pipe(ofType(register),
-        switchMap((payload:{registrationDetails:registrationDetails})=>this.authService.register({email:payload.registrationDetails.email,password:payload.registrationDetails.password,first_name:payload.registrationDetails.first_name}).pipe(
+        switchMap((payload:{registrationDetails:registrationDetails})=>this.authService.register(payload.registrationDetails).pipe(
             map((res)=>registerSuccess({message:res.message})),
             catchError(error=>of(registerFailure({message:error.message})))
         ))
