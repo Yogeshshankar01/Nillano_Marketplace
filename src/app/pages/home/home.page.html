@@ -6,10 +6,10 @@
     <ion-segment class="p-2" [(ngModel)]="selectedTab" (ionChange)="segmentChanged($event)">
       <ion-segment-button class="overflow-hidden buy tab fw-bold  " value="buying"
         [ngClass]="{'active-tab': selectedTab === 'buying'}"> 
-        <ion-label class="w-100 m-0 d-flex align-items-center justify-content-center"> <i class="fa-solid fa-cart-shopping shop-icon fa-2x" style="transform: rotate(10deg);" ></i> Shop </ion-label>
+        <ion-label class="w-100 m-0 d-flex align-items-center justify-content-center"> <i class="fa-solid fa-cart-shopping fa-2x me-1" style="transform: rotate(10deg); opacity: .3; " ></i> Shop </ion-label>
       </ion-segment-button>
       <ion-segment-button class="overflow-hidden rent tab fw-bold" value="renting"
-        [ngClass]="{'active-tab': selectedTab === 'renting'}"> <ion-label class="m-0 d-flex align-items-center justify-content-center"> <i class="fa-solid fa-key me-1 fa-2x" style="transform: rotate(10deg);" ></i> Rent </ion-label> 
+        [ngClass]="{'active-tab': selectedTab === 'renting'}"> <ion-label class="m-0 d-flex align-items-center justify-content-center"> <i class="fa-solid fa-key me-1 fa-2x" style="opacity: .3;" ></i> Rent </ion-label> 
       </ion-segment-button>
     </ion-segment>
 
