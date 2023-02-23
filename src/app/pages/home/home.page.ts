@@ -67,6 +67,8 @@ export class HomePage implements OnDestroy,OnInit {
 
   toast:any
 
+  connected!: boolean;
+
   ngOnInit() {
 
     if(localStorage.getItem("access_token")){
@@ -103,6 +105,8 @@ export class HomePage implements OnDestroy,OnInit {
           this.store.dispatch(endLoading())
           // console.log(res.products)
           this.products = res.products
+
+          this.connected = true
   
           setTimeout(() => {
             let products = document.querySelector('.products') as HTMLElement
@@ -116,6 +120,8 @@ export class HomePage implements OnDestroy,OnInit {
         if (res.failure) {
   
           this.store.dispatch(endLoading())
+
+          this.connected = false
   
           this.toast = this.toastController.create({
             message: res.message ? res.message : "Sorry, we're unable to retrieve products at the moment. We're working to fix the issue. Please try again later.",

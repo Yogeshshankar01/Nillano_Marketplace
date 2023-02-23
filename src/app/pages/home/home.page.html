@@ -9,11 +9,11 @@
         <ion-label class="w-100 m-0 d-flex align-items-center justify-content-center"> <i class="fa-solid fa-cart-shopping fa-2x me-1" style="transform: rotate(10deg); opacity: .3; " ></i> Shop </ion-label>
       </ion-segment-button>
       <ion-segment-button class="overflow-hidden rent tab fw-bold" value="renting"
-        [ngClass]="{'active-tab': selectedTab === 'renting'}"> <ion-label class="m-0 d-flex align-items-center justify-content-center"> <i class="fa-solid fa-key me-1 fa-2x" style="opacity: .3;" ></i> Rent </ion-label> 
+        [ngClass]="{'active-tab': selectedTab === 'renting'}"> <ion-label class="m-0 d-flex align-items-center justify-content-center"> <i class="fa-solid fa-key me-1 fa-2x" style="transform: rotate(10deg); opacity: .3;" ></i> Rent </ion-label> 
       </ion-segment-button>
     </ion-segment>
 
-    <div [ngSwitch]="selectedTab">
+    <div *ngIf="connected" [ngSwitch]="selectedTab">
 
       <div class="" *ngSwitchCase="'buying'">
         <!-- Content for Tab 1 -->
@@ -115,7 +115,13 @@
 
     </div>
 
-    <ion-fab (click)="setOpen(true)" slot="fixed" vertical="bottom" horizontal="end">
+    <div class="mt-3 container d-flex align-items-center flex-column justify-content-center" *ngIf="!connected">
+      <h3 class="mb-0">UNABLE TO CONNECT</h3>
+      <i class="fa-solid fa-close fa-10x text-danger my-3"></i>
+      <button class="btn btn-dark w-100">RETRY</button>
+    </div>
+
+    <ion-fab *ngIf="connected" (click)="setOpen(true)" slot="fixed" vertical="bottom" horizontal="end">
       <ion-fab-button style="--background : #1A4640;">
         <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
       </ion-fab-button>
