@@ -35,7 +35,7 @@
 
         <form [formGroup]="loginForm" (ngSubmit)="login()" class="w-100">
 
-          <ion-item class="rounded">
+          <ion-item lines="none" class="rounded">
 
             <ion-label style="color: #1A4640;" position="floating">
               Username or Email address
@@ -55,7 +55,7 @@
           </ion-item>
 
 
-          <ion-item class="rounded mt-4">
+          <ion-item lines="none" class="rounded mt-4">
             <ion-label style="color: #1A4640;" position="floating">
               Your password
               <small class="text-danger fw-bolder p-2"
@@ -91,12 +91,12 @@
 
         <form class="w-100" [formGroup]="registerForm" (ngSubmit)="register()">
 
-          <ion-item class="rounded">
+          <ion-item lines="none" class="rounded">
             <ion-label style="color: #1A4640;" position="floating">First name</ion-label>
             <ion-input type="text" formControlName="first_name"></ion-input>
           </ion-item>
 
-          <ion-item class="rounded mt-3">
+          <ion-item lines="none" class="rounded mt-3">
             <ion-label style="color: #1A4640;" position="floating">Last name</ion-label>
             <ion-input type="text" formControlName="first_name"></ion-input>
           </ion-item>
@@ -106,12 +106,12 @@
         <ion-input type="text" formControlName="first_name" ></ion-input>
       </ion-item> -->
 
-          <ion-item class="rounded mt-3">
+          <ion-item lines="none" class="rounded mt-3">
             <ion-label style="color: #1A4640;" position="floating">Email address</ion-label>
             <ion-input type="text" formControlName="email"></ion-input>
           </ion-item>
 
-          <ion-item class="rounded mt-3">
+          <ion-item lines="none" class="rounded mt-3">
             <ion-label style="color: #1A4640;" position="floating">Password</ion-label>
             <ion-input type="password" formControlName="password"></ion-input>
           </ion-item>
