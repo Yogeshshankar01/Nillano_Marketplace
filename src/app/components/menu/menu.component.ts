@@ -50,5 +50,15 @@ export class MenuComponent implements OnInit {
     this.router.navigate([redirect]);
   }
 
+  redirectAuth(redirect:string){
+
+    if(this.router.url!='/home'){
+    localStorage.setItem('currentroute',this.router.url)
+    }
+
+    this.menuController.close()
+    this.router.navigate(['auth'],{queryParams :{page:redirect}});
+  }
+
 
 }

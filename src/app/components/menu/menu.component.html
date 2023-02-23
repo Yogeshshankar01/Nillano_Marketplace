@@ -14,9 +14,9 @@
 
         <ion-item *ngIf="!user" lines="none" class="my-2" style="--background : transparent;">
           
-          <ion-button class="auth" [routerLink]="['/auth']" [queryParams]="{ page: 'register' }" slot="start" >Sign Up</ion-button>
+          <ion-button class="auth" (click)="redirectAuth('register')" slot="start" >Sign Up</ion-button>
 
-          <ion-button class="auth" slot="end" [routerLink]="['/auth']" [queryParams]="{ page: 'login' }" >Login</ion-button>
+          <ion-button class="auth" slot="end" (click)="redirectAuth('login')" >Login</ion-button>
 
           </ion-item>
 

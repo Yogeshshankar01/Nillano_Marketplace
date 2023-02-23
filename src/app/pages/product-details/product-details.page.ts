@@ -108,34 +108,6 @@ export class ProductDetailsPage implements OnInit {
 
   }
 
-  async logout() {
-
-
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Confirm Log out',
-      buttons: [{
-        text: 'Cancel',
-        role: 'cancel',
-        icon: 'close',
-        handler: () => {
-          // do nothing
-        }
-      }, {
-        text: 'Confirm',
-        icon: 'log-out-outline',
-        role: 'destructive',
-        handler: () => {
-
-          this.store.dispatch(startLoading())
-
-          this.authService.logout()
-
-        }
-      }]
-    });
-    await actionSheet.present();
-
-  }
 
   quantityCount: number = 1
 
@@ -210,18 +182,54 @@ export class ProductDetailsPage implements OnInit {
 
   constructor(private store: Store<AppState>, private activeRoute: ActivatedRoute, private router: Router, private toastController: ToastController, private socialSharing: SocialSharing, private modalCtrl: ModalController, private userProfile: UserprofileService, private http: HttpClient, private actionSheetController: ActionSheetController, private authService: AuthService) { }
 
+
   async presentCommentModal() {
+
+    if(!this.isLoggedIn){
+
+      this.toastController.create({
+        message: "Please Login to continue...",
+        duration: 3000,
+        color: 'danger',
+        position: 'top'
+      }).then((toast) => {
+        toast.present()
+      })
+
+      return
+
+    }
+
     const modal = await this.modalCtrl.create({
       component: CommentModalComponent,
       showBackdrop: true,
-      initialBreakpoint: 0.4
+      initialBreakpoint: 0.4,
+      componentProps : {productId : this.productId }
     });
     return await modal.present();
   }
 
+
+
   selectedItem: any
 
   async presentOrderModal() {
+
+    if(!this.isLoggedIn){
+
+      this.toastController.create({
+        message: "Please Login to continue...",
+        duration: 3000,
+        color: 'danger',
+        position: 'top'
+      }).then((toast) => {
+        toast.present()
+      })
+
+      return
+
+    }
+    
     this.selectedItem = {
       id:this.product.id,
       name: this.product.name,
@@ -242,16 +250,19 @@ export class ProductDetailsPage implements OnInit {
 
   ngOnInit() {
 
-    if (localStorage.getItem("access_token")) {
-      this.isLoggedIn = true
-    }
-    else {
-      this.isLoggedIn = false
-    }
+    this.store.select('checkLogin')
+      .subscribe(
+        res => {
+
+          this.isLoggedIn = res.loggedIn
+
+        }
+      )
 
     this.activeRoute.queryParams.subscribe(params => {
 
       if (!params['product']) {
+
         this.toastController.create({
           message: "Your product does not have an id",
           duration: 3000,
@@ -264,6 +275,7 @@ export class ProductDetailsPage implements OnInit {
             this.router.navigate(['products'])
           });
         })
+
       }
       else {
         this.productId = params['product'];

@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
 import { checkLogin } from 'src/app/store/checkLogin/checklogin.actions';
 import { endLoading } from 'src/app/store/loading/loading.action';
+import { logout } from 'src/app/store/login/login.action';
 import { AppState } from 'src/app/types/AppState';
 import { environment } from 'src/environments/environment';
 
@@ -55,6 +56,8 @@ login({email,password}:{email:string,password:string}):Observable<{message:strin
 
     // Remove any user data or tokens from storage
     localStorage.removeItem('access_token');
+
+    this.store.dispatch(logout())
 
     this.toastController.create({
       message: "Logout Successfull.",

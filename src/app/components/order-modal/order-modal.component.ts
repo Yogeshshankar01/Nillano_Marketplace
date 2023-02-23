@@ -16,6 +16,8 @@ import { AppState } from 'src/app/types/AppState';
 })
 export class OrderModalComponent implements OnInit {
 
+  isLoggedIn:boolean | undefined
+
   name!: string;
   email!: string;
   phone!: string;
@@ -37,6 +39,22 @@ export class OrderModalComponent implements OnInit {
   }
 
   submitOrder() {
+
+    if(!this.isLoggedIn){
+
+      this.toastController.create({
+        message: "Please Login to continue...",
+        duration: 3000,
+        color: 'danger',
+        position: 'top'
+      }).then((toast) => {
+        toast.present()
+      })
+
+      return
+
+    }
+    
     // Implement logic to submit the order details
     this.submitted = true
 
@@ -140,6 +158,15 @@ export class OrderModalComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.store.select('checkLogin')
+      .subscribe(
+        res => {
+
+          this.isLoggedIn = res.loggedIn
+
+        }
+      )
 
     this.amountPayable = this.selectedItem.quantity * this.selectedItem.price
 

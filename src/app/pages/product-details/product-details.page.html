@@ -1,13 +1,4 @@
-<ion-menu type="push" contentId="product-details-content">
-  <app-menu class="h-100"></app-menu>
-  <ion-footer *ngIf="isLoggedIn">
-    <ion-toolbar (click)="logout()" class="text-center" style="cursor: pointer;" >
-      <div class="d-flex align-items-center justify-content-center"> <ion-icon class="me-2" size="large" name="log-out-outline"></ion-icon> Logout </div>
-    </ion-toolbar>
-  </ion-footer>
-</ion-menu>
 
-<div class="ion-page" id="product-details-content">
   <ion-header>
     <ion-toolbar style="--background:#1A4640; color: #f2f2f2; border-bottom: 1px solid;">
       <ion-buttons slot="start">
@@ -24,7 +15,7 @@
 
   <ion-content class="ion-padding">
 
-    <div id="likeEffect" class="d-none align-items-center justify-content-center" style="height:100%; width: 100%; z-index: 99999; position: absolute; left:0%; top: 0%; background-color: #1a464028;">
+    <div id="likeEffect" class="d-none align-items-center justify-content-center" style="height:100%; width: 100%; z-index: 99999; position: absolute; left:0%; top: 0%; background-color: transparent;">
 
       <i class="fa-solid fa-heart fa-10x animate__animated animate__rubberBand" style="color: #1A4640;" ></i>
 
@@ -307,4 +298,3 @@
 
 
   </ion-content>
-</div>
