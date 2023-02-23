@@ -6,7 +6,14 @@ img#login-bg{
     position: absolute;
     left: 0%;
     z-index: 0;
-    bottom: 0%;
+    bottom: 1%;
+    width: 100%;
+    transform: rotate(10deg);
+}
+
+ion-segment{
+    position: relative;
+    z-index: 1;
 }
 
 ion-segment-button{
@@ -31,6 +38,26 @@ ion-segment-button.register{
   }
   
 
-//   .active-tab ion-label{
-//     border-color: #1A4640;
-//   }
+@media(max-width:1000px){
+    .main-content{
+        width: 60% !important;
+    }
+}
+
+@media(max-width:600px){
+    .main-content{
+        width: 75% !important;
+    }
+}
+
+@media(max-width:500px){
+    .main-content{
+        width: 85% !important;
+    }
+}
+
+@media(max-width:400px){
+    .main-content{
+        width: 100% !important;
+    }
+}

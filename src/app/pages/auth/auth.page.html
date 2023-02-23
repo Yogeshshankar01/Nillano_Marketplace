@@ -10,6 +10,8 @@
 
 <ion-content class="ion-padding"> 
 
+  <div class="w-50 mx-auto h-100 main-content" style="position: relative;">
+    
     <ion-segment [(ngModel)]="selectedTab" (ionChange)="onSegmentChange($event)" color="primary" class="my-3">
       <ion-segment-button [ngClass]="{'active-tab': selectedTab === 'login'}" class="fw-bold login" value="login" color="success" value="login" >
         Login
@@ -26,7 +28,7 @@
 
     <div class="" *ngSwitchCase="'login'">
 
-    <h3 class="py-3 fs-6 fw-bold text-center" style="color:#f2f2f2;">Welcome back</h3>
+    <h3 class="py-3 fs-6 fw-bold text-center" style="color:#f2f2f2; position: relative; z-index: 1;">Welcome back</h3>
 
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="w-100">
 
@@ -100,6 +102,8 @@
       </div>
 
     </form>
+
+  </div>
 
   </div>
 

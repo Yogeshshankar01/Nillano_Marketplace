@@ -11,26 +11,36 @@ import { AppState } from 'src/app/types/AppState';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router: Router,private menuController:MenuController,private store:Store<AppState>) { }
+  constructor(private router: Router, private menuController: MenuController, private store: Store<AppState>) { }
 
   user: any
 
+  productsAvailable = 0
+
   ngOnInit() {
 
-    this.store.select('checkLogin')
-    .subscribe(
-      res=>{
+    this.store.select('products').subscribe(res => {
 
-        if(res.loggedIn){
-          this.user = res.profile
-        }
-
-        if(!res.loggedIn){
-          this.user = false
-        }
-
+      if (res.success) {
+        this.productsAvailable = res.products.length
       }
-    )
+
+    })
+
+    this.store.select('checkLogin')
+      .subscribe(
+        res => {
+
+          if (res.loggedIn) {
+            this.user = res.profile
+          }
+
+          if (!res.loggedIn) {
+            this.user = false
+          }
+
+        }
+      )
 
   }
 
