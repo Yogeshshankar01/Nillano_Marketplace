@@ -46,7 +46,7 @@ export class AuthPage implements OnInit {
       selectOption.classList.remove('d-flex')
       selectOption.classList.add('d-none')
       sellerUserName.classList.remove('d-none')
-      sellerUserName.classList.remove('d-flex')
+      sellerUserName.classList.add('d-flex')
       return
     }
 
