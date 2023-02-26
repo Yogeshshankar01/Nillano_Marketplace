@@ -19,6 +19,33 @@ export class MyProductsPage implements OnInit {
   constructor(private modalCtrl: ModalController, private actionSheetController: ActionSheetController, private store: Store<AppState>, private toastController: ToastController, private productsService: ProductsserviceService) { }
 
   async presentListProductModal() {
+
+    // if(this.user.account_status != "verified"){
+    //   this.toastController.create({
+    //     message: "Please verify your account to continue",
+    //     duration: 2000,
+    //     color: 'danger',
+    //     position: 'bottom',
+    //   }).then((toast) => {
+    //     toast.present()
+    //   })
+
+    //   return
+    // }
+
+    if(!this.user.username){
+      this.toastController.create({
+        message: "Please provide a username to continue",
+        duration: 2000,
+        color: 'danger',
+        position: 'bottom',
+      }).then((toast) => {
+        toast.present()
+      })
+
+      return
+    }
+
     const modal = await this.modalCtrl.create({
       component: ListProductComponent,
       showBackdrop: true,
@@ -97,7 +124,22 @@ export class MyProductsPage implements OnInit {
 
   editProduct(product: any) { }
 
+  user:any ;
+
   ngOnInit() {
+
+    this.store.select('checkLogin')
+    .subscribe(
+      res=>{
+
+        if(res.loggedIn){
+          this.user = res.profile
+        }
+
+       
+
+      }
+    )
 
     this.store.dispatch(getUserProducts())
 

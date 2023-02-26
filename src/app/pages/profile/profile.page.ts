@@ -219,7 +219,7 @@ export class ProfilePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: BalanceComponent,
       showBackdrop: true,
-      initialBreakpoint: 0.4
+      initialBreakpoint: 0.35
     });
     return await modal.present();
   }
@@ -234,7 +234,7 @@ export class ProfilePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: EditProfileComponent,
       showBackdrop: true,
-      initialBreakpoint: 0.48,
+      initialBreakpoint: 0.72,
       componentProps: { "user": this.user }
     });
     await modal.present();

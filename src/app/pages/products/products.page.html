@@ -67,6 +67,8 @@
         </ion-card-subtitle>
 
         <p class="d-flex align-items-center"> <ion-icon class="text-dark" name="location-outline"></ion-icon> {{product.location}}</p>
+
+        <p *ngIf="product.Campus" class="d-flex align-items-center text-nowrap" style="text-overflow: ellipsis;" > <ion-icon class="text-dark me-1" name="school-outline"></ion-icon> {{product.Campus}} </p>
         
       </ion-card-content>
     </ion-card>

@@ -14,8 +14,13 @@ import { environment } from 'src/environments/environment';
 })
 export class EditProfileComponent implements OnInit {
 
-
   user: any;
+
+  username!: string;
+  first_name!: string;
+  last_name!: string;
+  phone_number!: string;
+  bio!: string;
 
   dismissModal() {
     // code to dismiss the modal
@@ -29,57 +34,69 @@ export class EditProfileComponent implements OnInit {
     // code to save the changes to the user object
 
     let user = {
-      username:this.user.username,
-      first_name: this.user.first_name,
-      last_name : this.user.last_name,
-      phone_number : this.user.phone_number
+      username: this.username,
+      first_name: this.first_name,
+      last_name: this.last_name,
+      phone_number: this.phone_number,
+      bio: this.bio
     }
 
-    this.http.post<{message:string}>(`${environment.server}/users/edit-profile`,user)
-    .pipe(take(1))
-    .subscribe(
-      res=>{
+    // console.log(user)
 
-        this.store.dispatch(endLoading())
+    this.http.post<{ message: string }>(`${environment.server}/users/edit-profile`, user)
+      .pipe(take(1))
+      .subscribe(
+        res => {
 
-        this.dismissModal()
+          this.store.dispatch(endLoading())
 
-        res.message && this.toastController.create({
-          message: res.message,
-          duration: 5000,
-          header: "Profile Updated",
-          color: 'primary',
-          position: 'top'
-        }).then((toast) => {
-          toast.present()
-      })
+          this.dismissModal()
 
-      },
-      err=>{
+          res.message && this.toastController.create({
+            message: res.message,
+            duration: 2000,
+            header: "Profile Updated",
+            color: 'primary',
+            position: 'top'
+          }).then((toast) => {
+            toast.present()
+          })
 
-        this.store.dispatch(endLoading())
+        },
+        err => {
 
-        this.dismissModal()
+          this.store.dispatch(endLoading())
 
-        err.error.message && this.toastController.create({
-          message: err.error.message,
-          duration: 5000,
-          header: "Profile not updated",
-          color: 'danger',
-          position: 'top'
-        }).then((toast) => {
-          toast.present()
-      })
+          this.dismissModal()
 
-    }
-    )
+          err.error.message && this.toastController.create({
+            message: err.error.message,
+            duration: 2000,
+            header: "Profile not updated",
+            color: 'danger',
+            position: 'top'
+          }).then((toast) => {
+            toast.present()
+          })
+
+        }
+      )
 
   }
 
-  constructor(private modalCtrl:ModalController,private navParams  : NavParams,private http:HttpClient,private toastController:ToastController,private store:Store<AppState>) { }
+  constructor(private modalCtrl: ModalController, private navParams: NavParams, private http: HttpClient, private toastController: ToastController, private store: Store<AppState>) { }
 
   ngOnInit() {
     this.user = this.navParams.get('user')
+
+    this.username = this.user.username
+    this.first_name = this.user.first_name
+    this.last_name = this.user.last_name
+    this.phone_number = this.user.phone_number
+    this.bio = this.user.bio ? this.user.bio : ""
+
+    // console.log(this.phone_number)
+
   }
 
 }

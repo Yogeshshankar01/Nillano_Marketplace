@@ -16,7 +16,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding" >
 
   <ion-item class="ion-text-center">
     <ion-label>
@@ -24,7 +24,7 @@
     </ion-label>
   </ion-item>
 
-  <ion-item *ngIf="products?.length<1" class="ion-no-padding">
+  <ion-item *ngIf="products?.length<1" class="ion-no-padding ion-text-center ">
     <ion-label text-wrap>
       You currently don't have any products. Click the action button to start listing your products.
     </ion-label>

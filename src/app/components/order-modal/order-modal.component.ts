@@ -100,6 +100,8 @@ export class OrderModalComponent implements OnInit {
     .subscribe(
       res=>{
 
+        console.log(res)
+
         this.toastController.create({
           message: res.message,
           duration: 3000,

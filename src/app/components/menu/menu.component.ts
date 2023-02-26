@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
+import { getUserProducts } from 'src/app/store/userProducts/userproducts.actions';
 import { AppState } from 'src/app/types/AppState';
 
 @Component({
@@ -16,8 +17,11 @@ export class MenuComponent implements OnInit {
   user: any
 
   productsAvailable = 0
+  userProductsAvailable = 0
 
   ngOnInit() {
+
+    this.store.dispatch(getUserProducts())
 
     this.store.select('products').subscribe(res => {
 
@@ -26,6 +30,17 @@ export class MenuComponent implements OnInit {
       }
 
     })
+
+    this.store.select('userProducts')
+      .subscribe(
+        products => {
+
+          if (products.success) {
+            this.userProductsAvailable = products.products.length
+          }
+
+        }
+      )
 
     this.store.select('checkLogin')
       .subscribe(

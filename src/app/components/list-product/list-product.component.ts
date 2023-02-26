@@ -11,6 +11,7 @@ import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
 import { listProduct } from 'src/app/store/listProduct/list.actions';
 import { getUserProducts } from 'src/app/store/userProducts/userproducts.actions';
 import { take } from 'rxjs';
+import { getProducts } from 'src/app/store/products/products.action';
 
 @Component({
   selector: 'app-list-product',
@@ -305,6 +306,7 @@ export class ListProductComponent implements OnInit {
         if(res.success && this.submitted){
           this.store.dispatch(endLoading())
           this.store.dispatch(getUserProducts())
+          this.store.dispatch(getProducts())
 
           this.toastController.create({
             message: res.message,

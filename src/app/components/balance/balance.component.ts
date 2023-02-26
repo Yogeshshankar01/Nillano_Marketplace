@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-balance',
@@ -8,17 +8,26 @@ import { ModalController } from '@ionic/angular';
 })
 export class BalanceComponent implements OnInit {
 
-  constructor(private modalCTRL : ModalController) { }
+  constructor(private modalCTRL : ModalController,private toastController:ToastController) { }
 
   dismissModal(){
     this.modalCTRL.dismiss()
   }
 
-  availableBalance = 300
-  pendingMoney = 200
+  availableBalance = 0
+  pendingMoney = 0
 
   withdrawMoney(){
     
+    this.toastController.create({
+      message: "Sorry, you need at least GH₵10 to withdraw.",
+      duration: 2000,
+      color: 'danger',
+      position: 'top'
+    }).then((toast) => {
+      toast.present()
+    })
+
   }
 
   ngOnInit() {}

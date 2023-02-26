@@ -10,7 +10,9 @@
 
 <ion-content class="ion-padding">
 
-  <div class="w-50 mx-auto h-100 main-content" style="position: relative;">
+  <img id="login-bg" src="../../../assets/images/login-bg.png" alt="login bg" />
+
+  <div class="w-50 mx-auto main-content" style="position: relative; min-height:90%;">
 
     <ion-segment [(ngModel)]="selectedTab" (ionChange)="onSegmentChange($event)" color="primary" class="my-3">
       <ion-segment-button [ngClass]="{'active-tab': selectedTab === 'login'}" class="fw-bold login" value="login"
@@ -22,8 +24,6 @@
         Register
       </ion-segment-button>
     </ion-segment>
-
-    <img id="login-bg" src="../../../assets/images/login-bg.png" alt="login bg" />
 
 
     <div [ngSwitch]="selectedTab">
@@ -218,10 +218,13 @@
 
           <ion-item lines="none" class="mt-3 rounded w-100">
             <ion-label position="floating">Enter username</ion-label>
-            <ion-input [(ngModel)]="username" maxlength="100" placeholder="Enter username..."></ion-input>
+            <ion-input (change)="checkUserNameExists()" [(ngModel)]="username" maxlength="100" placeholder="Enter username..."></ion-input>
           </ion-item>
 
-          <p class="text-end mt-2" style="color:#f2f2f2;" > {{ username.length }}/100 </p>
+          <p *ngIf="userNameExists && userNameExists?.exists" class="text-primary mt-2"> {{userNameExists.message}} </p>
+          <p *ngIf="userNameExists && !userNameExists?.exists" class="text-danger mt-2"> {{userNameExists.message}} </p>
+
+          <!-- <p class="text-end mt-2" style="color:#f2f2f2;" > {{ username.length }}/100 </p> -->
 
           <ion-item lines="none" class="mt-3 rounded w-100">
             <ion-label position="floating">Bio (A brief intro about your brand)</ion-label>

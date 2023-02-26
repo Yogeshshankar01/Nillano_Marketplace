@@ -48,6 +48,12 @@
     </ion-row>
   </div>
 
+  <ion-item class="ion-text-center" *ngIf="!orders">
+    <ion-label>
+      No Products Ordered
+    </ion-label>
+  </ion-item>
+
   <div class="border mt-3" *ngFor="let order of orders">
 
     <ion-item lines="none">

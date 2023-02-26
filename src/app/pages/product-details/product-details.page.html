@@ -59,7 +59,7 @@
       </ion-col>
 
 
-      <ion-col class="overflow-hidden" style="height: 400px;" size="12" size-md="6">
+      <ion-col class="overflow-hidden" style="height: 405px;" size="12" size-md="6">
 
         <ion-item class="ion-no-padding">
           <ion-label>{{product.name}}</ion-label>
@@ -117,8 +117,8 @@
               </ion-button>
             </ion-label>
             <ion-button slot="end" class="add-to-cart-button h-100" style="--background: #1a4640;">
-              <ion-icon class="me-2" name="cart"></ion-icon>
-              Add to Cart
+              <ion-icon size="large" class="me-2" name="bookmark"></ion-icon>
+              Save for later
             </ion-button>
 
           </ion-item>
@@ -172,6 +172,19 @@
               <h3> {{product.user?.username}} </h3>
               <p>{{product.user?.following.length}} following | {{product.user?.followers.length}} followers</p>
             </ion-label>
+
+            <ng-template *ngFor="let follower of product.user?.followers">
+
+            <ion-button *ngIf="follower.followerId != 4" fill="clear" size="large">
+              <ion-icon name="add-circle-outline"></ion-icon>
+            </ion-button>
+
+            <ion-button *ngIf="follower.followerId == 4" fill="clear" size="large">
+              <ion-icon name="checkmark-done-circle"></ion-icon>
+            </ion-button>
+
+            </ng-template>
+            
           </ion-item>
 
         </ion-col>
@@ -233,13 +246,13 @@
               </ion-label>
             </ion-item>
 
-            <ion-item>
+            <!-- <ion-item>
 
-              <!-- <ion-label>
+              <ion-label>
                 <p>View replies (10)</p>
-              </ion-label> -->
+              </ion-label>
 
-            </ion-item>
+            </ion-item> -->
 
           </div>
         </ion-list>

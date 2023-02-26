@@ -58,7 +58,7 @@ export class ProductDetailsPage implements OnInit {
 
               this.toastController.create({
                 message: res.message,
-                duration: 3000,
+                duration: 1000,
                 color: 'primary',
                 position: 'top'
               }).then((toast) => {
@@ -70,7 +70,7 @@ export class ProductDetailsPage implements OnInit {
           } else {
             this.toastController.create({
               message: res.message,
-              duration: 3000,
+              duration: 1000,
               color: 'primary',
               position: 'top'
             }).then((toast) => {
@@ -87,7 +87,7 @@ export class ProductDetailsPage implements OnInit {
 
           err.error.message && this.toastController.create({
             message: err.error.message=="No authorization header" ? "Please log in to like product" : err.error.message,
-            duration: 3000,
+            duration: 1000,
             color: 'danger',
             position: 'top'
           }).then((toast) => {
@@ -96,7 +96,7 @@ export class ProductDetailsPage implements OnInit {
 
           !err.error.message && this.toastController.create({
             message: "Sorry! unable to like product. Try again.",
-            duration: 3000,
+            duration: 1000,
             color: 'danger',
             position: 'top'
           }).then((toast) => {
@@ -303,6 +303,8 @@ export class ProductDetailsPage implements OnInit {
             this.relatedProducts = this.product.user.products
 
             let currentUserId: number
+
+            console.log(this.product.user.followers)
 
             this.userProfile.myProfile().subscribe(
               async res => {

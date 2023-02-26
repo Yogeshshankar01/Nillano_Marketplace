@@ -8,12 +8,12 @@ import { environment } from 'src/environments/environment';
 })
 export class OrdersService {
 
-  orderProduct(formData:any):Observable<{message:string}>{
+  orderProduct(formData:any):Observable<{message:string,seller:any}>{
     return new Observable((observer)=>{
-      this.http.post<{message:string}>(`${environment.server}/orders/place-order`,formData)
+      this.http.post<{message:string,seller:any}>(`${environment.server}/orders/place-order`,formData)
       .pipe(take(1))
       .subscribe(async(res)=>{
-        observer.next({message:res.message})
+        observer.next({message:res.message,seller:res.seller})
         observer.complete()
       },(err)=>{
         err.error.message && observer.error({message:err.error.message})

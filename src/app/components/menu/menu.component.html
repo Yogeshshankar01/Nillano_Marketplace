@@ -34,7 +34,7 @@
       <ion-icon class="fa-solid fa-boxes-stacked" slot="start" name="search"></ion-icon>
       <ion-label>
         <h3>My Products</h3>
-        <p>230 Listed</p>
+        <p>{{userProductsAvailable}} Listed</p>
       </ion-label>
     </ion-item>
 
@@ -59,11 +59,11 @@
       Order History
     </ion-item>
 
-    <ion-item button (click)="redirect('cart')" routerLink="/cart">
+    <ion-item *ngIf="user" button (click)="redirect('cart')" routerLink="/cart">
       <ion-icon slot="start" name="cart"></ion-icon>
       <ion-label>
         <h3>Cart</h3>
-        <p>4 Items Added</p>
+        <p>0 Items Added</p>
       </ion-label>
     </ion-item>
 
