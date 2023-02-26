@@ -31,6 +31,8 @@ export class ProductDetailsPage implements OnInit {
 
   isLiked = false
 
+  isFollowing = false
+
   likes: Number | undefined
 
   toggleLike() {
@@ -311,6 +313,8 @@ export class ProductDetailsPage implements OnInit {
                 currentUserId = await res.profile.id
                 console.log(currentUserId)
                 this.isLiked = this.product.Likes.some((like: { user_id: number; }) => like.user_id === currentUserId);
+                this.isFollowing = this.product.user.followers.some((follower: { followerId : number; }) => follower.followerId === currentUserId);
+                console.log(this.isFollowing)
               },
               err => {
                 console.log(err)

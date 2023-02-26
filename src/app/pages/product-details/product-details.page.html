@@ -116,7 +116,7 @@
                 <ion-icon name="add-circle-outline"></ion-icon>
               </ion-button>
             </ion-label>
-            <ion-button slot="end" class="add-to-cart-button h-100" style="--background: #1a4640;">
+            <ion-button slot="end" class="add-to-cart-button d-flex justify-content-center align-items-center h-100" style="--background: #1a4640;">
               <ion-icon size="large" class="me-2" name="bookmark"></ion-icon>
               Save for later
             </ion-button>
@@ -152,7 +152,7 @@
     </ion-row>
 
     <div class="mt-2 fs-6 d-flex justify-content-center align-items-center text-dark ">
-      <ion-icon name="location-outline" style="color: #202428;" size="large" class="me-2"></ion-icon>
+      <ion-icon name="location-outline" style="color: #202428;" class="me-1"></ion-icon>
       <span>{{product.location}}</span>
     </div>
 
@@ -160,7 +160,7 @@
 
       <h3 class="fw-bolder m-0 text-dark">Listed By:</h3>
 
-      <ion-row>
+      <ion-row class="d-flex justify-content-center align-items-center ">
 
         <ion-col size="12" size-md="6">
 
@@ -168,30 +168,34 @@
             <ion-avatar slot="start">
               <img alt="Silhouette of a person's head" [src]="product.user?.user_profile.url" />
             </ion-avatar>
+
             <ion-label>
               <h3> {{product.user?.username}} </h3>
               <p>{{product.user?.following.length}} following | {{product.user?.followers.length}} followers</p>
             </ion-label>
 
-            <ng-template *ngFor="let follower of product.user?.followers">
-
-            <ion-button *ngIf="follower.followerId != 4" fill="clear" size="large">
-              <ion-icon name="add-circle-outline"></ion-icon>
+            <ion-button slot="end" *ngIf="!isFollowing" fill="clear" size="large">
+              <ion-icon class="text-primary" name="add-circle-outline"></ion-icon>
             </ion-button>
 
-            <ion-button *ngIf="follower.followerId == 4" fill="clear" size="large">
-              <ion-icon name="checkmark-done-circle"></ion-icon>
+            <ion-button slot="end" *ngIf="isFollowing" fill="clear" size="large">
+              <ion-icon class="text-dark" name="checkmark-done-circle"></ion-icon>
             </ion-button>
-
-            </ng-template>
             
           </ion-item>
 
         </ion-col>
 
-        <ion-col size="12" size-md="6">
+        <ion-col class="bg-secondary rounded" style="background-color: #1A4640 !important;" size="12" size-md="6">
 
-          <ion-button class="text-light w-100" style="--background:#202428;" shape="round">
+          <ion-item lines="none">
+            <ion-label style="color: #1A4640;" position="floating">
+              Enter Message...
+            </ion-label>
+            <ion-input class="rounded" type="text"></ion-input>
+          </ion-item>
+
+          <ion-button class="text-dark w-100 mt-2" style="--background:#f2f2f2;" shape="round">
             <ion-icon class="me-2" name="chatbubbles"></ion-icon>
             Chat Seller
           </ion-button>
@@ -204,7 +208,7 @@
 
     </div>
 
-    <ion-card style="--background:#f2f2f2;">
+    <ion-card class="mt-5" style="--background:#f2f2f2;">
       <ion-card-header style="background-color: #1a4640;">
         <ion-card-title class="text-light text-center">Comments and Feedback</ion-card-title>
         <p *ngIf="product.Comments?.length > 1" class="text-light text-center fst-italic">{{product.Comments?.length}}

@@ -6,28 +6,50 @@
     <ion-title class="logo">
       <img src="../../../assets/images/logo.png" class="logo" alt="logo">
     </ion-title>
-    <ion-buttons class="d-sm-block d-none" style="color:#1A4640;" slot="end">
-      <ion-button routerLink="/cart">
-        <ion-icon name="cart"></ion-icon>
-        <span class="fw-bold">Cart<ion-badge color="danger">70</ion-badge></span>
-      </ion-button>
 
-      <!-- <ion-button class="rounded-2 fw-bold text-light" style="background-color: #1A4640;" id="hover-trigger">
-        <ion-icon class="mx-1" name="person-circle-outline"></ion-icon>
-          <span class="mx-1"> Account </span>
+    <!-- <ion-buttons class="d-sm-block bg-dark me-2 d-none py-2 rounded" style="color:#f2f2f2; background:#1A4640;" slot="end">
+
+      <ion-button class="d-flex align-items-center justify-content-center" routerLink="/cart">
+        Register
       </ion-button>
-    <ion-popover trigger="hover-trigger" triggerAction="hover">
-      <ng-template>
-        <ion-content class="ion-padding">Profile</ion-content>
-      </ng-template>
-    </ion-popover> -->
     
     </ion-buttons>
 
-    
+    <ion-buttons class="d-sm-block bg-dark me-2 d-none py-2 rounded" style="color:#f2f2f2; background:#1A4640;" slot="end">
 
-    <ion-buttons slot="end">
-      <ion-menu-button style="color:#1A4640;"></ion-menu-button>
+      <ion-button class="d-flex align-items-center justify-content-center" routerLink="/cart">
+        Login
+      </ion-button>
+    
+    </ion-buttons> -->
+
+    <ion-buttons class="d-sm-block d-none py-1 rounded" style="color:#f2f2f2; background:#1A4640;" slot="end">
+
+      <ion-button class="d-flex align-items-center justify-content-center" routerLink="/cart">
+        <ion-icon size="large" name="bookmark"></ion-icon>
+        <span>Saved Items</span>
+      </ion-button>
+
+      <span class="position-absolute start-0 translate-middle badge rounded-pill bg-danger" style="top:20%;">
+        0
+      </span>
+    
+    </ion-buttons>
+
+    <ion-buttons class="d-sm-none d-block rounded m-0" style="color:#1A4640;" slot="end">
+
+      <ion-button class="d-flex m-0 p-0 align-items-center justify-content-center" routerLink="/cart">
+        <ion-icon size="large" name="bookmark"></ion-icon>
+        <span class="position-absolute start-20 translate-middle badge rounded-pill bg-danger" style="top:30%;">
+          0
+        </span>
+        <!-- <span>Saved Items</span> -->
+      </ion-button>
+    
+    </ion-buttons>
+
+    <ion-buttons class="menu-button" slot="end">
+      <ion-menu-button size="large" style="color:#1A4640;"></ion-menu-button>
     </ion-buttons>
 
     
