@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons class="rounded-circle" slot="start">
+      <ion-back-button id="backButton" defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Messages</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-menu-button size="large" style="color:#f2f2f2;"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content class="ion-no-padding">
+
+  <ion-row class="h-100">
+
+    <ion-col class="mh-100" id="chatslist" style="overflow-y: scroll;" size="12" size-md="5" size-lg="4" >
+      
+      <ion-item [routerLink]="['/messages']" [queryParams]="{ chat: chat.id }" button *ngFor="let chat of chats">
+        <ion-avatar slot="start">
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <ion-label>
+          {{chat.name}}
+          <p>Your product is nice</p>
+        </ion-label>
+        <ion-badge slot="end" style="--background:#33887d;">2</ion-badge>
+      </ion-item>
+
+    </ion-col>
+
+    <ion-col class="mh-100 d-sm-block d-none" id="chats" size="12" size-md="7" size-lg="8" >
+
+      <div *ngIf="selectedUser" class="h-100 d-flex flex-column">
+
+        <div class="bg-light" style="height: 10%;" >
+
+          <ion-item lines="none" class="h-100">
+
+            <ion-avatar slot="start">
+              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <ion-label>
+              {{selectedUserMessages.name}}
+            </ion-label>
+          </ion-item>
+
+        </div>
+
+        <div class="bg-light ion-padding" style="height: 80%; overflow-y: scroll;" >
+
+          <div class="sent mt-2">
+
+           <div class="p-2 message rounded">
+            hello Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum magnam distinctio nostrum aspernatur rerum nulla architecto ipsa laborum, tenetur facere!
+
+            <div class="time">
+              16:24
+             </div>
+           </div>
+           
+
+          </div>
+
+          <div class="received mt-2">
+
+            <div class="p-2 message rounded">
+              hi Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui quas vero ex maxime omnis deleniti odio facere nulla exercitationem fugit.
+              <div class="time">
+                16:24
+               </div>
+            </div>
+
+          </div>
+
+          
+        </div>
+
+        <div class="bg-light d-flex flex-column align-items-center justify-content-end ion-padding pb-0 " style="height: 15%;" >
+
+          <ion-item fill="outline" id="custom-item" class="w-100" counter="true" [counterFormatter]="customCounterFormatter">
+            <ion-label position="floating">Type a message</ion-label>
+            <ion-input autofocus="true" maxlength="250" placeholder="Enter message"></ion-input>
+
+            <ion-button slot="end" fill="clear">
+              <ion-icon slot="end" name="send"></ion-icon>
+            </ion-button>
+
+          </ion-item>
+
+        </div>
+
+      </div>
+
+    </ion-col>
+
+  </ion-row>
+
+</ion-content>

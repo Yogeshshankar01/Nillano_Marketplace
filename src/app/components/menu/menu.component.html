@@ -46,7 +46,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item *ngIf="user" button detail="true" detail-icon="caret-forward-outline" (click)="redirect('n/a')">
+    <ion-item *ngIf="user" button detail="true" detail-icon="caret-forward-outline" (click)="redirect('messages')">
       <ion-icon slot="start" name="chatbox-ellipses"></ion-icon>
       <ion-label>
         <h3>Messages</h3>
@@ -59,11 +59,11 @@
       Order History
     </ion-item>
 
-    <ion-item *ngIf="user" button (click)="redirect('cart')" routerLink="/cart">
+    <ion-item button (click)="redirect('cart')" routerLink="/cart">
       <ion-icon slot="start" name="bookmark"></ion-icon>
       <ion-label>
         <h3>Saved Items</h3>
-        <p>0 Items Added</p>
+        <p> {{savedItems.length}} Items Added</p>
       </ion-label>
     </ion-item>
 

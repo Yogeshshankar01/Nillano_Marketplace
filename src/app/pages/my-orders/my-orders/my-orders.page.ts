@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
 import { OrdersService } from 'src/app/services/orders/orders.service';
@@ -106,17 +106,28 @@ export class MyOrdersPage implements OnInit {
 
   async rejectOrder(orderId:number){
 
-    const actionSheet = await this.actionSheet.create({
-      header: 'Are you sure you want to reject this order?',
-      subHeader : 'This action cannot be undone.',
+    const actionSheet = await this.alertController.create({
+      header: 'Reject Order',
+      message: 'Do you have any reason for rejecting this order?',
+      inputs: [
+        {
+          name: 'reason',
+          type: 'text',
+          placeholder: 'Reason'
+        }
+      ],
       buttons: [
         {
-          text: 'Confirm',
-          icon: 'checkmark-done',
-          role: 'destructive',
-          handler: () => {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Reject',
+          handler: (data) => {
+            // handle rejection with reason here
+            // console.log('Rejected with reason:', data.reason);
 
-            this.orderService.rejectOrder(orderId)
+            this.orderService.rejectOrder(orderId,data.reason)
             .pipe(take(1))
             .subscribe(
               res=>{
@@ -148,18 +159,15 @@ export class MyOrdersPage implements OnInit {
             )
 
           }
-        },{
-        text: 'Cancel',
-        role: 'cancel',
-        icon: 'close',
-        handler: () => {
-          // do nothing
         }
-      }]
+      ]
+    
     });
     await actionSheet.present();
 
   }
+  
+
 
   async confirmDelivery(orderId:number){
 
@@ -217,11 +225,12 @@ export class MyOrdersPage implements OnInit {
 
   }
 
-  constructor(private http:HttpClient,private store:Store<AppState>,private actionSheet:ActionSheetController,private orderService:OrdersService,private toastController:ToastController) { }
+  constructor(private http:HttpClient,private store:Store<AppState>,private actionSheet:ActionSheetController,private orderService:OrdersService,private toastController:ToastController, private alertController:AlertController) { }
 
   ngOnInit() {
 
     this.getOrders()
+    
   }
 
 }

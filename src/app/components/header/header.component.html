@@ -23,25 +23,25 @@
     
     </ion-buttons> -->
 
-    <ion-buttons class="d-sm-block d-none py-1 rounded" style="color:#f2f2f2; background:#1A4640;" slot="end">
+    <ion-buttons (click)="redirect('saveditems')" class="d-sm-block d-none py-1 rounded" style="color:#f2f2f2; background:#1A4640;" slot="end">
 
-      <ion-button class="d-flex align-items-center justify-content-center" routerLink="/cart">
-        <ion-icon size="large" name="bookmark"></ion-icon>
+      <ion-button class="d-flex align-items-center justify-content-center">
+        <ion-icon size="large" name="bookmark-outline"></ion-icon>
         <span>Saved Items</span>
       </ion-button>
 
       <span class="position-absolute start-0 translate-middle badge rounded-pill bg-danger" style="top:20%;">
-        0
+        {{savedItems.length}}
       </span>
     
     </ion-buttons>
 
-    <ion-buttons class="d-sm-none d-block rounded m-0" style="color:#1A4640;" slot="end">
+    <ion-buttons (click)="redirect('saveditems')" class="d-sm-none d-block rounded m-0" style="color:#1A4640;" slot="end">
 
       <ion-button style="--padding-end: 0%;" class="d-flex m-0 p-0 align-items-center justify-content-center" routerLink="/cart">
         <ion-icon size="large" name="bookmark-outline"></ion-icon>
         <span class="position-absolute start-20 translate-middle badge rounded-pill bg-danger" style="top:30%;">
-          0
+          {{savedItems.length}}
         </span>
       </ion-button>
     

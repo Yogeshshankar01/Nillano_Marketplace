@@ -4,6 +4,7 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
 import { OrdersService } from 'src/app/services/orders/orders.service';
+import { SaveditemsService } from 'src/app/services/saveditems.service';
 import { UserprofileService } from 'src/app/services/userprofile/userprofile.service';
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
 import { AppState } from 'src/app/types/AppState';
@@ -23,6 +24,7 @@ export class OrderModalComponent implements OnInit {
   phone!: string;
   address!: string;
   terms!: boolean;
+  specialRequests!: string;
 
   paymentOption!:string
 
@@ -64,7 +66,7 @@ export class OrderModalComponent implements OnInit {
 
     this.toastController.create({
       message: "Please fill in the required fields before proceeding",
-      duration: 3000,
+      duration: 1500,
       header: "Validation Error",
       color: 'danger',
       position: 'top'
@@ -88,23 +90,26 @@ export class OrderModalComponent implements OnInit {
     quantity:this.selectedItem.quantity,
     paymentMethod:this.paymentOption,
     productId : this.selectedItem.id,
-    sellerId:this.selectedItem.sellerId
+    sellerId:this.selectedItem.sellerId,
+    specialRequests : this.specialRequests
   }
 
   if(formData.paymentMethod == "Cash"){
-    console.log("Cash logic")
-    console.log(formData)
+    // console.log("Cash logic")
+    // console.log(formData)
+
+    this.modalCtrl.dismiss()
 
     this.orderService.orderProduct(formData)
     .pipe(take(1))
     .subscribe(
       res=>{
 
-        console.log(res)
+        // console.log(res)
 
         this.toastController.create({
           message: res.message,
-          duration: 3000,
+          duration: 1500,
           header: "Order Successful",
           color: 'dark',
           position: 'top'
@@ -115,6 +120,8 @@ export class OrderModalComponent implements OnInit {
         this.modalCtrl.dismiss()
         
         this.store.dispatch(endLoading())
+
+        this.savedItemsService.removeSavedItem(formData.productId)
 
         this.router.navigate(['order-history'])
 
@@ -147,11 +154,11 @@ export class OrderModalComponent implements OnInit {
 
   submitted = false
 
-  constructor(private modalCtrl: ModalController, private toastController : ToastController,private usersProfileService:UserprofileService,private orderService:OrdersService,private router:Router,private store:Store<AppState>) { }
+  constructor(private modalCtrl: ModalController, private toastController : ToastController,private usersProfileService:UserprofileService,private orderService:OrdersService,private router:Router,private store:Store<AppState>,private savedItemsService:SaveditemsService) { }
 
   paymentDone(event:any){
 
-    console.log(event)
+    // console.log(event)
 
   }
 

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, MenuController, ModalController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Subscription, take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -54,7 +54,7 @@ export class AuthPage implements OnInit {
 
     else {
       this.isModalOpen = false
-      this.register()
+      this.presentTermsAndConditionsAlert()
       return
     }
 
@@ -109,8 +109,41 @@ export class AuthPage implements OnInit {
     this.registerForm.get('bio')?.setValue(this.bio)
     this.registerForm.get('username')?.setValue(this.username)
 
-    this.register()
+    this.presentTermsAndConditionsAlert()
+    
   }
+
+  async presentTermsAndConditionsAlert() {
+    const alert = await this.alertController.create({
+      header: 'Terms of Service',
+      message: 'By registering you agree to our <a id="termsLink" class="terms-link" >terms of service</a>.',
+      buttons: [
+        {
+          text: 'Decline',
+          role: 'cancel'
+        },
+        {
+          text: 'Agree',
+          handler: () => {
+            // Perform register action here
+            this.register()
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+
+    // Add onclick event listener to the terms of service link
+    let termsLink = document.getElementById('termsLink') as HTMLElement
+    
+    termsLink.onclick = () => {
+      alert.dismiss()
+    this.router.navigate(['products'])
+  }
+
+  }
+  
 
   loginSubscription: Subscription | undefined
 
@@ -144,7 +177,7 @@ export class AuthPage implements OnInit {
   }
 
 
-  constructor(private store: Store<AppState>, private authService: AuthService, private toastController: ToastController, private router: Router, private menuController: MenuController, private route: ActivatedRoute,private modalController:ModalController,private http:HttpClient) {
+  constructor(private store: Store<AppState>, private authService: AuthService, private toastController: ToastController, private router: Router, private menuController: MenuController, private route: ActivatedRoute,private modalController:ModalController,private http:HttpClient,private alertController:AlertController) {
 
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),

@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { SaveditemsService, SaveItem } from 'src/app/services/saveditems.service';
 
 @Component({
   selector: 'app-product-details',
@@ -182,7 +183,24 @@ export class ProductDetailsPage implements OnInit {
   productId: number | undefined
 
 
-  constructor(private store: Store<AppState>, private activeRoute: ActivatedRoute, private router: Router, private toastController: ToastController, private socialSharing: SocialSharing, private modalCtrl: ModalController, private userProfile: UserprofileService, private http: HttpClient, private actionSheetController: ActionSheetController, private authService: AuthService) { }
+  constructor(private store: Store<AppState>, private activeRoute: ActivatedRoute, private router: Router, private toastController: ToastController, private socialSharing: SocialSharing, private modalCtrl: ModalController, private userProfile: UserprofileService, private http: HttpClient, private actionSheetController: ActionSheetController, private authService: AuthService,private saveItemService:SaveditemsService) { }
+
+
+  saveItemForLater(){
+
+    let selectedItem:SaveItem = {
+      id:this.product.id,
+      name: this.product.name,
+      price: this.product.discount_price ? this.product.discount_price : this.product.price,
+      quantity: this.quantityCount,
+      sellerId:this.product.user.id,
+      seller : this.product.user.username,
+      image : this.product.image.url
+    }
+
+    this.saveItemService.addSavedItem(selectedItem)
+
+  }
 
 
   async presentCommentModal() {
@@ -239,6 +257,7 @@ export class ProductDetailsPage implements OnInit {
       quantity: this.quantityCount,
       sellerId:this.product.user.id
     }
+
     const modal = await this.modalCtrl.create({
       component: OrderModalComponent,
       showBackdrop: true,

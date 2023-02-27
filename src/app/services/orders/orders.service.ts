@@ -43,9 +43,9 @@ export class OrdersService {
   }
 
 
-  rejectOrder(orderId:number):Observable<{message:string}>{
+  rejectOrder(orderId:number,reason:string):Observable<{message:string}>{
     return new Observable((observer)=>{
-      this.http.get<{message:string}>(`${environment.server}/orders/reject-order/${orderId}`)
+      this.http.get<{message:string}>(`${environment.server}/orders/reject-order/${orderId}/${reason}`)
       .pipe(take(1))
       .subscribe(async(res)=>{
         observer.next({message:res.message})

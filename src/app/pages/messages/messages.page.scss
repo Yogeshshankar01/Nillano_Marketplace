@@ -1,0 +1,45 @@
+.sent{
+    display: flex;
+    justify-content: end;
+
+    div.message{
+        background-color: #dfcece;
+        max-width: 60%;
+
+        div.time{
+        font-size: .8em;
+        text-align: right;
+        }
+    }
+
+}
+
+.received{
+    display: flex;
+    justify-content:flex-start;
+
+    div.message{
+        background-color: #b9c5d6;
+        max-width: 60%;
+
+        div.time{
+        font-size: .8em;
+        text-align: right;
+        }
+    }
+
+}
+
+// .received{
+//     div{
+//         background-color: #f2f2f2;
+//         max-width: 60%;
+//         float: left;
+//     }
+// }
+
+// .received{
+//     background-color: #f2f2f2;
+//     max-width: 60%;
+//     float: left;
+// }

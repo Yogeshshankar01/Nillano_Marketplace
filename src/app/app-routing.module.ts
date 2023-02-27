@@ -43,6 +43,14 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./pages/auth/auth.module').then( m => m.AuthPageModule)
   },
+  {
+    path: 'saveditems',
+    loadChildren: () => import('./pages/saveditems/saveditems.module').then( m => m.SaveditemsPageModule)
+  },
+  {
+    path: 'messages',
+    loadChildren: () => import('./pages/messages/messages.module').then( m => m.MessagesPageModule)
+  },
 ];
 
 @NgModule({

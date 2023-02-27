@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { SaveditemsService } from 'src/app/services/saveditems.service';
 
 @Component({
   selector: 'app-header',
@@ -7,8 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  redirect(path:string){
 
-  ngOnInit() {}
+    this.router.navigate([path])
+
+  }
+
+  savedItems:any
+
+  constructor(private router:Router,private savedItemsService:SaveditemsService) { }
+
+  ngOnInit() {
+    this.savedItems = this.savedItemsService.getAllSavedItems()
+  }
 
 }

@@ -85,6 +85,7 @@
       <ion-label>
         <h3>Payment Method: {{order.Payments[0].paymentMethod=="Cash" ? "Cash On Delivery" : "Mobile Money" }} </h3>
         <p *ngIf="order.Payments[0].transactionId!='N/A'"> Status: {{order.Payments[0].transactionId!="N/A" ? "Paid" : "" }} </p>
+        <h3> Requests: {{order.specialRequests ? order.specialRequests : 'No Requests'}} </h3>
       </ion-label>
     </ion-item>
 
