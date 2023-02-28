@@ -30,16 +30,8 @@
 
 }
 
-// .received{
-//     div{
-//         background-color: #f2f2f2;
-//         max-width: 60%;
-//         float: left;
-//     }
-// }
-
-// .received{
-//     background-color: #f2f2f2;
-//     max-width: 60%;
-//     float: left;
-// }
+@media(min-width:500px){
+    .user-profile{
+        margin-left: 2% !important;
+    }
+}
