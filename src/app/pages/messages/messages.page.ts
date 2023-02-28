@@ -73,6 +73,17 @@ export class MessagesPage implements OnInit {
  
   }
 
+  unreadMessages(){
+    this.chats.forEach((element: any) => {
+      element.unreadMessages = 0
+      element.messages.forEach((e:any)=>{
+        if(!e.read && e.from==element.id){
+          element.unreadMessages = element.unreadMessages ? element.unreadMessages+1 : 1
+        }
+      })
+    });
+  }
+
 
   constructor(private activeRoute: ActivatedRoute, private router: Router) { }
 
@@ -80,9 +91,9 @@ export class MessagesPage implements OnInit {
 
     this.chats = [
       {
-        "id": 2,
-        "username": "Smith_Stores",
-        "first_name": "Jane",
+        "id": 1,
+        "username": "JohnDoe_Shoes",
+        "first_name": "John",
         "user_profile": {
           "url": "https://ionicframework.com/docs/img/demos/avatar.svg",
           "public_id": "sjjd"
@@ -93,6 +104,7 @@ export class MessagesPage implements OnInit {
             "content": "Hello good morning",
             "from": 1,
             "to": 2,
+            "read" : false,
             "createdAt": "2023-02-27T19:10:28.044Z"
           },
           {
@@ -100,6 +112,7 @@ export class MessagesPage implements OnInit {
             "content": "Am Latif",
             "from": 1,
             "to": 2,
+            "read" : false,
             "createdAt": "2023-02-27T19:10:28.044Z"
           },
           {
@@ -107,6 +120,7 @@ export class MessagesPage implements OnInit {
             "content": "Good morning, how are you",
             "from": 2,
             "to": 1,
+            "read" : false,
             "createdAt": "2023-02-27T19:10:28.045Z"
           }
         ]
@@ -121,24 +135,20 @@ export class MessagesPage implements OnInit {
         },
         "messages": [
           {
-            "id": 5,
-            "content": "hey",
+            "id": 2,
+            "content": "Hello, am Latif am interested in your product",
             "from": 3,
-            "to": 1,
-            "createdAt": "2023-02-27T19:10:28.045Z"
-          },
-          {
-            "id": 6,
-            "content": "hi",
-            "from": 1,
-            "to": 3,
-            "createdAt": "2023-02-27T19:10:28.045Z"
+            "to": 2,
+            "createdAt": "2023-02-27T19:10:28.044Z",
+            "read" : false,
           }
         ]
       }
     ]
 
-    this.activeRoute.queryParams.subscribe(params => {
+  this.unreadMessages()
+
+    this.activeRoute.queryParams.subscribe(async params => {
 
 
       let chatslist = document.getElementById('chatslist') as HTMLElement
@@ -153,6 +163,17 @@ export class MessagesPage implements OnInit {
       else {
         this.selectedUser = true
         let selectedUserId = params["chat"]
+
+        await this.chats.forEach((element: any) => {
+          if(element.id == selectedUserId){
+            element.messages.forEach((e: any) => {
+              e.read = true
+            });
+          }
+        });
+
+        this.unreadMessages()
+        
         this.selectedUserMessages = this.chats.find((chat: { id: any; }) => (chat.id == selectedUserId))
 
         if (window.innerWidth <= 767) {

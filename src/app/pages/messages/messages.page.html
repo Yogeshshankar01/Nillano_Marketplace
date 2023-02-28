@@ -28,7 +28,7 @@
           {{chat.username ? chat.username : chat.first_name}}
           <p>{{chat.messages[chat.messages.length - 1].content}}</p>
         </ion-label>
-        <ion-badge slot="end" style="--background:#33887d;">2</ion-badge>
+        <ion-badge *ngIf="chat.unreadMessages" slot="end" style="--background:#33887d;">{{chat.unreadMessages}}</ion-badge>
       </ion-item>
 
     </ion-col>
