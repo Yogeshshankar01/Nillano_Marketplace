@@ -1,6 +1,7 @@
 .sent{
     display: flex;
     justify-content: end;
+    color: #242323;
 
     div.message{
         background-color: #dfcece;
@@ -17,6 +18,7 @@
 .received{
     display: flex;
     justify-content:flex-start;
+    color: #242323;
 
     div.message{
         background-color: #b9c5d6;

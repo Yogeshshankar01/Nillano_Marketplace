@@ -20,7 +20,7 @@
 
     <ion-col class="mh-100" id="chatslist" style="overflow-y: scroll;" size="12" size-md="5" size-lg="4" >
       
-      <ion-item [routerLink]="['/messages']" [queryParams]="{ chat: chat.id }" button *ngFor="let chat of chats">
+      <ion-item lines="full" [routerLink]="['/messages']" [queryParams]="{ chat: chat.id }" button *ngFor="let chat of chats">
         <ion-avatar slot="start">
           <img alt="User profile" [src]="chat.user_profile.url">
         </ion-avatar>
