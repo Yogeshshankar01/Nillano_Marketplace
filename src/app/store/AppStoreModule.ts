@@ -16,6 +16,8 @@ import { editProductReducers } from "./editProducts/editProductState.reducers";
 import { editProductEffect } from "./editProducts/editProductState.effects";
 import { checkLoginReducers } from "./checkLogin/checklogin.reducers";
 import { checkLoginEffect } from "./checkLogin/checklogin.effects";
+import { getUserMessagesEffects } from "./getUserMessages/getUserMessages.effects";
+import { getuserMessagesReducers } from "./getUserMessages/getUserMessages.reducers";
 
 export const AppStoreModule = [
     StoreModule.forRoot({}, {}),
@@ -27,6 +29,7 @@ export const AppStoreModule = [
     StoreModule.forFeature("userProducts",userProductsReducers),
     StoreModule.forFeature("editProduct",editProductReducers),
     StoreModule.forFeature("checkLogin",checkLoginReducers),
+    StoreModule.forFeature("getUserMessages",getuserMessagesReducers),
     EffectsModule.forRoot([]),
     EffectsModule.forFeature([
         loginEffects,
@@ -36,6 +39,7 @@ export const AppStoreModule = [
         listProductEffect,
         userProductsEffects,
         editProductEffect,
-        checkLoginEffect
+        checkLoginEffect,
+        getUserMessagesEffects
     ])
 ]

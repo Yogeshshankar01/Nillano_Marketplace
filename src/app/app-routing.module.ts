@@ -49,7 +49,11 @@ const routes: Routes = [
   },
   {
     path: 'messages',
-    loadChildren: () => import('./pages/messages/messages.module').then( m => m.MessagesPageModule)
+    loadChildren: () => import('./pages/messages/messages.module').then( m => m.MessagesPageModule),canLoad : [AuthGuard]
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
   },
 ];
 

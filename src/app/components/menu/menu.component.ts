@@ -22,7 +22,23 @@ export class MenuComponent implements OnInit {
 
   savedItems:any
 
+  totalUnreadMessages = 0
+
   ngOnInit() {
+
+    this.store.select("getUserMessages")
+      .subscribe(
+        res => {
+          if (res.success) {
+            this.totalUnreadMessages = res.totalUnreadMesages
+          }
+
+          if (res.fail) {
+            this.totalUnreadMessages = 0
+          }
+
+        }
+      )
 
     this.savedItems = this.savedItemsService.getAllSavedItems()
 

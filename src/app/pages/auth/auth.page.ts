@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { Subscription, take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { checkLogin } from 'src/app/store/checkLogin/checklogin.actions';
+import { getUserMessages } from 'src/app/store/getUserMessages/userMessages.action';
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
 import { login } from 'src/app/store/login/login.action';
 import { register } from 'src/app/store/register/register.action';
@@ -231,6 +232,8 @@ export class AuthPage implements OnInit {
             }).then(toast => toast.present())
 
             localStorage.getItem('registered') && localStorage.removeItem('registered')
+
+            this.store.dispatch(getUserMessages())
 
             this.store.dispatch(checkLogin())
 

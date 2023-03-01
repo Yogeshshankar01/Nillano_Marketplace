@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { take } from 'rxjs';
+import { UserMessagesService } from 'src/app/services/userMessages/user-messages.service';
+import { getUserMessages } from 'src/app/store/getUserMessages/userMessages.action';
+import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
+import { AppState } from 'src/app/types/AppState';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-messages',
@@ -11,6 +19,7 @@ export class MessagesPage implements OnInit {
   chats: any
 
   back() {
+    // this.messageRead = false
     this.router.navigate(['messages'])
   }
 
@@ -53,147 +62,168 @@ export class MessagesPage implements OnInit {
 
   content = ""
 
-  addChat(userId: number) {
-    
-    this.chats.forEach((element: any) => {
-      if(element.id === userId){
+  addChat(messageToId: number) {
 
-        element.messages.push({
-          id: 4,
-          content: this.content,
-          from: 1,
-          to: userId,
-          createdAt: new Date().toISOString()
-        })
+    let content
 
-        this.content = ""
+    if (localStorage.getItem("chatSellerMessageContent")) {
+      content = localStorage.getItem("chatSellerMessageContent")
+      localStorage.removeItem("chatSellerMessageContent")
+      this.store.dispatch(startLoading())
+    }
+    else {
+      content = this.content
+    }
 
-      }
-    });
- 
-  }
+    this.http.post(`${environment.server}/messaging/send`, { to: messageToId, content: content })
+      .pipe(take(1))
+      .subscribe(
+        res => {
+          this.content = ""
+          this.store.dispatch(getUserMessages())
+          this.store.dispatch(endLoading())
+        },
+        err => {
 
-  unreadMessages(){
-    this.chats.forEach((element: any) => {
-      element.unreadMessages = 0
-      element.messages.forEach((e:any)=>{
-        if(!e.read && e.from==element.id){
-          element.unreadMessages = element.unreadMessages ? element.unreadMessages+1 : 1
         }
-      })
-    });
+      )
+
   }
 
+  totalUnreadMessages = 0
 
-  constructor(private activeRoute: ActivatedRoute, private router: Router) { }
+
+  constructor(private activeRoute: ActivatedRoute, private router: Router, private userMessagesService: UserMessagesService, private store: Store<AppState>, private http: HttpClient) { }
+
+  messageRead = false
 
   ngOnInit() {
 
-    this.chats = [
-      {
-        "id": 1,
-        "username": "JohnDoe_Shoes",
-        "first_name": "John",
-        "user_profile": {
-          "url": "https://ionicframework.com/docs/img/demos/avatar.svg",
-          "public_id": "sjjd"
-        },
-        "messages": [
-          {
-            "id": 1,
-            "content": "Hello good morning",
-            "from": 1,
-            "to": 2,
-            "read" : false,
-            "createdAt": "2023-02-27T19:10:28.044Z"
-          },
-          {
-            "id": 3,
-            "content": "Am Latif",
-            "from": 1,
-            "to": 2,
-            "read" : false,
-            "createdAt": "2023-02-27T19:10:28.044Z"
-          },
-          {
-            "id": 4,
-            "content": "Good morning, how are you",
-            "from": 2,
-            "to": 1,
-            "read" : false,
-            "createdAt": "2023-02-27T19:10:28.045Z"
+    this.store.select("getUserMessages")
+      .subscribe(
+        res => {
+
+          if (res.success) {
+
+            this.totalUnreadMessages = res.totalUnreadMesages
+            this.chats = JSON.parse(JSON.stringify(res.userMessages))
+
+            this.activeRoute.queryParams
+              .subscribe(async params => {
+
+                let chatslist = document.getElementById('chatslist') as HTMLElement
+                let chats = document.getElementById('chats') as HTMLElement
+
+                if (!params["chat"]) {
+                  this.selectedUser = false
+                  chatslist.classList.remove('d-none')
+                  chats.classList.add('d-none')
+                }
+
+                else {
+                  this.selectedUser = true
+                  let selectedUserId = params["chat"]
+
+                  this.selectedUserMessages = this.chats.find((chat: { id: any; }) => (chat.id == selectedUserId))
+
+                  if (localStorage.getItem("chatSellerMessageContent")) {
+                    this.addChat(selectedUserId)
+                  }
+
+                  if (!this.selectedUserMessages) {
+
+                    this.store.dispatch(startLoading())
+
+                    this.http.get<{ usersMessages: any[] }>(`${environment.server}/messaging/messages/user/${selectedUserId}`)
+                      .subscribe(
+                        res => {
+                          this.selectedUserMessages = res.usersMessages[0]
+                          this.store.dispatch(endLoading())
+
+                        }
+                      )
+
+                  }
+
+                  if (window.innerWidth <= 767) {
+
+                    chatslist.classList.add('d-none')
+                    chats.classList.remove('d-none')
+
+                  }
+
+                  this.selectedUserMessages.messages.forEach((element: any) => {
+
+                    if(element.read == false && element.from == selectedUserId){
+                      this.http.get(`${environment.server}/messaging/messages/read/${this.selectedUserMessages.id}`)
+                      .subscribe(res => {
+                        this.store.dispatch(getUserMessages())
+                      })
+                      return
+                    }
+                    
+                  });
+
+
+
+                }
+
+              })
+
+
           }
-        ]
-      },
-      {
-        "id": 3,
-        "username": "Bobby1_Shop",
-        "first_name": "Bob",
-        "user_profile": {
-          "url": "https://ionicframework.com/docs/img/demos/avatar.svg",
-          "public_id": "sjjd"
-        },
-        "messages": [
-          {
-            "id": 2,
-            "content": "Hello, am Latif am interested in your product",
-            "from": 3,
-            "to": 2,
-            "createdAt": "2023-02-27T19:10:28.044Z",
-            "read" : false,
+
+          if (res.fail) {
+            this.totalUnreadMessages = 0
           }
-        ]
-      }
-    ]
 
-  this.unreadMessages()
-
-    this.activeRoute.queryParams.subscribe(async params => {
+        }
+      )
 
 
-      let chatslist = document.getElementById('chatslist') as HTMLElement
+  }
+
+  ionViewDidLeave(){
+    // this.messageRead = false
+  }
+
+  ngAfterViewInit() {
+
+      if(this.selectedUser){
+
+        setTimeout(() => {
+
+          let chatslist = document.getElementById('chatslist') as HTMLElement
       let chats = document.getElementById('chats') as HTMLElement
 
-      if (!params["chat"]) {
-        this.selectedUser = false
-        chatslist.classList.remove('d-none')
-        chats.classList.add('d-none')
+      if(window.innerWidth <= 767) {
+
+        chatslist.classList.add('d-none')
+        chats.classList.remove('d-none')
+
       }
+          
+        }, 1000);
+      
+    }
+    else{
+      setTimeout(() => {
 
-      else {
-        this.selectedUser = true
-        let selectedUserId = params["chat"]
-
-        await this.chats.forEach((element: any) => {
-          if(element.id == selectedUserId){
-            element.messages.forEach((e: any) => {
-              e.read = true
-            });
+        if(this.selectedUser){
+          let chatslist = document.getElementById('chatslist') as HTMLElement
+          let chats = document.getElementById('chats') as HTMLElement
+    
+          if(window.innerWidth <= 767) {
+    
+            chatslist.classList.add('d-none')
+            chats.classList.remove('d-none')
+    
           }
-        });
-
-        this.unreadMessages()
+        }
         
-        this.selectedUserMessages = this.chats.find((chat: { id: any; }) => (chat.id == selectedUserId))
-
-        if (window.innerWidth <= 767) {
-
-          chatslist.classList.add('d-none')
-          chats.classList.remove('d-none')
-
-        }
-
-        else {
-          chatslist.classList.remove('d-none')
-          chats.classList.add('d-none')
-        }
-
-
-
-      }
-
-    })
-
+      }, 2000);
+    }
+    
   }
 
 }

@@ -3,6 +3,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { AuthService } from './services/auth/auth.service';
 import { checkLogin } from './store/checkLogin/checklogin.actions';
+import { getUserMessages } from './store/getUserMessages/userMessages.action';
 import { startLoading } from './store/loading/loading.action';
 import { AppState } from './types/AppState';
 
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(checkLogin())
+    this.store.dispatch(getUserMessages())
 
     this.store.select('checkLogin')
     .subscribe(

@@ -36,6 +36,8 @@ export class ProductDetailsPage implements OnInit {
 
   likes: Number | undefined
 
+  currentUserId!: number;
+
   toggleLike() {
 
     this.store.dispatch(startLoading())
@@ -120,7 +122,7 @@ export class ProductDetailsPage implements OnInit {
 
       this.toastController.create({
         message: "You have reached the maximum quantity of this product.",
-        duration: 3000,
+        duration: 1500,
         color: 'dark',
         position: 'bottom'
       }).then((toast) => {
@@ -146,7 +148,7 @@ export class ProductDetailsPage implements OnInit {
 
       this.toastController.create({
         message: "You have reached the minimum order of this product.",
-        duration: 3000,
+        duration: 1500,
         color: 'dark',
         position: 'bottom'
       }).then((toast) => {
@@ -269,6 +271,65 @@ export class ProductDetailsPage implements OnInit {
     return await modal.present();
   }
 
+  chatSellerMessageContent:string = ""
+
+  chatSeller(){
+
+    if(!this.chatSellerMessageContent){
+
+      this.toastController.create({
+        message: "Please type a message to send to seller...",
+        duration: 1500,
+        color: 'danger',
+        position: 'bottom'
+      }).then((toast) => {
+        toast.present()
+      })
+
+      return
+
+    }
+
+    if(!this.currentUserId){
+
+      this.toastController.create({
+        message: "Please login to chat seller...",
+        duration: 1500,
+        color: 'danger',
+        position: 'bottom'
+      }).then((toast) => {
+        toast.present()
+      })
+
+      return
+
+    }
+
+    if(this.currentUserId === this.product.user_id){
+
+      this.toastController.create({
+        message: "Sorry you can not have a coversation with yourself...",
+        duration: 1500,
+        color: 'danger',
+        position: 'bottom'
+      }).then((toast) => {
+        toast.present()
+      })
+
+      return
+
+    }
+
+    localStorage.setItem("chatSellerMessageContent",this.chatSellerMessageContent)
+
+    this.router.navigate(['messages'],{queryParams:{chat:this.product.user.id}})
+
+  }
+
+  ionViewDidLeave(){
+    this.chatSellerMessageContent = ""
+  }
+
   ngOnInit() {
 
     this.store.select('checkLogin')
@@ -323,17 +384,15 @@ export class ProductDetailsPage implements OnInit {
 
             this.relatedProducts = this.product.user.products
 
-            let currentUserId: number
-
-            console.log(this.product.user.followers)
+            // console.log(this.product.user.followers)
 
             this.userProfile.myProfile().subscribe(
               async res => {
-                currentUserId = await res.profile.id
-                console.log(currentUserId)
-                this.isLiked = this.product.Likes.some((like: { user_id: number; }) => like.user_id === currentUserId);
-                this.isFollowing = this.product.user.followers.some((follower: { followerId : number; }) => follower.followerId === currentUserId);
-                console.log(this.isFollowing)
+                this.currentUserId = await res.profile.id
+                // console.log(this.currentUserId)
+                this.isLiked = this.product.Likes.some((like: { user_id: number; }) => like.user_id === this.currentUserId);
+                this.isFollowing = this.product.user.followers.some((follower: { followerId : number; }) => follower.followerId === this.currentUserId);
+                // console.log(this.isFollowing)
               },
               err => {
                 console.log(err)

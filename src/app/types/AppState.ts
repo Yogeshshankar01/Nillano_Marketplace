@@ -1,5 +1,6 @@
 import { checkLoginInterface } from "../store/checkLogin/checklogininterface";
 import { editProductStateInterface } from "../store/editProducts/editProductStateInterface";
+import { getUserMessagesInterface } from "../store/getUserMessages/getUserMessages.interface";
 import { listProductStateInterface } from "../store/listProduct/list.state";
 import { loadingStateInterface } from "../store/loading/loadingStateInterface";
 import { LoginStateInterface } from "../store/login/LoginState";
@@ -17,5 +18,6 @@ export interface AppState{
     addProduct : listProductStateInterface,
     userProducts : userProductsStateInterface
     editProduct : editProductStateInterface,
-    checkLogin : checkLoginInterface
+    checkLogin : checkLoginInterface,
+    getUserMessages : getUserMessagesInterface
 }

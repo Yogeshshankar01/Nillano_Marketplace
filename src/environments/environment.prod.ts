@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  server:'https://9998-154-160-9-24.eu.ngrok.io'
+  server:'https://fdba-154-160-18-53.eu.ngrok.io'
 };

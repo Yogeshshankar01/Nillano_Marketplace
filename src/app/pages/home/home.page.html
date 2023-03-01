@@ -138,49 +138,12 @@
     <button class="btn btn-dark w-100" (click)="retry()">RETRY</button>
   </div>
 
-  <ion-fab *ngIf="connected" (click)="setOpen(true)" slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab *ngIf="connected" [routerLink]="['/messages']" slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button style="--background : #1A4640;">
       <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
     </ion-fab-button>
-    <ion-badge color="danger" class="position-absolute top-0 left-0 border border-light rounded-circle">5</ion-badge>
+    <ion-badge color="danger" class="position-absolute top-0 left-0 border border-light rounded-circle">{{totalUnreadMessages}}</ion-badge>
   </ion-fab>
-
-  <ion-modal [isOpen]="isModalOpen">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Chats</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="setOpen(false)">Close</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-
-        <ion-item *ngFor="let chat of chats">
-          <ion-avatar slot="start">
-            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-          </ion-avatar>
-          <ion-label>
-            {{chat.name}}
-            <p>Your product is nice</p>
-          </ion-label>
-          <ion-badge slot="end" style="--background:#33887d;">2</ion-badge>
-        </ion-item>
-
-      </ion-content>
-
-      <ion-footer>
-        <ion-item class="ion-text-center" lines="none">
-          <div class="w-100 d-flex align-items-center justify-content-center">
-            <ion-icon class="pe-2" style="color: #1A4640;" name="lock-closed-outline"></ion-icon>
-            <ion-label style="color: #1A4640;" class="ion-text-light">Your messages are secured</ion-label>
-          </div>
-        </ion-item>
-      </ion-footer>
-
-    </ng-template>
-  </ion-modal>
 
 
 </ion-content>

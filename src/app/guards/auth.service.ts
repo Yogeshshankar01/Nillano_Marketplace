@@ -14,8 +14,8 @@ export class AuthGuard implements CanLoad,OnDestroy {
 
   message(){
     this.toastController.create({
-      message:"Access to this page requires login",
-      duration:3000,
+      message:"Please log in...",
+      duration:1500,
       color:'danger',
       position : 'bottom'
     }).then(toast=>toast.present())

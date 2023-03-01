@@ -54,5 +54,13 @@ export const AppInitialState:AppState = {
         loggedIn : false,
         process : false,
         profile : null
+    },
+    getUserMessages:{
+        process : false,
+        success : false,
+        fail : false,
+        message : null,
+        userMessages : [],
+        totalUnreadMesages : 0
     }
 }

@@ -5,6 +5,7 @@ import { MenuController, NavController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
 import { checkLogin } from 'src/app/store/checkLogin/checklogin.actions';
+import { getUserMessages } from 'src/app/store/getUserMessages/userMessages.action';
 import { endLoading } from 'src/app/store/loading/loading.action';
 import { logout } from 'src/app/store/login/login.action';
 import { registrationDetails } from 'src/app/store/register/registrationDetails';
@@ -71,6 +72,8 @@ login({email,password}:{email:string,password:string}):Observable<{message:strin
     })
 
     this.store.dispatch(checkLogin())
+
+    this.store.dispatch(getUserMessages())
 
     // if(this.router.url == '/home'){
     //   location.reload()

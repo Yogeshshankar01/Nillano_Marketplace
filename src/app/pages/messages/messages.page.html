@@ -5,7 +5,7 @@
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
 
-    <ion-title>Messages</ion-title>
+    <ion-title>Messages <span *ngIf="totalUnreadMessages" style="font-size: .6em;"> ({{totalUnreadMessages}} Unread) </span></ion-title>
 
     <ion-buttons slot="end">
       <ion-menu-button size="large" style="color:#f2f2f2;"></ion-menu-button>
@@ -16,7 +16,7 @@
 
 <ion-content class="ion-no-padding">
 
-  <ion-row class="h-100">
+  <ion-row *ngIf="chats?.length > 0" class="h-100">
 
     <ion-col class="mh-100" id="chatslist" style="overflow-y: scroll;" size="12" size-md="5" size-lg="4" >
       
@@ -25,8 +25,8 @@
           <img alt="User profile" [src]="chat.user_profile.url">
         </ion-avatar>
         <ion-label>
-          {{chat.username ? chat.username : chat.first_name}}
-          <p>{{chat.messages[chat.messages.length - 1].content}}</p>
+          <h3> {{chat.name}} <small> (@{{chat.username}}) </small> </h3>
+          <p *ngIf="chat.messages.length > 0">{{chat.messages[chat.messages.length - 1].content}}</p>
         </ion-label>
         <ion-badge *ngIf="chat.unreadMessages" slot="end" style="--background:#33887d;">{{chat.unreadMessages}}</ion-badge>
       </ion-item>
@@ -35,7 +35,7 @@
 
     <ion-col class="mh-100 d-sm-block d-none" id="chats" size="12" size-md="7" size-lg="8" >
 
-      <div *ngIf="selectedUser" class="h-100 d-flex flex-column">
+      <div *ngIf="selectedUserMessages" class="h-100 d-flex flex-column">
 
         <div class="bg-light" style="height: 10%;" >
 
@@ -47,29 +47,31 @@
 
             </ion-button>
 
-            <ion-avatar class="user-profile" slot="start">
-              <img alt="User Profile" [src]="selectedUserMessages.user_profile.url" />
+            <ion-avatar *ngIf="selectedUserMessages" class="user-profile" slot="start">
+              <img alt="User Profile" [src]="selectedUserMessages?.user_profile.url" />
             </ion-avatar>
 
-            <ion-label>
-              {{selectedUserMessages.username ? selectedUserMessages.username : selectedUserMessages.first_name}}
+            <ion-label *ngIf="selectedUserMessages">
+              <h3> {{selectedUserMessages.name}} <small>(@{{selectedUserMessages.username}})</small> </h3>
             </ion-label>
           </ion-item>
 
         </div>
 
-        <div class="bg-light ion-padding" style="height: 80%; overflow-y: scroll;" >
+        <div #scrollMe [scrollTop]="scrollMe.scrollHeight" class="bg-light ion-padding" style="height: 80%; overflow-y: scroll;" >
 
-          <div *ngFor="let message of selectedUserMessages.messages">
+          <ng-container *ngIf="selectedUserMessages?.messages.length > 0">
+
+          <div *ngFor="let message of selectedUserMessages?.messages">
             
             <div *ngIf="message.to===selectedUserMessages.id" class="sent mt-2">
 
               <div class="p-2 message rounded">
               
-                {{message.content}}
+                {{message?.content}}
    
                <div class="time">
-                 {{formatTimestamp(message.createdAt)}}
+                 {{formatTimestamp(message?.createdAt)}}
                 </div>
               </div>
               
@@ -79,15 +81,17 @@
              <div *ngIf="message.to!==selectedUserMessages.id" class="received mt-2">
    
                <div class="p-2 message rounded">
-                {{message.content}}
+                {{message?.content}}
                  <div class="time">
-                  {{formatTimestamp(message.createdAt)}}
+                  {{formatTimestamp(message?.createdAt)}}
                   </div>
                </div>
    
              </div>
 
           </div>
+
+          </ng-container>
 
           
         </div>
@@ -111,5 +115,10 @@
     </ion-col>
 
   </ion-row>
+
+  <div *ngIf="chats?.length < 1" id="container">
+    <strong>You have no chats at the moment</strong>
+    <p> Start by messaging some sellers about their products. </p>
+  </div>
 
 </ion-content>
