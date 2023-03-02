@@ -138,8 +138,8 @@ p {
     padding: 2% 0;
   }
 
-  .active-tab ion-label {
-    background:#f2f2f2;
+  ion-segment-button.active-tab {
+    --indicator-color: none;
   }
 
 }
