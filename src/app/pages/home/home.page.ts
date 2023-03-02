@@ -4,7 +4,7 @@ import { AppState } from 'src/app/types/AppState';
 import Masonry from 'masonry-layout';
 import { Router } from '@angular/router';
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
-import { ActionSheetController, ToastController } from '@ionic/angular';
+import { ActionSheetController, Platform, ToastController } from '@ionic/angular';
 import { getProducts } from 'src/app/store/products/products.action';
 import { ProductsserviceService } from 'src/app/services/productsservice/productsservice.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -58,7 +58,11 @@ export class HomePage implements OnDestroy, OnInit {
 
   }
 
-  constructor(private store: Store<AppState>, private router: Router, private toastController: ToastController, private productsService: ProductsserviceService, private authService: AuthService, private actionSheetController: ActionSheetController) {
+  isIOS!: boolean;
+
+  constructor(private store: Store<AppState>, private router: Router, private toastController: ToastController, private productsService: ProductsserviceService, private authService: AuthService, private actionSheetController: ActionSheetController,private platform: Platform) {
+
+    this.isIOS = this.platform.is('ios');
 
   }
 

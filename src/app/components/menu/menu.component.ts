@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { SaveditemsService } from 'src/app/services/saveditems.service';
 import { getUserProducts } from 'src/app/store/userProducts/userproducts.actions';
@@ -13,7 +13,11 @@ import { AppState } from 'src/app/types/AppState';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router: Router, private menuController: MenuController, private store: Store<AppState>,private savedItemsService:SaveditemsService) { }
+  isIOS:boolean
+
+  constructor(private router: Router, private menuController: MenuController, private store: Store<AppState>,private savedItemsService:SaveditemsService,private platform: Platform) { 
+    this.isIOS = this.platform.is('ios');
+  }
 
   user: any
 

@@ -40,3 +40,17 @@ ion-searchbar.custom {
         padding: 0% !important;
     }
 }
+
+/* Styles for iOS devices */
+:host-context(.ios) {
+  /* your styles here */
+  // ion-toolbar{
+  //   // --padding-bottom:6%;
+  // }
+
+  ion-buttons{
+    margin-top: 3% !important;
+    margin-bottom: 3% !important;
+  }
+  
+}

@@ -19,3 +19,11 @@ ion-button.auth {
     --padding-top: 10px;
     --padding-bottom: 10px;
 }
+
+:host-context(.ios) {
+
+    ion-toolbar{
+        padding: 3%;
+    }
+
+}

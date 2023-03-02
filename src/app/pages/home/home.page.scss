@@ -155,3 +155,30 @@ p {
   margin-top: 8px;
   font-size: 14px;
 }
+
+:host-context(.ios) {
+
+  ion-segment-button{
+    --padding-top:5%;
+    --padding-bottom:5%;
+  }
+
+  ion-segment{
+    border-radius: 0%;
+  }
+
+  ion-segment-button.buy{
+    border-top-right-radius: 0%;
+    border-bottom-right-radius: 0%;
+  }
+  
+  ion-segment-button.rent{
+    border-top-left-radius: 0%;
+    border-bottom-left-radius: 0%;
+  }
+
+  ion-toolbar#search{
+    padding: 2% 0;
+  }
+
+}

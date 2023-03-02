@@ -64,7 +64,6 @@ export class ProductsPage implements OnInit {
 
       // Getting the states of the products at each time
     this.store.select('products')
-    .pipe(take(1))
     .subscribe(res => {
 
       if(!res.filter && !this.getProducts){
@@ -77,6 +76,7 @@ export class ProductsPage implements OnInit {
       }
 
       if (res.success) {
+        console.log("Success")
         this.store.dispatch(endLoading())
         console.log(res.products)
         this.products = res.products
