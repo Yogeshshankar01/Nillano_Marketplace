@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
@@ -13,7 +15,39 @@ import { environment } from 'src/environments/environment';
 })
 export class OrderHistoryPage implements OnInit {
 
+  chatSellerMessageContent = ""
+
   orders:any
+
+  chatSeller(sellerId:number){
+
+    console.log("Clicked")
+
+    if(!this.chatSellerMessageContent){
+
+      this.toastController.create({
+        message: "Please type a message to send to seller...",
+        duration: 1500,
+        color: 'danger',
+        position: 'bottom'
+      }).then((toast) => {
+        toast.present()
+      })
+
+      return
+
+    }
+
+    localStorage.setItem("chatSellerMessageContent",this.chatSellerMessageContent)
+
+    this.router.navigate(['messages'],{queryParams:{chat:sellerId}})
+
+  }
+
+  ionViewDidLeave(){
+    this.chatSellerMessageContent = ""
+  }
+
 
   getOrders(){
 
@@ -38,12 +72,13 @@ export class OrderHistoryPage implements OnInit {
 
   toggleOrderDetails(orderID:number) {
     this.showDetails = this.showDetails!=orderID ? orderID : 0
+    this.chatSellerMessageContent = ""
   }
 
   deleteItem(item:any) {
     // implement item deletion logic here
   }
-  constructor(private http:HttpClient,private store:Store<AppState>) { }
+  constructor(private http:HttpClient,private store:Store<AppState>,private toastController:ToastController,private router : Router) { }
 
   ngOnInit() {
     this.getOrders()

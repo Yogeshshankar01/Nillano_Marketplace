@@ -11,6 +11,7 @@ import { getUserMessages } from 'src/app/store/getUserMessages/userMessages.acti
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
 import { login } from 'src/app/store/login/login.action';
 import { register } from 'src/app/store/register/register.action';
+import { getUserProducts } from 'src/app/store/userProducts/userproducts.actions';
 import { AppState } from 'src/app/types/AppState';
 import { environment } from 'src/environments/environment';
 
@@ -236,6 +237,8 @@ export class AuthPage implements OnInit {
             this.store.dispatch(getUserMessages())
 
             this.store.dispatch(checkLogin())
+
+            this.store.dispatch(getUserProducts())
 
             if (this.currentRoute.includes('?')) {
               location.assign(this.currentRoute)

@@ -211,7 +211,7 @@ export class ProductDetailsPage implements OnInit {
 
       this.toastController.create({
         message: "Please Login to continue...",
-        duration: 3000,
+        duration: 2000,
         color: 'danger',
         position: 'top'
       }).then((toast) => {
@@ -225,7 +225,7 @@ export class ProductDetailsPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: CommentModalComponent,
       showBackdrop: true,
-      initialBreakpoint: 0.4,
+      initialBreakpoint: 0.45,
       componentProps : {productId : this.productId }
     });
     return await modal.present();

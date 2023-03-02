@@ -147,7 +147,18 @@ export class OrderModalComponent implements OnInit {
   }
 
   if(formData.paymentMethod == "Mobile"){
-    console.log("Mobile logic")
+    
+    this.toastController.create({
+      message: "Sorry mobile money transaction is not working at the moment.",
+      duration: 1500,
+      color: 'danger',
+      position: 'top'
+    }).then((toast) => {
+      toast.present()
+    })
+
+    this.store.dispatch(endLoading())
+
   }
 
   }

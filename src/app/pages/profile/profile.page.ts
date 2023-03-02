@@ -90,7 +90,7 @@ export class ProfilePage implements OnInit {
 
         this.toastController.create({
           message: res.message,
-          duration: 3500,
+          duration: 1500,
           header: "Success",
           color: 'primary',
           position: 'top'
@@ -106,7 +106,7 @@ export class ProfilePage implements OnInit {
 
         err.error.message && this.toastController.create({
           message: err.error.message,
-          duration: 3500,
+          duration: 1500,
           header: "Error",
           color: 'danger',
           position: 'top'
@@ -219,7 +219,7 @@ export class ProfilePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: BalanceComponent,
       showBackdrop: true,
-      initialBreakpoint: 0.35
+      initialBreakpoint: 0.4
     });
     return await modal.present();
   }
