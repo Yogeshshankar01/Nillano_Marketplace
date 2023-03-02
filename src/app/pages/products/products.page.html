@@ -12,23 +12,27 @@
       <ion-menu-button style="color: #f2f2f2;"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar style="--background:#1A4640; color: #f2f2f2;">
-    <ion-searchbar class="custom"></ion-searchbar>
-    <ion-buttons slot="end">
-      <ion-button (click)="openFilter()">
-        <ion-icon style="color:#f2f2f2;" name="options"></ion-icon>
-        <ion-text class="ms-1"> Filters </ion-text>
-      </ion-button>
-    </ion-buttons>
+  <ion-toolbar id="search" style="--background:#1A4640; color: #f2f2f2;">
+    <ion-searchbar class="custom" placeholder="Search for products or sellers"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 
-<ion-content style="--padding-top:5%;">
+<ion-content>
   
-  <ion-label class="search-results m-2 mb-3 text-dark">
-    Search Results: {{products.length}}
-  </ion-label>
+  <ion-item lines="none" style="--background: transparent;">
+
+    <ion-label class="search-results text-dark">
+      Search Results: {{products.length}}
+    </ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button class="text-primary fs-6" (click)="openFilter()">
+        <ion-icon class="me-1" name="options"></ion-icon> Filter
+      </ion-button>
+    </ion-buttons>
+
+  </ion-item>
   
 
   <ion-row class="products">
@@ -76,6 +80,19 @@
     </ion-col>
    
   </ion-row>
+
+
+    <div id="container" *ngIf="products.length < 1" class="text-dark text-center">
+      
+   <strong>
+    Our sellers are currently adding products.
+   </strong>
+
+   <p>
+    New items will be available soon!
+   </p>
+</div>
+    
 
   <!-- <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
     <ion-infinite-scroll-content loadingText="Loading More Products Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>

@@ -24,11 +24,11 @@
       <ion-toolbar id="search" style="--background:#1A4640;">
         <ion-searchbar class="custom" style="--background: #f2f2f2; color: #1A4640;"
           placeholder="Search for products or sellers"></ion-searchbar>
-        <ion-buttons slot="end">
-          <ion-button (click)="openfilter()">
-            <ion-icon style="color:#f2f2f2;" name="options"></ion-icon>
+        <!-- <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon size="large" style="color:#f2f2f2;" name="search-circle"></ion-icon>
           </ion-button>
-        </ion-buttons>
+        </ion-buttons> -->
       </ion-toolbar>
 
       <ion-grid>
@@ -43,7 +43,16 @@
 
             <ion-grid>
               <!-- <ion-img class="newarrival" src="../../../assets/images/newarrival.png"> </ion-img> -->
-              <h3 class="fw-bolder text-dark">Products : {{products.length}} results</h3>
+              <!-- <h3 class="fw-bolder text-dark">Products : {{products.length}} results</h3> -->
+
+              <ion-item lines="none" class="ion-no-padding" style="--background:transparent;">
+                <ion-buttons slot="end">
+                  <ion-button class="text-primary fs-6" (click)="openfilter()">
+                    <ion-icon class="me-1" name="options"></ion-icon> Filter
+                  </ion-button>
+                </ion-buttons>
+              </ion-item>
+
               <ion-row class="products m-0 p-0">
                 <ion-col class="product-item" size="6" size-md="4" size-lg="3" [routerLink]="['/product-details']"
                   [queryParams]="{ product: product.id }" *ngFor="let product of products">
@@ -92,12 +101,18 @@
                 </ion-col>
 
                 <ion-col *ngIf="products.length < 1">
-                  <ion-item class="ion-text-center">
-                    <ion-label text-wrap>
-                      We are currently updating our product catalog. Please check back soon for exciting new products!"
-                      or "Our sellers are currently adding products. New items will be available soon!
-                    </ion-label>
-                  </ion-item>
+
+                  <div class="text-dark text-center">
+                    
+                 <strong>
+                  Our sellers are currently adding products.
+                 </strong>
+
+                 <p>
+                  New items will be available soon!
+                 </p>
+</div>
+                  
                 </ion-col>
 
               </ion-row>

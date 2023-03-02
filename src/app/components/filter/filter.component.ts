@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavParams, PopoverController } from '@ionic/angular';
+import { NavParams, Platform, PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-filter',
@@ -15,8 +15,13 @@ export class FilterComponent {
   priceRange: any;
   
   subcategories:any;
+  
+  // isIOS:boolean
 
-  constructor(private navParams: NavParams, private popoverController: PopoverController) {
+  constructor(private navParams: NavParams, private popoverController: PopoverController,private platform: Platform) {
+
+    // this.isIOS = this.platform.is('ios');
+
     this.selectedCategory = navParams.get('selectedCategory');
     this.selectedSubcategory = navParams.get('selectedSubcategory');
     this.priceRange = navParams.get('priceRange');

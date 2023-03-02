@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angula
 import Masonry from 'masonry-layout';
 import imagesLoaded from 'imagesloaded';
 import { FilterComponent } from 'src/app/components/filter/filter.component';
-import { InfiniteScrollCustomEvent, PopoverController, ToastController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { filterProducts, getProducts } from 'src/app/store/products/products.action';
 import { AppState } from 'src/app/types/AppState';
