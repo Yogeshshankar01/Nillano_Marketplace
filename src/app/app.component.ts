@@ -14,6 +14,18 @@ import { AppState } from './types/AppState';
 })
 export class AppComponent implements OnInit {
 
+  doRefresh(event:any) {
+    // do some work to refresh the content here
+    // ...
+
+
+    location.reload()
+  
+    // when the refresh is complete, call the complete() method
+    event.target.complete();
+  }
+  
+
   isLoggedIn:boolean
 
   constructor(private actionSheetController:ActionSheetController,private store:Store<AppState>,private authService:AuthService) {
