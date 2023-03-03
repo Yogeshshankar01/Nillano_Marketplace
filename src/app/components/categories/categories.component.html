@@ -45,14 +45,14 @@
 
 </ion-grid>
 
-<ion-modal [initialBreakpoint]="0.28" [breakpoints]="[0, 0.4, 0.6, 0.75, 0.85]" #modal trigger="open-modal">
+<ion-modal [initialBreakpoint]="0.35" [breakpoints]="[0, 0.45, 0.6, 0.75, 0.85]" #modal trigger="open-modal">
   <ng-template>
     <ion-content>
       <ion-toolbar>
         <ion-title>All Categories</ion-title>
         <ion-buttons slot="end">
           <ion-button color="light" (click)="modal.dismiss()">
-            <ion-icon name="close" size="large"></ion-icon>
+            <ion-icon name="close" class="text-light" size="large"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
