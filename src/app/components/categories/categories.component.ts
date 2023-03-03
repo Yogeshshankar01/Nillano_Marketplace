@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { ProductsserviceService } from 'src/app/services/productsservice/productsservice.service';
 import { filterProducts } from 'src/app/store/products/products.action';
@@ -24,12 +24,14 @@ categories:any = []
     this.isOpen = true;
   }
 
-  constructor(private productsservice:ProductsserviceService,private store:Store<AppState>,private router : Router,private popoverController:PopoverController) { }
+  constructor(private productsservice:ProductsserviceService,private store:Store<AppState>,private router : Router,private popoverController:PopoverController,private modalCtrl : ModalController) { }
 
 
   productFilter(categoryID:Number,SubcategoryID:Number){
 
     this.popoverController.dismiss();
+
+    this.modalCtrl.dismiss()
 
     this.store.dispatch(filterProducts({ filters: { category: categoryID, subcategory: SubcategoryID, priceRange: undefined } }))
 

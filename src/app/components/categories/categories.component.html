@@ -45,13 +45,15 @@
 
 </ion-grid>
 
-<ion-modal #modal trigger="open-modal">
+<ion-modal [initialBreakpoint]="0.28" [breakpoints]="[0, 0.4, 0.6, 0.75, 0.85]" #modal trigger="open-modal">
   <ng-template>
     <ion-content>
       <ion-toolbar>
         <ion-title>All Categories</ion-title>
         <ion-buttons slot="end">
-          <ion-button color="light" (click)="modal.dismiss()">Close</ion-button>
+          <ion-button color="light" (click)="modal.dismiss()">
+            <ion-icon name="close" size="large"></ion-icon>
+          </ion-button>
         </ion-buttons>
       </ion-toolbar>
       <ion-list style="background: #fff;">
@@ -64,7 +66,7 @@
             <p>{{category.description}}</p>
           </ion-label>
 
-          <ion-popover side="right" *ngIf="category.Subcategories" [trigger]="category.image" triggerAction="click">
+          <ion-popover side="top" alignment="end" *ngIf="category.Subcategories" [trigger]="category.image" triggerAction="click">
             <ng-template>
               <ion-content>
                 <ion-list>
