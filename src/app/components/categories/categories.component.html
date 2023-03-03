@@ -45,7 +45,7 @@
 
 </ion-grid>
 
-<ion-modal [initialBreakpoint]="0.35" [breakpoints]="[0, 0.45, 0.6, 0.75, 0.85]" #modal trigger="open-modal">
+<ion-modal [initialBreakpoint]="0.6" [breakpoints]="[0, 0.6, 0.75, 0.85]" #modal trigger="open-modal">
   <ng-template>
     <ion-content>
       <ion-toolbar>
@@ -66,7 +66,7 @@
             <p>{{category.description}}</p>
           </ion-label>
 
-          <ion-popover side="top" alignment="end" *ngIf="category.Subcategories" [trigger]="category.image" triggerAction="click">
+          <ion-popover side="bottom" alignment="end" *ngIf="category.Subcategories" [trigger]="category.image" triggerAction="click">
             <ng-template>
               <ion-content>
                 <ion-list>
