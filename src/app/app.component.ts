@@ -14,7 +14,7 @@ import { AppState } from './types/AppState';
 })
 export class AppComponent implements OnInit {
 
-  doRefresh(event:any) {
+  handleRefresh(event:any) {
     // do some work to refresh the content here
     // ...
 
@@ -22,7 +22,11 @@ export class AppComponent implements OnInit {
     location.reload()
   
     // when the refresh is complete, call the complete() method
-    event.target.complete();
+    setTimeout(() => {
+
+      event.target.complete();
+      
+    }, 2000);
   }
   
 
