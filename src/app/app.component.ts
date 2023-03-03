@@ -20,14 +20,14 @@ export class AppComponent implements OnInit {
 
     let refreshertext = document.querySelector(".refresher-refreshing-text") as HTMLElement
 
-    refreshertext.style.color = "black"
+    refreshertext.style.color = "#f2f2f2"
 
-    // location.reload()
+    location.reload()
   
     // when the refresh is complete, call the complete() method
     setTimeout(() => {
 
-      // event.target.complete();
+      event.target.complete();
       
     }, 2000);
   }
