@@ -18,13 +18,16 @@ export class AppComponent implements OnInit {
     // do some work to refresh the content here
     // ...
 
+    let refreshertext = document.querySelector(".refresher-refreshing-text") as HTMLElement
 
-    location.reload()
+    refreshertext.style.color = "black"
+
+    // location.reload()
   
     // when the refresh is complete, call the complete() method
     setTimeout(() => {
 
-      event.target.complete();
+      // event.target.complete();
       
     }, 2000);
   }
