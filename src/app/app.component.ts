@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
     let refreshertext = document.querySelector(".refresher-refreshing-text") as HTMLElement
 
-    refreshertext.style.color = "#f2f2f2"
+    refreshertext.style.color = "#000"
 
     location.reload()
   
