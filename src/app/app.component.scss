@@ -1,3 +1,11 @@
 ion-app{
     --background: #f2f2f2;
 }
+
+ion-refresher ion-refresher-content {
+    --color:#000 !important;
+    
+    .refresher-pulling-text, .refresher-refreshing-text, .refresher-refreshing-icon, .refresher-pulling-icon {
+      color: #000 !important;
+    }
+  }
