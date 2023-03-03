@@ -18,7 +18,7 @@ ion-col.category {
   
   ion-popover::part(backdrop) {
     background-color: #1A4640;
-    height: 109%;
+    // height: 109%;
   }
 
   // ion-modal {
@@ -30,7 +30,7 @@ ion-col.category {
   ion-modal::part(backdrop) {
     background: #1A4640;
     opacity: 1;
-    height: 109%;
+    // height: 109%;
   }
   
   // ion-modal ion-toolbar {
@@ -44,3 +44,30 @@ ion-col.category {
     //     overflow-x: scroll;
     // }
   }
+  
+  .my-popover ion-content ion-list {
+    height: 500px;
+    overflow-y: scroll; /* add scroll to the ion-content element */
+  }
+
+  @media(max-height : 900px){
+    .my-popover ion-content ion-list {
+      height: 500px;
+      overflow-y: scroll; /* add scroll to the ion-content element */
+    }
+  }
+
+  @media(max-height : 750px){
+    .my-popover ion-content ion-list {
+      height: 400px;
+      overflow-y: scroll; /* add scroll to the ion-content element */
+    }
+  }
+
+  @media(max-height : 650px){
+    .my-popover ion-content ion-list {
+      height: 350px;
+      overflow-y: scroll; /* add scroll to the ion-content element */
+    }
+  }
+  

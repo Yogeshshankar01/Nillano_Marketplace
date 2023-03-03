@@ -12,7 +12,7 @@
           <img class="rounded-circle h-100 w-100" src=".././../../assets/images/electronics.jpg"
             alt="{{category.name}}" />
         </ion-thumbnail>
-        <ion-label class="text-wrap">{{ category.name }}</ion-label>
+        <ion-label text-wrap>{{ category.name }}</ion-label>
       </ion-item>
 
       <ion-list class="text-center d-block d-sm-none" style="background: transparent;">
@@ -21,7 +21,7 @@
       </ion-list>
 
 
-      <ion-popover side="right" *ngIf="category.Subcategories" [trigger]="category.name" triggerAction="click">
+      <ion-popover cssClass="my-popover" side="right" *ngIf="category.Subcategories" [trigger]="category.name" triggerAction="click">
         <ng-template>
           <ion-content>
             <ion-list>
