@@ -1,18 +1,18 @@
 <ion-app>
-  
-  <ion-menu type="push" contentId="main-content">
-
-    <app-menu class="h-100"></app-menu>
-  
-    <ion-footer *ngIf="isLoggedIn">
-      <ion-toolbar (click)="logout()" class="text-center" style="cursor: pointer;" >
-        <div class="d-flex align-items-center justify-content-center"> <ion-icon class="me-2" size="large" name="log-out-outline"></ion-icon> Logout </div>
-      </ion-toolbar>
-    </ion-footer>
-  
-  </ion-menu>
 
   <ion-content>
+
+    <ion-menu type="push" contentId="main-content">
+
+      <app-menu class="h-100"></app-menu>
+    
+      <ion-footer *ngIf="isLoggedIn">
+        <ion-toolbar (click)="logout()" class="text-center" style="cursor: pointer;" >
+          <div class="d-flex align-items-center justify-content-center"> <ion-icon class="me-2" size="large" name="log-out-outline"></ion-icon> Logout </div>
+        </ion-toolbar>
+      </ion-footer>
+    
+    </ion-menu>
 
     <ion-refresher style="background: #f2f2f2; height: 70px; z-index: 99;" class="py-2" slot="fixed" (ionRefresh)="handleRefresh($event)">
       <ion-refresher-content refreshingTextColor="red" refreshingText="Refreshing..." pullingIcon="chevron-down-circle-outline" refreshingSpinner="circles"></ion-refresher-content>
