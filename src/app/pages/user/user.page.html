@@ -38,7 +38,7 @@
     <ion-list-header>
       <ion-label>Available Products</ion-label>
     </ion-list-header>
-    <ion-item *ngFor="let product of user.products">
+    <ion-item lines="none" *ngFor="let product of user.products">
       <ion-thumbnail slot="start">
         <img class="h-100" src="../../../assets/images/agric-food.jpg" alt="{{ product.name }} image">
       </ion-thumbnail>
