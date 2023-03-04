@@ -29,9 +29,32 @@
     </ion-label>
   </ion-item>
 
-  <p class="my-3 text-center text-dark">
+  <div class="d-flex justify-content-center text-center text-dark align-items-center">
+
+    <p class="p-2">
+      <strong> 21 </strong> <br>
+      Following
+    </p>
+
+    <p class="p-2" style="border-left: 2px dashed black;">
+      <strong> 10 </strong> <br>
+      Followers
+    </p>
+
+  </div>
+
+  <p class="text-center text-dark">
     {{ user.bio }}
   </p>
+
+  <div class="mb-3 text-center">
+    
+    <ion-button style="--background:#1A4640; --color:#f2f2f2;">
+      <ion-icon class="me-1" name="person-add"></ion-icon>
+      Follow
+    </ion-button>
+  
+    </div>
 
 
   <ion-list>
