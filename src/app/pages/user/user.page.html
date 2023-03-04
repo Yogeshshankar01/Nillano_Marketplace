@@ -1,9 +1,51 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>user</ion-title>
+  <ion-toolbar style="--background:#f2f2f2; color:#000;">
+
+    <ion-buttons class="rounded-circle" slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>{{ user.username }}</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
+  <ion-item lines="none">
+    <ion-avatar slot="start">
+      <img class="h-100 w-100" alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+    </ion-avatar>
+    <ion-label>
+      <h2> {{ user.first_name }} {{user.last_name }} </h2>
+      <h3>@{{ user.username }}</h3>
+      <p>{{ user.location }}</p>
+    </ion-label>
+  </ion-item>
+
+  <p class="my-3">
+    {{ user.bio }}
+  </p>
+
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Available Products</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let product of user.products">
+      <ion-thumbnail slot="start">
+        <img class="h-100" src="../../../assets/images/agric-food.jpg" alt="{{ product.name }} image">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <p>{{ product.price | currency }}</p>
+      </ion-label>
+
+      <ion-button slot="end">
+        view
+      </ion-button>
+      
+    </ion-item>
+  </ion-list>
 </ion-content>
