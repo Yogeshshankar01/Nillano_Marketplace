@@ -4,7 +4,7 @@ import { AppState } from 'src/app/types/AppState';
 import Masonry from 'masonry-layout';
 import { Router } from '@angular/router';
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
-import { ActionSheetController, Platform, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, Platform, ToastController } from '@ionic/angular';
 import { getProducts } from 'src/app/store/products/products.action';
 import { ProductsserviceService } from 'src/app/services/productsservice/productsservice.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -60,12 +60,21 @@ export class HomePage implements OnDestroy, OnInit {
 
   isIOS!: boolean;
 
-  constructor(private store: Store<AppState>, private router: Router, private toastController: ToastController, private productsService: ProductsserviceService, private authService: AuthService, private actionSheetController: ActionSheetController,private platform: Platform) {
+  constructor(private store: Store<AppState>, private router: Router, private toastController: ToastController, private productsService: ProductsserviceService, private authService: AuthService, private actionSheetController: ActionSheetController,private platform: Platform,private alertController:AlertController) {
 
     this.isIOS = this.platform.is('ios');
 
   }
 
+  async presentLoginAlert() {
+    const alert = await this.alertController.create({
+      header: 'Login Required',
+      message: 'You need to log in to perform this action.',
+      buttons: ['OK']
+    });
+  
+    await alert.present();
+  }
 
   productsStateSubscription: Subscription | undefined;
 
@@ -80,6 +89,8 @@ export class HomePage implements OnDestroy, OnInit {
   totalUnreadMessages = 0
 
   ngOnInit() {
+
+    // this.presentLoginAlert()
 
     if (localStorage.getItem("access_token")) {
       this.isLoggedIn = true
