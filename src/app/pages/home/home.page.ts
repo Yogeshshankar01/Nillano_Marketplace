@@ -88,6 +88,15 @@ export class HomePage implements OnDestroy, OnInit {
 
   totalUnreadMessages = 0
 
+  ionViewDidEnter() {
+    if (localStorage.getItem("access_token")) {
+      this.isLoggedIn = true
+    }
+    else {
+      this.isLoggedIn = false
+    }
+  }
+
   ngOnInit() {
 
     // this.presentLoginAlert()
