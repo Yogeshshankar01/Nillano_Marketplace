@@ -52,5 +52,10 @@ ion-searchbar.custom {
     margin-top: 3% !important;
     margin-bottom: 3% !important;
   }
+
+  ion-button#mobile-saved-icon{
+    --padding-start : 10px;
+    --padding-top: 5px;
+  }
   
 }

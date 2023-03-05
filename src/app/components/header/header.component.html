@@ -20,7 +20,7 @@
 
     <ion-buttons (click)="redirect('saveditems')" class="d-sm-none d-block rounded m-0" style="color:#1A4640;" slot="end">
 
-      <ion-button style="--padding-end: 0%;" class="d-flex m-0 p-0 align-items-center justify-content-center" routerLink="/cart">
+      <ion-button id="mobile-saved-icon" style="--padding-end: 0%;" class="d-flex m-0 p-0 align-items-center justify-content-center" routerLink="/cart">
         <ion-icon size="large" name="bookmark-outline"></ion-icon>
         <span class="position-absolute start-20 translate-middle badge rounded-pill bg-danger" style="top:30%;">
           {{savedItems.length}}

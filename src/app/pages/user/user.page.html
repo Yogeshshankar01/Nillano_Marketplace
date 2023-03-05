@@ -5,27 +5,27 @@
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
 
-    <ion-title>{{ user.username }}</ion-title>
+    <ion-title>{{ user?.username }}</ion-title>
 
-    <ion-button class="me-2" style="--background : #f2f2f2; --color: #000;" slot="end">
+    <ion-button class="me-2" style="--background : #transparent; --color: #f2f2f2; --padding-start: 0%;--padding-end: 0%; --box-shadow: none;" slot="end">
 
       <i class="fa-solid fa-share"></i>
 
     </ion-button>
 
-    <ion-button id="auto-trigger" class="me-2" style="--background : #transparent; --color: #f2f2f2;" slot="end">
+    <ion-button id="auto-trigger" class="me-2" style="--background : #transparent; --color: #f2f2f2; --box-shadow: none; " slot="end">
 
-      <i slot="end" class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+      <i slot="end" class="fa-solid text-light fa-ellipsis-vertical"></i>
 
     </ion-button>
 
   </ion-toolbar>
 </ion-header>
 
- <ion-popover trigger="auto-trigger" size="auto">
+<ion-popover trigger="auto-trigger" size="auto">
   <ng-template>
     <ion-content class="ion-padding">
-      <ion-item button class="ion-no-padding" lines="none">
+      <ion-item button detail="false" class="ion-no-padding" lines="none">
         <ion-icon class="text-danger me-1" size="large" name="alert-circle"></ion-icon>
         <ion-label>Report</ion-label>
       </ion-item>
@@ -35,63 +35,84 @@
 
 <ion-content class="ion-padding">
 
-  <ion-item lines="none">
-    <ion-avatar slot="start">
-      <img class="h-100 w-100" alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-    </ion-avatar>
-    <ion-label>
-      <h2> {{ user.first_name }} {{user.last_name }} </h2>
-      <h3>@{{ user.username }}</h3>
-      <p>{{ user.location }}</p>
-    </ion-label>
-  </ion-item>
+  <ion-row>
 
-  <div class="d-flex justify-content-center text-center text-dark align-items-center">
+    <ion-col size="12" size-md="6">
 
-    <p class="p-2">
-      <strong> 21 </strong> <br>
-      Following
-    </p>
-
-    <p class="p-2" style="border-left: 2px dashed black;">
-      <strong> 10 </strong> <br>
-      Followers
-    </p>
-
-  </div>
-
-  <p class="text-center text-dark">
-    {{ user.bio }}
-  </p>
-
-  <div class="mb-3 text-center">
-    
-    <ion-button style="--background:#1A4640; --color:#f2f2f2;">
-      <ion-icon class="me-1" name="person-add"></ion-icon>
-      Follow
-    </ion-button>
-  
-    </div>
-
-
-  <ion-list>
-    <ion-list-header>
-      <ion-label>Available Products</ion-label>
-    </ion-list-header>
-    <ion-item lines="none" *ngFor="let product of user.products">
-      <ion-thumbnail slot="start">
-        <img class="h-100" src="../../../assets/images/agric-food.jpg" alt="{{ product.name }} image">
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ product.name }}</h2>
-        <p>{{ product.description }}</p>
-        <p>{{ product.price | currency }}</p>
-      </ion-label>
-
-      <ion-button style="--background:#1A4640; --color:#f2f2f2;" slot="end">
-        view
-      </ion-button>
+      <ion-item lines="none">
+        <div class="item-container">
+          <ion-avatar class="me-1">
+            <img class="h-100 w-100" alt="Silhouette of a person's head"
+              src="{{user?.user_profile.url}}" />
+          </ion-avatar>
+          <ion-label>
+            <h2> {{ user?.first_name }} {{user?.last_name }} </h2>
+            <h3>@{{ user?.username }}</h3>
+            <p>{{ user?.email }}</p>
+          </ion-label>
+        </div>
+      </ion-item>
       
-    </ion-item>
-  </ion-list>
+    
+      <div class="d-flex mt-3 justify-content-center text-center text-dark align-items-center">
+    
+        <p class="p-2">
+          <strong> 21 </strong> <br>
+          Following
+        </p>
+    
+        <p class="p-2" style="border-left: 2px dashed black;">
+          <strong> 10 </strong> <br>
+          Followers
+        </p>
+    
+      </div>
+    
+      <p class="text-center text-dark">
+        {{ user?.bio }}
+      </p>
+    
+      <div class="mb-3 text-center">
+    
+        <ion-button style="--background:#1A4640; --color:#f2f2f2;">
+          <ion-icon class="me-1" name="person-add"></ion-icon>
+          Follow
+        </ion-button>
+    
+      </div>
+
+    </ion-col>
+
+    <ion-col size="12" size-md="6">
+
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Available Products</ion-label>
+        </ion-list-header>
+        <ng-container *ngIf="user?.products.length > 0">
+          <ion-item lines="none" *ngFor="let product of user.products">
+            <ion-thumbnail slot="start">
+              <img class="h-100" src="{{product.image.url}}" alt="{{ product.name }} image">
+            </ion-thumbnail>
+            <ion-label>
+              <h2>{{ product.name }}</h2>
+              <p>{{ product.description }}</p>
+              <p *ngIf="!product.discount_percent">{{ product.price | currency : 'GH₵' }}</p>
+              <p *ngIf="product.discount_percent" class="text-decoration-line-through">{{ product.price | currency : 'GH₵'
+                }}</p>
+                <p *ngIf="product.discount_percent">{{ product.discount_price | currency : 'GH₵' }}</p>
+            </ion-label>
+    
+            <ion-button [routerLink]="['/product-details']" [queryParams]="{ product: product.id }"  style="--background:#1A4640; --color:#f2f2f2;" slot="end">
+              view
+            </ion-button>
+    
+          </ion-item>
+        </ng-container>
+      </ion-list>
+
+    </ion-col>
+
+  </ion-row>
+
 </ion-content>
