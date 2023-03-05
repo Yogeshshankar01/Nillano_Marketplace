@@ -161,11 +161,10 @@
     <ion-badge color="danger" class="position-absolute top-0 left-0 border border-light rounded-circle">{{totalUnreadMessages}}</ion-badge>
   </ion-fab>
 
-  <ion-card class="login-suggestion">
+  <ion-card style="--background:#f2f2f2;" *ngIf="!isLoggedIn" class="login-suggestion">
     <ion-card-content>
-      <p>Access all features and personalized content of our marketplace.</p>
-      <ion-button expand="block" routerLink="/auth">Login/Register</ion-button>
-      <!-- <ion-button expand="block" >Dismiss</ion-button> -->
+      <p class="text-center">Access all features and personalized content of our marketplace.</p>
+      <ion-button style="--background:#1A4640;" expand="block" routerLink="/auth" [queryParams]="{ page: 'login' }">Login/Register</ion-button>
     </ion-card-content>
   </ion-card>
 
