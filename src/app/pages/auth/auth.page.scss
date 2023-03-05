@@ -86,3 +86,16 @@ ion-radio {
     color: #3880ff;
     text-decoration: underline;
   }
+
+  :host-context(.ios) {
+
+    ion-segment-button{
+        padding: 2%;
+    }
+
+    .active-tab {
+        background-color: #212529;
+        --ion-color-base:#f2f2f2;
+      }
+
+  }
