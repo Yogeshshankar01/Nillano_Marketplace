@@ -14,7 +14,7 @@
 
   <div class="w-50 mx-auto main-content" style="position: relative; min-height:90%;">
 
-    <ion-segment [(ngModel)]="selectedTab" (ionChange)="onSegmentChange($event)" color="primary" class="my-3">
+    <ion-segment mode="md" [(ngModel)]="selectedTab" (ionChange)="onSegmentChange($event)" color="primary" class="my-3">
       <ion-segment-button [ngClass]="{'active-tab': selectedTab === 'login'}" class="fw-bold login" value="login"
         color="success" value="login">
         Login

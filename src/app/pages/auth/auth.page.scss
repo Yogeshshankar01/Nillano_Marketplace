@@ -16,6 +16,10 @@ ion-segment{
     z-index: 1;
 }
 
+// .in-segment-color{
+//     background-color: red !important;
+// }
+
 ion-segment-button{
     background-color: #f2f2f2;
     color: #212529;
@@ -90,12 +94,12 @@ ion-radio {
   :host-context(.ios) {
 
     ion-segment-button{
-        padding: 2%;
+        // padding: 2%;
     }
 
-    .active-tab {
-        background-color: #212529;
-        --ion-color-base:#f2f2f2;
-      }
+    .segment-button-checked .segment-button-indicator {
+        opacity: 0;
+    }
+      
 
   }
