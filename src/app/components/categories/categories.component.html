@@ -9,14 +9,14 @@
 
       <ion-item class="bg-light rounded d-none d-sm-block" style="--background:#f2f2f2; --color: black;">
         <ion-thumbnail slot="start">
-          <img class="rounded-circle h-100 w-100" src=".././../../assets/images/electronics.jpg"
+          <img class="rounded-circle h-100 w-100" src="{{category.image}}"
             alt="{{category.name}}" />
         </ion-thumbnail>
         <ion-label text-wrap>{{ category.name }}</ion-label>
       </ion-item>
 
       <ion-list class="text-center d-block d-sm-none" style="background: transparent;">
-        <img class="rounded-circle" src=".././../../assets/images/electronics.jpg" alt="{{category.name}}" />
+        <img class="rounded-circle" src="{{category.image}}" alt="{{category.name}}" />
         <p style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ category.name }}</p>
       </ion-list>
 
@@ -59,7 +59,7 @@
       <ion-list style="background: #fff;">
         <ion-item [id]="category.image" *ngFor="let category of categories">
           <ion-avatar slot="start">
-            <ion-img src=".././../../assets/images/electronics.jpg"></ion-img>
+            <ion-img src="{{category.image}}"></ion-img>
           </ion-avatar>
           <ion-label>
             <h2>{{category.name}}</h2>
