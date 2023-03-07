@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons> -->
    
-    <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)" placeholder="Search for products or sellers" autofocus ></ion-searchbar>
+    <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)" placeholder="Search for products or sellers" autofocus style="--background: #f2f2f2; color: #1A4640;" ></ion-searchbar>
     
     <ion-buttons (click)="dismissModal()" slot="end">
       <ion-button>
