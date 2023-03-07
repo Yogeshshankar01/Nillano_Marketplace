@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angula
 import Masonry from 'masonry-layout';
 import imagesLoaded from 'imagesloaded';
 import { FilterComponent } from 'src/app/components/filter/filter.component';
-import { InfiniteScrollCustomEvent, Platform, PopoverController, ToastController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { filterProducts, getProducts } from 'src/app/store/products/products.action';
 import { AppState } from 'src/app/types/AppState';
@@ -10,6 +10,7 @@ import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
 import { ProductsserviceService } from 'src/app/services/productsservice/productsservice.service';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs';
+import { SearchComponent } from 'src/app/components/search/search.component';
 
 @Component({
   selector: 'app-products',
@@ -29,7 +30,7 @@ export class ProductsPage implements OnInit {
 
   masonry: any
 
-  constructor(private popoverController: PopoverController, private store: Store<AppState>, private productsService: ProductsserviceService, private toastController: ToastController, private activatedRoute: ActivatedRoute) {
+  constructor(private popoverController: PopoverController, private store: Store<AppState>, private productsService: ProductsserviceService, private toastController: ToastController, private activatedRoute: ActivatedRoute, private modalCtrl:ModalController) {
 
   }
 
@@ -172,6 +173,14 @@ export class ProductsPage implements OnInit {
     // this.getMoreProducts().then(() => {
     //   event.target.complete();
     // });
+  }
+
+   async searchI(){
+    const modal = await this.modalCtrl.create({
+      component: SearchComponent,
+      showBackdrop: true,
+    });
+    return await modal.present();
   }
 
   openFilter() {
