@@ -166,7 +166,7 @@ export class HomePage implements OnDestroy, OnInit {
           let masonry = new Masonry(products, {
             itemSelector: '.product-item'
           })
-        }, 2000);
+        }, 3000);
 
       }
 
