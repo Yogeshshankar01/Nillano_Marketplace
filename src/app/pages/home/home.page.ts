@@ -4,11 +4,12 @@ import { AppState } from 'src/app/types/AppState';
 import Masonry from 'masonry-layout';
 import { Router } from '@angular/router';
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
-import { ActionSheetController, AlertController, Platform, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { getProducts } from 'src/app/store/products/products.action';
 import { ProductsserviceService } from 'src/app/services/productsservice/productsservice.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Subscription } from 'rxjs';
+import { SearchComponent } from 'src/app/components/search/search.component';
 
 @Component({
   selector: 'app-home',
@@ -60,7 +61,7 @@ export class HomePage implements OnDestroy, OnInit {
 
   isIOS!: boolean;
 
-  constructor(private store: Store<AppState>, private router: Router, private toastController: ToastController, private productsService: ProductsserviceService, private authService: AuthService, private actionSheetController: ActionSheetController,private platform: Platform,private alertController:AlertController) {
+  constructor(private store: Store<AppState>, private router: Router, private toastController: ToastController, private productsService: ProductsserviceService, private authService: AuthService, private actionSheetController: ActionSheetController,private platform: Platform,private alertController:AlertController,private modalCtrl:ModalController) {
 
     this.isIOS = this.platform.is('ios');
 
@@ -95,6 +96,14 @@ export class HomePage implements OnDestroy, OnInit {
     else {
       this.isLoggedIn = false
     }
+  }
+
+  async searchI(){
+    const modal = await this.modalCtrl.create({
+      component: SearchComponent,
+      showBackdrop: true,
+    });
+    return await modal.present();
   }
 
   ngOnInit() {

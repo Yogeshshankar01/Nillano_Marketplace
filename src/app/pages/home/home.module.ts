@@ -9,6 +9,7 @@ import { WelcomeModule } from 'src/app/components/welcome/welcome.module';
 import { HeaderModule } from 'src/app/components/header/header.module';
 import { CategoriesModule } from 'src/app/components/categories/categories.module';
 import { MenuModule } from 'src/app/components/menu/menu.component.module';
+import { SearchModule } from 'src/app/components/search/search.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { MenuModule } from 'src/app/components/menu/menu.component.module';
     WelcomeModule,
     HeaderModule,
     CategoriesModule,
-    MenuModule
+    MenuModule,
+    SearchModule
   ],
   declarations: [HomePage]
 })
