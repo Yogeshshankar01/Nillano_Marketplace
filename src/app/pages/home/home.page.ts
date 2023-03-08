@@ -91,14 +91,14 @@ export class HomePage implements OnDestroy, OnInit {
 
   ionViewDidEnter() {
 
-    this.store.dispatch(startLoading())
+    // this.store.dispatch(startLoading())
 
     setTimeout(() => {
       let products = document.querySelector('.products') as HTMLElement
       let masonry = new Masonry(products, {
         itemSelector: '.product-item'
       })
-      this.store.dispatch(endLoading())
+      // this.store.dispatch(endLoading())
     }, 2000);
 
     if (localStorage.getItem("access_token")) {
@@ -181,7 +181,7 @@ export class HomePage implements OnDestroy, OnInit {
       // }
 
       if (res.process) {
-        this.store.dispatch(startLoading())
+         this.products.length < 1 && this.store.dispatch(startLoading())
       }
 
       if (res.success) {
