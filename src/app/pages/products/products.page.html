@@ -23,7 +23,7 @@
   <ion-item lines="none" style="--background: transparent;">
 
     <ion-label class="search-results text-dark">
-      Search Results: {{products.length}}
+      Products found: {{productsAvailable}}
     </ion-label>
 
     <ion-buttons slot="end">
@@ -34,7 +34,8 @@
 
   </ion-item>
   
-
+<ion-grid>
+  
   <ion-row class="products">
 
     <!-- <app-loading></app-loading> -->
@@ -80,6 +81,12 @@
     </ion-col>
    
   </ion-row>
+  
+  </ion-grid>
+
+  <ion-infinite-scroll class="custom-spinner" (ionInfinite)="loadMoreProducts($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 
     <div id="container" *ngIf="products.length < 1" class="text-dark text-center">

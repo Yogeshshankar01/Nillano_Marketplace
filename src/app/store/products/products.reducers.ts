@@ -12,7 +12,7 @@ export const productsReducers = createReducer(initialState,
     }),
     on(getProductsFailure,(state,action)=>({...state,process:false,success:false,failure:true,products:[],message:action.error,filter:false,productsAvailable:0})),
     on(filterProducts,(state)=>({...state,process:true,success:false,failure:false,products:[],filter:true,productsAvailable:0})),
-    on(filterProductsSuccess,(state,action)=>({...state,process:false,success:true,failure:false,products:action.products,message:action.message,filter:true,productsAvailable:0})),
+    on(filterProductsSuccess,(state,action)=>({...state,process:false,success:true,failure:false,products:action.products,message:action.message,filter:true,productsAvailable:action.productsAvailable})),
     on(filterProductsFailure,(state,action)=>({...state,process:false,success:false,failure:true,products:[],message:action.error,filter:false,productsAvailable:0}))
 
     )

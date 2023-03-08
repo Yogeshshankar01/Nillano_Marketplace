@@ -21,6 +21,8 @@ export class ProductsPage implements OnInit {
 
   products: any = [];
   categoriesAndSubcategories: any = [];
+
+  productsAvailable:any
   // selectedCategory: string | undefined;
   // selectedPriceRange: string | undefined;
 
@@ -71,23 +73,49 @@ export class ProductsPage implements OnInit {
         this.store.dispatch(getProducts({page:1}))
         this.getProducts = true
       }
-
-      if (res.process) {
-        this.store.dispatch(startLoading())
+      else if(res.filter){
+        this.getProducts = false
       }
 
-      if (res.success) {
+      if (!res.filter && res.process) {
+        this.products.length < 1 && this.store.dispatch(startLoading())
+      }
+
+      else if (res.filter && res.process) {
+       this.store.dispatch(startLoading())
+      }
+
+      if (!res.filter && res.success) {
         console.log("Success")
         this.store.dispatch(endLoading())
-        console.log(res.products)
-        this.products = res.products
+        // console.log(res.products)
+        this.products = this.products.length > 0 ? [...this.products,...res.products] : res.products
+
+        this.productsAvailable = res.productsAvailable
 
         setTimeout(() => {
           let products = document.querySelector('.products') as HTMLElement
           let masonry = new Masonry(products, {
             itemSelector: '.product-item'
           })
-        }, 3000);
+        }, 2000);
+
+      }
+
+      else if (res.filter && res.success) {
+        console.log("Success")
+        this.store.dispatch(endLoading())
+        // console.log(res.products)
+        this.products = res.products
+
+        this.productsAvailable = res.productsAvailable
+
+        setTimeout(() => {
+          let products = document.querySelector('.products') as HTMLElement
+          let masonry = new Masonry(products, {
+            itemSelector: '.product-item'
+          })
+        }, 2000);
 
       }
 
@@ -95,7 +123,7 @@ export class ProductsPage implements OnInit {
 
         this.store.dispatch(endLoading())
 
-        console.log(res.message)
+        // console.log(res.message)
 
         this.toastController.create({
           message: res.message ? res.message : "Sorry, we're unable to retrieve products at the moment. We're working to fix the issue. Please try again later.",
@@ -154,25 +182,25 @@ export class ProductsPage implements OnInit {
   }
 
 
-  loadMoreProducts(event: any) {
+  loadMoreProducts(event:any) {
+    // Fetch more products from your database or service
+
+    let nextPage:number = Number(localStorage.getItem('currentPage'))
+   
+    if(this.getProducts){
+    this.store.dispatch(getProducts({page:nextPage + 1}))
+    }
+    
 
     setTimeout(() => {
+      let products = document.querySelector('.products') as HTMLElement
+      let masonry = new Masonry(products, {
+        itemSelector: '.product-item'
+      })
+      event.target.complete();
+    }, 2000);
 
-      // const nextBatch = this.getProducts1()
-
-      // this.products.push(...nextBatch);
-      // event.target.complete();
-
-      // this.masonry.reload()
-
-      (event as InfiniteScrollCustomEvent).target.complete();
-
-    }, 5000);
-
-    // Call the function that retrieves the next batch of products from the database
-    // this.getMoreProducts().then(() => {
-    //   event.target.complete();
-    // });
+  
   }
 
    async searchI(){
@@ -203,7 +231,7 @@ export class ProductsPage implements OnInit {
 
           // this.filterProducts()
 
-          console.log({ cat: this.selectedCategory, sub: this.selectedSubcategory, price: this.priceRange })
+          // console.log({ cat: this.selectedCategory, sub: this.selectedSubcategory, price: this.priceRange })
 
           this.store.dispatch(filterProducts({ filters: { category: this.selectedCategory, subcategory: this.selectedSubcategory, priceRange: this.priceRange } }))
           // Filter your products here using the selected values of category, subcategory and price
@@ -211,6 +239,21 @@ export class ProductsPage implements OnInit {
       });
       popover.present();
     });
+  }
+
+  ionViewDidEnter() {
+
+    console.log("Entered")
+
+    setTimeout(() => {
+      let products = document.querySelector('.products') as HTMLElement
+      let masonry = new Masonry(products, {
+        itemSelector: '.product-item'
+      })
+
+      console.log("timer working")
+    }, 2000);
+
   }
 
   ngAfterViewInit() {

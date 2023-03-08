@@ -91,13 +91,13 @@ export class ProductsserviceService {
     })
   }
 
-  filterProducts(filters:any):Observable<{message:string,products:[]}>{
+  filterProducts(filters:any):Observable<{message:string,products:[],productsAvailable:number}>{
     return new Observable(observer=>{
 
-      this.http.get<{products:any}>(`${environment.server}/products/filter`,{ params: filters})
+      this.http.get<{products:any,productsAvailable:number}>(`${environment.server}/products/filter`,{ params: filters})
     .pipe(take(1))
     .subscribe(async(res)=>{
-      observer.next({message:"Products Provided",products:res.products})
+      observer.next({message:"Products Provided",products:res.products,productsAvailable: res.productsAvailable})
       observer.complete()
     },(err)=>{
       // observer.error({message:err.error.message})

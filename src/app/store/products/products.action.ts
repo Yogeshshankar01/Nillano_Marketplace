@@ -13,7 +13,7 @@ export const filterProducts = createAction(
 
   export const filterProductsSuccess = createAction(
     "[Products] filter Products success",
-    props<{message:string,products:[]}>()
+    props<{message:string,products:[],productsAvailable:number}>()
   );
 
   export const filterProductsFailure = createAction(

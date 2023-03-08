@@ -30,7 +30,7 @@ export class ProductsEffect {
             ofType(productActions.filterProducts),
             switchMap((filters) => this.productService.filterProducts(filters.filters).pipe(take(1))
                     .pipe(
-                        map((products) => productActions.filterProductsSuccess({message:products.message,products:products.products})),
+                        map((products) => productActions.filterProductsSuccess({message:products.message,products:products.products,productsAvailable:products.productsAvailable})),
                         catchError((error) => of(productActions.filterProductsFailure({error:error.message})))
                     )
             )
