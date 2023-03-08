@@ -4,5 +4,6 @@ export interface productsState{
     failure : Boolean,
     products : [],
     message : any,
-    filter:Boolean
+    filter:Boolean,
+    productsAvailable : number
 }

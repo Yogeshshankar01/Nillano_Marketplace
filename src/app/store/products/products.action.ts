@@ -2,7 +2,7 @@ import { createAction, props } from "@ngrx/store";
 
 export const getProducts = createAction("[Products] get Products",props<{page:number}>())
 
-export const getProductsSuccess = createAction("[Products] get Products success",props<{message:string,products:[]}>())
+export const getProductsSuccess = createAction("[Products] get Products success",props<{message:string,products:[],productsAvailable:number}>())
 
 export const getProductsFailure = createAction("[Products] get Products Failed",props<{error:string}>())
 

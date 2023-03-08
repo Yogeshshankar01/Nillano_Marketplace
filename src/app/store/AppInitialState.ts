@@ -22,7 +22,8 @@ export const AppInitialState:AppState = {
         failure : false,
         products : [],
         message : null,
-        filter : false
+        filter : false,
+        productsAvailable : 0
     },
     product:{
         process : false,

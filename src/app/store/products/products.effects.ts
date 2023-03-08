@@ -18,7 +18,7 @@ export class ProductsEffect {
             switchMap((payload:{page:number}) => {
                 return this.productService.getProducts(payload.page)
                     .pipe(
-                        map((products) => productActions.getProductsSuccess({message:products.message,products:products.products})),
+                        map((products) => productActions.getProductsSuccess({message:products.message,products:products.products,productsAvailable:products.productsAvailable})),
                         catchError((error) => of(productActions.getProductsFailure({error:error.message})))
                     );
             })

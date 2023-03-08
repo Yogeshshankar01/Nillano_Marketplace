@@ -51,7 +51,7 @@ export class MenuComponent implements OnInit {
     this.store.select('products').subscribe(res => {
 
       if (res.success) {
-        this.productsAvailable = res.products.length
+        this.productsAvailable = res.productsAvailable
       }
 
     })

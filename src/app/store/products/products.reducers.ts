@@ -6,13 +6,13 @@ import { productsState } from "./productsState";
 const initialState:productsState = AppInitialState.products
 
 export const productsReducers = createReducer(initialState,
-    on(getProducts,(state)=>({...state,process:true,success:false,failure:false,products:[],message:'',filter:false})),
+    on(getProducts,(state)=>({...state,process:true,success:false,failure:false,products:[],message:'',filter:false,productsAvailable:0})),
     on(getProductsSuccess,(state,action:any)=>{
-        return {...state,process:false,success:true,failure:false,products:action.products,message:action.message,filter:false}
+        return {...state,process:false,success:true,failure:false,products:action.products,message:action.message,filter:false,productsAvailable:action.productsAvailable}
     }),
-    on(getProductsFailure,(state,action)=>({...state,process:false,success:false,failure:true,products:[],message:action.error,filter:false})),
-    on(filterProducts,(state)=>({...state,process:true,success:false,failure:false,products:[],filter:true})),
-    on(filterProductsSuccess,(state,action)=>({...state,process:false,success:true,failure:false,products:action.products,message:action.message,filter:true})),
-    on(filterProductsFailure,(state,action)=>({...state,process:false,success:false,failure:true,products:[],message:action.error,filter:false}))
+    on(getProductsFailure,(state,action)=>({...state,process:false,success:false,failure:true,products:[],message:action.error,filter:false,productsAvailable:0})),
+    on(filterProducts,(state)=>({...state,process:true,success:false,failure:false,products:[],filter:true,productsAvailable:0})),
+    on(filterProductsSuccess,(state,action)=>({...state,process:false,success:true,failure:false,products:action.products,message:action.message,filter:true,productsAvailable:0})),
+    on(filterProductsFailure,(state,action)=>({...state,process:false,success:false,failure:true,products:[],message:action.error,filter:false,productsAvailable:0}))
 
     )
