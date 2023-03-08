@@ -84,18 +84,48 @@ export class HomePage implements OnDestroy, OnInit {
   connected!: boolean;
 
   retry() {
-    this.store.dispatch(getProducts())
+    this.store.dispatch(getProducts({page:1}))
   }
 
   totalUnreadMessages = 0
 
   ionViewDidEnter() {
+
+    this.store.dispatch(startLoading())
+
+    setTimeout(() => {
+      let products = document.querySelector('.products') as HTMLElement
+      let masonry = new Masonry(products, {
+        itemSelector: '.product-item'
+      })
+      this.store.dispatch(endLoading())
+    }, 2000);
+
     if (localStorage.getItem("access_token")) {
       this.isLoggedIn = true
     }
     else {
       this.isLoggedIn = false
     }
+  }
+
+  loadMoreProducts(event:any) {
+    // Fetch more products from your database or service
+
+    let nextPage:number = Number(localStorage.getItem('currentPage'))
+   
+    this.store.dispatch(getProducts({page:nextPage + 1}))
+    
+
+    setTimeout(() => {
+      let products = document.querySelector('.products') as HTMLElement
+      let masonry = new Masonry(products, {
+        itemSelector: '.product-item'
+      })
+      event.target.complete();
+    }, 2000);
+
+  
   }
 
   async searchI(){
@@ -140,7 +170,7 @@ export class HomePage implements OnDestroy, OnInit {
         }
       )
 
-    this.store.dispatch(getProducts())
+    this.store.dispatch(getProducts({page:1}))
 
     // Getting the states of the products at each time
     this.productsStateSubscription = this.store.select('products').subscribe(res => {
@@ -157,7 +187,8 @@ export class HomePage implements OnDestroy, OnInit {
       if (res.success) {
         this.store.dispatch(endLoading())
         // console.log(res.products)
-        this.products = res.products
+        
+        this.products = this.products.length > 0 ? [...this.products,...res.products] : res.products
 
         this.connected = true
 
@@ -166,7 +197,7 @@ export class HomePage implements OnDestroy, OnInit {
           let masonry = new Masonry(products, {
             itemSelector: '.product-item'
           })
-        }, 3000);
+        }, 2000);
 
       }
 
@@ -186,7 +217,7 @@ export class HomePage implements OnDestroy, OnInit {
             {
               text: 'Retry',
               handler: () => {
-                this.store.dispatch(getProducts())
+                this.store.dispatch(getProducts({page:1}))
               }
             }
           ]

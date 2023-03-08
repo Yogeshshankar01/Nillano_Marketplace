@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 
-export const getProducts = createAction("[Products] get Products")
+export const getProducts = createAction("[Products] get Products",props<{page:number}>())
 
 export const getProductsSuccess = createAction("[Products] get Products success",props<{message:string,products:[]}>())
 

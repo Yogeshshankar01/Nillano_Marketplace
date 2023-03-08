@@ -68,7 +68,7 @@ export class ProductsPage implements OnInit {
     .subscribe(res => {
 
       if(!res.filter && !this.getProducts){
-        this.store.dispatch(getProducts())
+        this.store.dispatch(getProducts({page:1}))
         this.getProducts = true
       }
 
@@ -106,7 +106,7 @@ export class ProductsPage implements OnInit {
             {
               text: 'Retry',
               handler: () => {
-                this.store.dispatch(getProducts())
+                this.store.dispatch(getProducts({page:1}))
                 this.productsService.getCategoriesAndSubCategoies()
                 .pipe(take(1))
                 .subscribe(

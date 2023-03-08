@@ -306,7 +306,7 @@ export class ListProductComponent implements OnInit {
         if(res.success && this.submitted){
           this.store.dispatch(endLoading())
           this.store.dispatch(getUserProducts())
-          this.store.dispatch(getProducts())
+          this.store.dispatch(getProducts({page:1}))
 
           this.toastController.create({
             message: res.message,

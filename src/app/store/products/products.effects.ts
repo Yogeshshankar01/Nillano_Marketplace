@@ -15,8 +15,8 @@ export class ProductsEffect {
     getProducts$ = createEffect(()=>
         this.actions$.pipe(
             ofType(productActions.getProducts),
-            switchMap(() => {
-                return this.productService.getProducts()
+            switchMap((payload:{page:number}) => {
+                return this.productService.getProducts(payload.page)
                     .pipe(
                         map((products) => productActions.getProductsSuccess({message:products.message,products:products.products})),
                         catchError((error) => of(productActions.getProductsFailure({error:error.message})))

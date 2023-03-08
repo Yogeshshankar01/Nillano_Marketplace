@@ -58,13 +58,14 @@ export class ProductsserviceService {
     })
   }
 
-  getProducts():Observable<{message:string,products:[]}>{
+  getProducts(page:number):Observable<{message:string,products:[]}>{
     return new Observable(observer=>{
 
-      this.http.get<{products:any}>(`${environment.server}/products/products`)
+      this.http.get<{products:any}>(`${environment.server}/products/products/${page}`)
     .pipe(take(1))
     .subscribe(async(res)=>{
       observer.next({message:"Products Provided",products:res.products})
+      localStorage.setItem('currentPage',String(page))
       observer.complete()
     },(err)=>{
       observer.error({message:err.error.message})
