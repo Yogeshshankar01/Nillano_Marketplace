@@ -9,14 +9,14 @@
 
       <ion-item class="bg-light rounded d-none d-sm-block" style="--background:#f2f2f2; --color: black;">
         <ion-thumbnail slot="start">
-          <img class="rounded-circle h-100 w-100" src="{{category.image}}"
+          <img class="rounded-circle h-100 w-100" src="{{category.image.url}}"
             alt="{{category.name}}" />
         </ion-thumbnail>
         <ion-label text-wrap>{{ category.name }}</ion-label>
       </ion-item>
 
-      <ion-list class="text-center d-block d-sm-none" style="background: transparent;">
-        <img class="rounded-circle" src="{{category.image}}" alt="{{category.name}}" />
+      <ion-list *ngIf="category.id < 4" class="text-center d-block d-sm-none" style="background: transparent;">
+        <img class="rounded-circle" src="{{category.image.url}}" alt="{{category.name}}" />
         <p style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ category.name }}</p>
       </ion-list>
 
@@ -27,7 +27,7 @@
             <ion-list>
               <ion-item *ngFor="let sub of category.Subcategories" (click)="productFilter(category.id,sub.id)" style="cursor: pointer;" >
                 <ion-thumbnail slot="start">
-                  <img class="rounded-circle" [alt]="sub.name" src=".././../../assets/images/electronics.jpg" />
+                  <img class="rounded-circle" [alt]="sub.name" src="{{sub.image.url}}" />
                 </ion-thumbnail>
                 <ion-label>{{sub.name}}</ion-label>
               </ion-item>
@@ -57,22 +57,22 @@
         </ion-buttons>
       </ion-toolbar>
       <ion-list style="background: #fff;">
-        <ion-item [id]="category.image" *ngFor="let category of categories">
+        <ion-item [id]="'pop'+category.id" *ngFor="let category of categories">
           <ion-avatar slot="start">
-            <ion-img src="{{category.image}}"></ion-img>
+            <ion-img src="{{category.image.url}}"></ion-img>
           </ion-avatar>
           <ion-label>
             <h2>{{category.name}}</h2>
             <p>{{category.description}}</p>
           </ion-label>
 
-          <ion-popover side="bottom" alignment="end" *ngIf="category.Subcategories" [trigger]="category.image" triggerAction="click">
+          <ion-popover side="bottom" alignment="end" *ngIf="category.Subcategories" [trigger]="'pop'+category.id" triggerAction="click">
             <ng-template>
               <ion-content>
                 <ion-list>
                   <ion-item *ngFor="let sub of category.Subcategories" (click)="productFilter(category.id,sub.id)">
                     <ion-thumbnail slot="start">
-                      <img class="rounded-circle" [alt]="sub.name" src=".././../../assets/images/electronics.jpg" />
+                      <img class="rounded-circle" [alt]="sub.name" src="{{sub.image.url}}" />
                     </ion-thumbnail>
                     <ion-label>{{sub.name}}</ion-label>
                   </ion-item>
