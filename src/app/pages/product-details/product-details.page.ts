@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 import { take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { SaveditemsService, SaveItem } from 'src/app/services/saveditems.service';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-product-details',
@@ -91,7 +92,7 @@ export class ProductDetailsPage implements OnInit {
           this.store.dispatch(endLoading())
 
           err.error.message && this.toastController.create({
-            message: err.error.message=="No authorization header" ? "Please log in to like product" : err.error.message,
+            message: err.error.message == "No authorization header" ? "Please log in to like product" : err.error.message,
             duration: 1000,
             color: 'danger',
             position: 'top'
@@ -185,19 +186,19 @@ export class ProductDetailsPage implements OnInit {
   productId: number | undefined
 
 
-  constructor(private store: Store<AppState>, private activeRoute: ActivatedRoute, private router: Router, private toastController: ToastController, private socialSharing: SocialSharing, private modalCtrl: ModalController, private userProfile: UserprofileService, private http: HttpClient, private actionSheetController: ActionSheetController, private authService: AuthService,private saveItemService:SaveditemsService) { }
+  constructor(private store: Store<AppState>, private activeRoute: ActivatedRoute, private router: Router, private toastController: ToastController, private socialSharing: SocialSharing, private modalCtrl: ModalController, private userProfile: UserprofileService, private http: HttpClient, private actionSheetController: ActionSheetController, private authService: AuthService, private saveItemService: SaveditemsService, private titleService: Title, private metaService: Meta) { }
 
 
-  saveItemForLater(){
+  saveItemForLater() {
 
-    let selectedItem:SaveItem = {
-      id:this.product.id,
+    let selectedItem: SaveItem = {
+      id: this.product.id,
       name: this.product.name,
       price: this.product.discount_price ? this.product.discount_price : this.product.price,
       quantity: this.quantityCount,
-      sellerId:this.product.user.id,
-      seller : this.product.user.username,
-      image : this.product.image.url
+      sellerId: this.product.user.id,
+      seller: this.product.user.username,
+      image: this.product.image.url
     }
 
     this.saveItemService.addSavedItem(selectedItem)
@@ -207,7 +208,7 @@ export class ProductDetailsPage implements OnInit {
 
   async presentCommentModal() {
 
-    if(!this.isLoggedIn){
+    if (!this.isLoggedIn) {
 
       this.toastController.create({
         message: "Please Login to continue...",
@@ -226,7 +227,7 @@ export class ProductDetailsPage implements OnInit {
       component: CommentModalComponent,
       showBackdrop: true,
       initialBreakpoint: 0.45,
-      componentProps : {productId : this.productId }
+      componentProps: { productId: this.productId }
     });
     return await modal.present();
   }
@@ -237,7 +238,7 @@ export class ProductDetailsPage implements OnInit {
 
   async presentOrderModal() {
 
-    if(!this.isLoggedIn){
+    if (!this.isLoggedIn) {
 
       this.toastController.create({
         message: "Please Login to continue...",
@@ -251,13 +252,13 @@ export class ProductDetailsPage implements OnInit {
       return
 
     }
-    
+
     this.selectedItem = {
-      id:this.product.id,
+      id: this.product.id,
       name: this.product.name,
       price: this.product.discount_price ? this.product.discount_price : this.product.price,
       quantity: this.quantityCount,
-      sellerId:this.product.user.id
+      sellerId: this.product.user.id
     }
 
     const modal = await this.modalCtrl.create({
@@ -271,11 +272,11 @@ export class ProductDetailsPage implements OnInit {
     return await modal.present();
   }
 
-  chatSellerMessageContent:string = ""
+  chatSellerMessageContent: string = ""
 
-  chatSeller(){
+  chatSeller() {
 
-    if(!this.chatSellerMessageContent){
+    if (!this.chatSellerMessageContent) {
 
       this.toastController.create({
         message: "Please type a message to send to seller...",
@@ -290,7 +291,7 @@ export class ProductDetailsPage implements OnInit {
 
     }
 
-    if(!this.currentUserId){
+    if (!this.currentUserId) {
 
       this.toastController.create({
         message: "Please login to chat seller...",
@@ -305,7 +306,7 @@ export class ProductDetailsPage implements OnInit {
 
     }
 
-    if(this.currentUserId === this.product.user_id){
+    if (this.currentUserId === this.product.user_id) {
 
       this.toastController.create({
         message: "Sorry you can not have a coversation with yourself...",
@@ -320,13 +321,13 @@ export class ProductDetailsPage implements OnInit {
 
     }
 
-    localStorage.setItem("chatSellerMessageContent",this.chatSellerMessageContent)
+    localStorage.setItem("chatSellerMessageContent", this.chatSellerMessageContent)
 
-    this.router.navigate(['messages'],{queryParams:{chat:this.product.user.id}})
+    this.router.navigate(['messages'], { queryParams: { chat: this.product.user.id } })
 
   }
 
-  ionViewDidLeave(){
+  ionViewDidLeave() {
     this.chatSellerMessageContent = ""
   }
 
@@ -386,12 +387,21 @@ export class ProductDetailsPage implements OnInit {
 
             // console.log(this.product.user.followers)
 
+            this.titleService.setTitle(`${this.product.name} - GH₵${this.product.price}`);
+
+            this.metaService.updateTag({ property: 'og:title', content: `${this.product.name} - GH₵${this.product.price}` });
+            this.metaService.updateTag({ name: 'twitter:title', content: `${this.product.name} - GH₵${this.product.price}` });
+            this.metaService.updateTag({ property: 'og:description', content: this.product.description });
+            this.metaService.updateTag({ name: 'twitter:description', content: this.product.description });
+            this.metaService.updateTag({ property: 'og:image', content: this.product.image.url });
+            this.metaService.updateTag({ name: 'twitter:image', content: this.product.image.url });
+
             this.userProfile.myProfile().subscribe(
               async res => {
                 this.currentUserId = await res.profile.id
                 // console.log(this.currentUserId)
                 this.isLiked = this.product.Likes.some((like: { user_id: number; }) => like.user_id === this.currentUserId);
-                this.isFollowing = this.product.user.followers.some((follower: { followerId : number; }) => follower.followerId === this.currentUserId);
+                this.isFollowing = this.product.user.followers.some((follower: { followerId: number; }) => follower.followerId === this.currentUserId);
                 // console.log(this.isFollowing)
               },
               err => {
@@ -427,7 +437,7 @@ export class ProductDetailsPage implements OnInit {
   }
 
 
-  handleRefresh(event:any) {
+  handleRefresh(event: any) {
     // do some work to refresh the content here
     // ...
 
@@ -436,12 +446,12 @@ export class ProductDetailsPage implements OnInit {
     //refreshertext.style.color = "#000"
 
     location.reload()
-  
+
     // when the refresh is complete, call the complete() method
     setTimeout(() => {
 
       event.target.complete();
-      
+
     }, 1500);
   }
 

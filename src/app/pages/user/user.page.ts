@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -13,7 +14,7 @@ export class UserPage implements OnInit {
 
   user:any
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient,private titleService:Title,private metaService:Meta) { }
 
   ngOnInit() {
 
@@ -24,6 +25,16 @@ export class UserPage implements OnInit {
     .subscribe(
       res=>{
         this.user = res
+
+        this.titleService.setTitle(`${this.user.username} - ${this.user.first_name} ${this.user.last_name}`);
+
+        this.metaService.updateTag({ property: 'og:title', content: `${this.user.username} - ${this.user.first_name} ${this.user.last_name}` });
+        this.metaService.updateTag({ name: 'twitter:title', content: `${this.user.sername} - ${this.user.first_name} ${this.user.last_name}` });
+        this.metaService.updateTag({ property: 'og:description', content: this.user.bio });
+        this.metaService.updateTag({ name: 'twitter:description', content: this.user.bio });
+        this.metaService.updateTag({ property: 'og:image', content: this.user.user_profile.url });
+        this.metaService.updateTag({ name: 'twitter:image', content: this.user.user_profile.url });
+
       }
     )
 
