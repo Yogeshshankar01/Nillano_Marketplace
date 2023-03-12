@@ -32,6 +32,7 @@
     "@ngrx/effects": "^15.1.0",
     "@ngrx/store": "^15.1.0",
     "@ngrx/store-devtools": "^15.1.0",
+    "@nguniversal/express-engine": "^15.0.0",
     "angular-paystack": "^1.0.0",
     "cordova-plugin-x-socialsharing": "^6.0.4",
     "crypto-browserify": "^3.12.0",
