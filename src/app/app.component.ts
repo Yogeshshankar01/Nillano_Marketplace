@@ -13,24 +13,6 @@ import { AppState } from './types/AppState';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-
-  handleRefresh(event:any) {
-    // do some work to refresh the content here
-    // ...
-
-    let refreshertext = document.querySelector(".refresher-refreshing-text") as HTMLElement
-
-    refreshertext.style.color = "#000"
-
-    location.reload()
-  
-    // when the refresh is complete, call the complete() method
-    setTimeout(() => {
-
-      event.target.complete();
-      
-    }, 2000);
-  }
   
 
   isLoggedIn:boolean

@@ -18,6 +18,24 @@ import { SearchComponent } from 'src/app/components/search/search.component';
 })
 export class HomePage implements OnDestroy, OnInit {
 
+  handleRefresh(event:any) {
+    // do some work to refresh the content here
+    // ...
+
+    // let refreshertext = document.querySelector(".refresher-refreshing-text") as HTMLElement
+
+    // refreshertext.style.color = "#000"
+
+    location.reload()
+  
+    // when the refresh is complete, call the complete() method
+    setTimeout(() => {
+
+      event.target.complete();
+      
+    }, 1500);
+  }
+
   isLoggedIn = false
 
   products: any = []

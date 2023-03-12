@@ -10,6 +10,10 @@
 
 <ion-content class="ion-padding">
 
+  <ion-refresher style="background: #f2f2f2; height: 70px; z-index: 99;" class="py-2" slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" refreshingSpinner="circles"></ion-refresher-content>
+  </ion-refresher>
+
   <img id="login-bg" src="../../../assets/images/login-bg.png" alt="login bg" />
 
   <div class="w-50 mx-auto main-content" style="position: relative; min-height:90%;">

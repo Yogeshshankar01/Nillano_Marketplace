@@ -62,3 +62,7 @@ ion-popover {
   // max-height: 100vh;
   // overflow-y: scroll;
 }
+
+ion-refresher ion-refresher-content {
+  --color: #dd1c1c !important;
+}
