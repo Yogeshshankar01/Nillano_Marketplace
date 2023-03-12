@@ -40,6 +40,17 @@ export class AuthPage implements OnInit {
     }, 1500);
   }
 
+  trimEmail() {
+    const emailFormControl = this.registerForm.get('email');
+    emailFormControl?.setValue(emailFormControl.value.trim());
+  }
+
+  trimLoginEmail() {
+    const emailFormControl = this.loginForm.get('email');
+    emailFormControl?.setValue(emailFormControl.value.trim());
+  }
+  
+
   interest = 'shop'
 
   bio = ""

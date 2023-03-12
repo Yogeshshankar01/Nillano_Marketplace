@@ -54,7 +54,7 @@
               </small>
             </ion-label>
 
-            <ion-input type="text" formControlName="email"></ion-input>
+            <ion-input (ionChange)="trimLoginEmail()" type="text" formControlName="email"></ion-input>
 
           </ion-item>
 
@@ -131,7 +131,7 @@
                 **Enter a valid email
               </small>
             </ion-label>
-            <ion-input type="text" formControlName="email"></ion-input>
+            <ion-input type="text" (ionChange)="trimEmail()" formControlName="email"></ion-input>
           </ion-item>
 
           <ion-item lines="none" class="rounded mt-3">
