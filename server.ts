@@ -6,6 +6,71 @@ import * as express from 'express';
 import { existsSync } from 'fs';
 import { join } from 'path';
 
+const domino = require('domino');
+
+const fs = require('fs');
+
+const path = require('path');
+
+const template = fs.readFileSync(path.join('.', 'dist/app/browser', 'index.html')).toString();
+
+const win = domino.createWindow(template);
+
+// tslint:disable-next-line:no-string-literal
+global['window'] = win;
+
+// tslint:disable-next-line:no-string-literal
+global['document'] = win.document;
+
+// tslint:disable-next-line:no-string-literal
+global['DOMTokenList'] = win.DOMTokenList;
+
+// tslint:disable-next-line:no-string-literal
+global['Node'] = win.Node;
+
+// tslint:disable-next-line:no-string-literal
+global['Text'] = win.Text;
+
+// tslint:disable-next-line:no-string-literal
+global['HTMLElement'] = win.HTMLElement;
+
+// tslint:disable-next-line:no-string-literal
+global['navigator'] = win.navigator;
+
+global['self'] = win.self;
+
+// tslint:disable-next-line:no-string-literal
+global['MutationObserver'] = getMockMutationObserver();
+
+function getMockMutationObserver() {
+
+  return class {
+
+    observe(node:any, options:any) {
+
+    }
+
+    disconnect() {
+
+    }
+
+    takeRecords() {
+
+      return [];
+
+    }
+
+  };
+
+}
+
+// (global as any).self = {
+//   crypto: {
+//       getRandomValues: (arr: any) => require('crypto').randomFillSync(arr)
+//   }
+// };
+
+
 import { AppServerModule } from './src/main.server';
 
 // The Express app is exported so that it can be used by serverless Functions.
