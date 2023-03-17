@@ -1,5 +1,6 @@
 ion-content{
-    --background: linear-gradient(180deg, #1A4640 0%, #f2f2f2 100%);
+    // --background: linear-gradient(180deg, #1A4640 0%, #f2f2f2 100%);
+    --background : #1A4640;
 }
 
 img#login-bg{
@@ -9,6 +10,7 @@ img#login-bg{
     bottom: 1%;
     width: 100%;
     transform: rotate(10deg);
+    display: none;
 }
 
 ion-segment{
@@ -49,15 +51,27 @@ ion-segment-button.register{
 }
 
 @media(max-width:600px){
+
     .main-content{
         width: 75% !important;
     }
+
 }
 
 @media(max-width:500px){
     .main-content{
         width: 85% !important;
     }
+
+    ion-content{
+        --background: linear-gradient(180deg, #1A4640 0%, #f2f2f2 100%);
+        // --background : #1A4640;
+    }
+
+    img#login-bg{
+        display: block;
+    }
+    
 }
 
 @media(max-width:400px){

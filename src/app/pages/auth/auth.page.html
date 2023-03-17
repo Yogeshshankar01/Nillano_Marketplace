@@ -59,20 +59,24 @@
           </ion-item>
 
 
-          <ion-item lines="none" class="rounded mt-4">
-            <ion-label style="color: #1A4640;" position="floating">
-              Your password
-              <small class="text-danger fw-bolder p-2"
-                *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')">
-                **Password is required
-              </small>
-              <small class="text-danger fw-bolder p-2"
-                *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')">
-                Password must have at least 8 characters
-              </small>
-            </ion-label>
-            <ion-input type="password" formControlName="password"></ion-input>
-          </ion-item>
+        <ion-item lines="none" class="rounded mt-4">
+          <ion-label style="color: #1A4640;" position="floating">
+            Your password
+            <small class="text-danger fw-bolder p-2"
+              *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')">
+              **Password is required
+            </small>
+            <small class="text-danger fw-bolder p-2"
+              *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')">
+              Password must have at least 8 characters
+            </small>
+          </ion-label>
+          <ion-input type="{{ showPassword ? 'text' : 'password' }}" formControlName="password"></ion-input>
+          <ion-button color="primary" class="m-0" style="margin-top:7% !important;" slot="end" fill="clear" (click)="showPassword = !showPassword">
+            <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+          </ion-button>
+        </ion-item>
+
 
 
           <div class="form-group text-end mt-3">
@@ -148,7 +152,11 @@
             </small>
 
             </ion-label>
-            <ion-input type="password" formControlName="password"></ion-input>
+            <ion-input type="{{ showPassword ? 'text' : 'password' }}" formControlName="password"></ion-input>
+
+            <ion-button color="primary" class="m-0" style="margin-top:7% !important;" slot="end" fill="clear" (click)="showPassword = !showPassword">
+              <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+            </ion-button>
           </ion-item>
 
           <div class="form-group text-end mt-3">

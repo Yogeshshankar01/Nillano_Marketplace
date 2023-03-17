@@ -189,6 +189,7 @@ export class AuthPage implements OnInit {
     // console.log(this.registerForm.value)
   }
 
+   showPassword = false;
 
   login() {
     this.store.dispatch(login({ email: this.loginForm.get('email')?.value, password: this.loginForm.get('password')?.value }))
