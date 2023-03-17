@@ -64,12 +64,6 @@ function getMockMutationObserver() {
 
 }
 
-// (global as any).self = {
-//   crypto: {
-//       getRandomValues: (arr: any) => require('crypto').randomFillSync(arr)
-//   }
-// };
-
 
 import { AppServerModule } from './src/main.server';
 
