@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
 import { UserMessagesService } from 'src/app/services/userMessages/user-messages.service';
@@ -112,6 +112,12 @@ export class MessagesPage implements OnInit {
 
   selectedUserId = 0
 
+  viewMessage(userId:number) {
+
+
+    this.router.navigate([`/messages/${userId}`], { replaceUrl: true });
+  }
+
 
   constructor(private activeRoute: ActivatedRoute, private router: Router, private userMessagesService: UserMessagesService, private store: Store<AppState>, private http: HttpClient) { }
 
@@ -119,7 +125,7 @@ export class MessagesPage implements OnInit {
 
   ngOnInit() {
 
-    this.activeRoute.queryParams
+    this.activeRoute.params
       .subscribe(async params => {
 
         let chatslist = document.getElementById('chatslist') as HTMLElement
@@ -149,7 +155,7 @@ export class MessagesPage implements OnInit {
             this.totalUnreadMessages = res.totalUnreadMesages
             this.chats = JSON.parse(JSON.stringify(res.userMessages))
 
-            // console.log(this.selectedUserId)
+            console.log(this.selectedUserId)
 
             if (this.selectedUserId != 0) {
 
@@ -176,6 +182,8 @@ export class MessagesPage implements OnInit {
 
               if (window.innerWidth <= 767) {
 
+                console.log('screen')
+
                 setTimeout(() => {
 
                   let chatslist = document.getElementById('chatslist') as HTMLElement
@@ -183,6 +191,8 @@ export class MessagesPage implements OnInit {
 
                   chatslist.classList.add('d-none')
                   chats.classList.remove('d-none')
+
+                  console.log("DeBug")
 
                 }, 500);
 

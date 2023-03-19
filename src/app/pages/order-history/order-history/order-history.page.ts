@@ -40,7 +40,7 @@ export class OrderHistoryPage implements OnInit {
 
     localStorage.setItem("chatSellerMessageContent",this.chatSellerMessageContent)
 
-    this.router.navigate(['messages'],{queryParams:{chat:sellerId}})
+    this.router.navigate([`messages/${sellerId}`])
 
   }
 

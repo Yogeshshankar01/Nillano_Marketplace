@@ -323,7 +323,7 @@ export class ProductDetailsPage implements OnInit {
 
     localStorage.setItem("chatSellerMessageContent", this.chatSellerMessageContent)
 
-    this.router.navigate(['messages'], { queryParams: { chat: this.product.user.id } })
+    this.router.navigate([`messages/${this.product.user.id}`])
 
   }
 
