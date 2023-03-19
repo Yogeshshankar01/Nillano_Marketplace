@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
 })
 export class MessagesPage implements OnInit {
 
-  handleRefresh(event:any) {
+  handleRefresh(event: any) {
     // do some work to refresh the content here
     // ...
 
@@ -25,12 +25,12 @@ export class MessagesPage implements OnInit {
     // refreshertext.style.color = "#000"
 
     location.reload()
-  
+
     // when the refresh is complete, call the complete() method
     setTimeout(() => {
 
       event.target.complete();
-      
+
     }, 1500);
   }
 
@@ -110,12 +110,35 @@ export class MessagesPage implements OnInit {
 
   totalUnreadMessages = 0
 
+  selectedUserId = 0
+
 
   constructor(private activeRoute: ActivatedRoute, private router: Router, private userMessagesService: UserMessagesService, private store: Store<AppState>, private http: HttpClient) { }
 
   messageRead = false
 
   ngOnInit() {
+
+    this.activeRoute.queryParams
+      .subscribe(async params => {
+
+        let chatslist = document.getElementById('chatslist') as HTMLElement
+        let chats = document.getElementById('chats') as HTMLElement
+
+        if (!params["chat"]) {
+          this.selectedUser = false
+          this.selectedUserId = 0
+
+          chatslist?.classList.remove('d-none')
+          chats?.classList.add('d-none')
+        }
+
+        else {
+          this.selectedUser = true
+          this.selectedUserId = params["chat"]
+        }
+
+      })
 
     this.store.select("getUserMessages")
       .subscribe(
@@ -126,68 +149,49 @@ export class MessagesPage implements OnInit {
             this.totalUnreadMessages = res.totalUnreadMesages
             this.chats = JSON.parse(JSON.stringify(res.userMessages))
 
-            this.activeRoute.queryParams
-              .subscribe(async params => {
+            // console.log(this.selectedUserId)
 
-                let chatslist = document.getElementById('chatslist') as HTMLElement
-                let chats = document.getElementById('chats') as HTMLElement
+            if (this.selectedUserId != 0) {
 
-                if (!params["chat"]) {
-                  this.selectedUser = false
-                  chatslist.classList.remove('d-none')
-                  chats.classList.add('d-none')
-                }
+              this.store.dispatch(startLoading())
 
-                else {
-                  this.selectedUser = true
-                  let selectedUserId = params["chat"]
+              if (localStorage.getItem("chatSellerMessageContent")) {
+                this.addChat(this.selectedUserId)
+              }
 
-                  this.selectedUserMessages = this.chats.find((chat: { id: any; }) => (chat.id == selectedUserId))
+              this.selectedUserMessages = this.chats.find((chat: { id: any; }) => (chat.id == this.selectedUserId))
 
-                  if (localStorage.getItem("chatSellerMessageContent")) {
-                    this.addChat(selectedUserId)
-                  }
-
-                  if (!this.selectedUserMessages) {
-
-                    this.store.dispatch(startLoading())
-
-                    this.http.get<{ usersMessages: any[] }>(`${environment.server}/messaging/messages/user/${selectedUserId}`)
-                      .subscribe(
-                        res => {
-                          this.selectedUserMessages = res.usersMessages[0]
-                          this.store.dispatch(endLoading())
-
-                        }
-                      )
-
-                  }
-
-                  if (window.innerWidth <= 767) {
-
-                    chatslist.classList.add('d-none')
-                    chats.classList.remove('d-none')
-
-                  }
-
-                  this.selectedUserMessages.messages.forEach((element: any) => {
-
-                    if(element.read == false && element.from == selectedUserId){
-                      this.http.get(`${environment.server}/messaging/messages/read/${this.selectedUserMessages.id}`)
-                      .subscribe(res => {
-                        this.store.dispatch(getUserMessages())
-                      })
-                      return
+              if (!this.selectedUserMessages) {
+    
+                this.http.get<{ usersMessages: any[] }>(`${environment.server}/messaging/messages/user/${this.selectedUserId}`)
+                  .subscribe(
+                    res => {
+                      this.selectedUserMessages = res.usersMessages[0]
+    
                     }
-                    
-                  });
+                  )
+    
+              }
+    
 
+              if (window.innerWidth <= 767) {
 
+                setTimeout(() => {
 
-                }
+                  let chatslist = document.getElementById('chatslist') as HTMLElement
+                  let chats = document.getElementById('chats') as HTMLElement
 
-              })
+                  chatslist.classList.add('d-none')
+                  chats.classList.remove('d-none')
 
+                }, 500);
+
+              }
+
+                this.store.dispatch(endLoading())
+              
+
+            }
 
           }
 
@@ -199,49 +203,50 @@ export class MessagesPage implements OnInit {
       )
 
 
+
   }
 
-  ionViewDidLeave(){
+  ionViewDidLeave() {
     // this.messageRead = false
   }
 
   ngAfterViewInit() {
 
-      if(this.selectedUser){
+    // if (this.selectedUser) {
 
-        setTimeout(() => {
+    //   setTimeout(() => {
 
-          let chatslist = document.getElementById('chatslist') as HTMLElement
-      let chats = document.getElementById('chats') as HTMLElement
+    //     let chatslist = document.getElementById('chatslist') as HTMLElement
+    //     let chats = document.getElementById('chats') as HTMLElement
 
-      if(window.innerWidth <= 767) {
+    //     if (window.innerWidth <= 767) {
 
-        chatslist.classList.add('d-none')
-        chats.classList.remove('d-none')
+    //       chatslist.classList.add('d-none')
+    //       chats.classList.remove('d-none')
 
-      }
-          
-        }, 1000);
-      
-    }
-    else{
-      setTimeout(() => {
+    //     }
 
-        if(this.selectedUser){
-          let chatslist = document.getElementById('chatslist') as HTMLElement
-          let chats = document.getElementById('chats') as HTMLElement
-    
-          if(window.innerWidth <= 767) {
-    
-            chatslist.classList.add('d-none')
-            chats.classList.remove('d-none')
-    
-          }
-        }
-        
-      }, 2000);
-    }
-    
+    //   }, 1000);
+
+    // }
+    // else {
+    //   setTimeout(() => {
+
+    //     if (this.selectedUser) {
+    //       let chatslist = document.getElementById('chatslist') as HTMLElement
+    //       let chats = document.getElementById('chats') as HTMLElement
+
+    //       if (window.innerWidth <= 767) {
+
+    //         chatslist.classList.add('d-none')
+    //         chats.classList.remove('d-none')
+
+    //       }
+    //     }
+
+    //   }, 2000);
+    // }
+
   }
 
 }
