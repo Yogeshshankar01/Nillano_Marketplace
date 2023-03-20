@@ -114,9 +114,9 @@ export class MessagesPage implements OnInit {
 
   viewMessage(userId:number) {
 
-    location.replace(`/messages/${userId}`)
+    // location.replace(`/messages/${userId}`)
 
-    // this.router.navigate([`/messages/${userId}`], { replaceUrl: true });
+    this.router.navigate([`/messages/${userId}`], { replaceUrl: true });
   }
 
 
@@ -136,8 +136,8 @@ export class MessagesPage implements OnInit {
           this.selectedUser = false
           this.selectedUserId = 0
 
-          // chatslist?.classList.remove('d-none')
-          // chats?.classList.add('d-none')
+          chatslist?.classList.remove('d-none')
+          chats?.classList.add('d-none')
         }
 
         else {
@@ -193,19 +193,19 @@ export class MessagesPage implements OnInit {
               });
     
 
-              if (window.innerWidth <= 767) {
+              // if (window.innerWidth <= 767) {
 
-                setTimeout(() => {
+              //   setTimeout(() => {
 
-                  let chatslist = document.getElementById('chatslist') as HTMLElement
-                  let chats = document.getElementById('chats') as HTMLElement
+              //     let chatslist = document.getElementById('chatslist') as HTMLElement
+              //     let chats = document.getElementById('chats') as HTMLElement
 
-                  chatslist.classList.add('d-none')
-                  chats.classList.remove('d-none')
+              //     chatslist.classList.add('d-none')
+              //     chats.classList.remove('d-none')
 
-                }, 500);
+              //   }, 500);
 
-              }
+              // }
 
                 this.store.dispatch(endLoading())
               

@@ -22,7 +22,7 @@
 
   <ion-row *ngIf="chats?.length > 0" class="h-100">
 
-    <ion-col class="mh-100" id="chatslist" style="overflow-y: scroll;" size="12" size-md="5" size-lg="4" >
+    <ion-col [ngClass]="{'d-sm-block d-none': selectedUserMessages, 'd-sm-none d-block': !selectedUserMessages}" class="mh-100" id="chatslist" style="overflow-y: scroll;" size="12" size-md="5" size-lg="4" >
       
       <ion-item lines="full" (click)="viewMessage(chat.id)" button *ngFor="let chat of chats">
         <ion-avatar slot="start">
@@ -37,7 +37,7 @@
 
     </ion-col>
 
-    <ion-col class="mh-100 d-sm-block d-none" id="chats" size="12" size-md="7" size-lg="8" >
+    <ion-col [ngClass]="{'d-sm-block d-none': !selectedUserMessages, 'd-sm-none d-block': selectedUserMessages}" class="mh-100" id="chats" size="12" size-md="7" size-lg="8" >
 
       <div *ngIf="selectedUserMessages" class="h-100 d-flex flex-column">
 
