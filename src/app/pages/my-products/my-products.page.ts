@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, ModalController, ToastController } from '@ionic/angular';
+import { ActionSheetController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
 import { EditproductComponent } from 'src/app/components/editproduct/editproduct.component';
@@ -16,7 +16,7 @@ import { AppState } from 'src/app/types/AppState';
 })
 export class MyProductsPage implements OnInit {
 
-  constructor(private modalCtrl: ModalController, private actionSheetController: ActionSheetController, private store: Store<AppState>, private toastController: ToastController, private productsService: ProductsserviceService) { }
+  constructor(private modalCtrl: ModalController, private actionSheetController: ActionSheetController, private store: Store<AppState>, private toastController: ToastController, private productsService: ProductsserviceService,private popoverController:PopoverController) { }
 
   async presentListProductModal() {
 
@@ -33,7 +33,7 @@ export class MyProductsPage implements OnInit {
     //   return
     // }
 
-    if(!this.user.username){
+    if (!this.user.username) {
       this.toastController.create({
         message: "Please provide a username to continue",
         duration: 2000,
@@ -124,22 +124,22 @@ export class MyProductsPage implements OnInit {
 
   editProduct(product: any) { }
 
-  user:any ;
+  user: any;
 
   ngOnInit() {
 
     this.store.select('checkLogin')
-    .subscribe(
-      res=>{
+      .subscribe(
+        res => {
 
-        if(res.loggedIn){
-          this.user = res.profile
+          if (res.loggedIn) {
+            this.user = res.profile
+          }
+
+
+
         }
-
-       
-
-      }
-    )
+      )
 
     this.store.dispatch(getUserProducts())
 
@@ -176,8 +176,67 @@ export class MyProductsPage implements OnInit {
 
   }
 
+  async share(platform: string) {
+    // Logic to share content on selected platform
 
-  handleRefresh(event:any) {
+    const link = `${window.location.origin}/@/${this.user.username}`
+
+    let shareUrl: any;
+
+    switch (platform) {
+      case 'copy':
+
+        // copy the link to the clipboard using the browser API
+        try {
+
+          await navigator.clipboard.writeText(link);
+
+          const toast = await this.toastController.create({
+            message: 'Link copied!',
+            duration: 2000,
+            color: 'dark'
+          });
+
+          await toast.present();
+
+        } catch (err) {
+          console.error('Failed to copy text: ', err);
+
+          const toast = await this.toastController.create({
+            color: 'danger',
+            message: 'Failed to copy text!',
+            duration: 2000
+          });
+        }
+
+        break;
+
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${link}`;
+        break;
+
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?url=${link}`;
+        break;
+
+        case 'whatsapp':
+          shareUrl = `https://api.whatsapp.com/send?text=${link}`;
+          break;
+
+      default:
+        break;
+    }
+
+    if (shareUrl) {
+      window.open(shareUrl, '_blank');
+    }
+
+    await this.popoverController.dismiss();
+
+  }
+
+
+  handleRefresh(event: any) {
     // do some work to refresh the content here
     // ...
 
@@ -186,12 +245,12 @@ export class MyProductsPage implements OnInit {
     // refreshertext.style.color = "#000"
 
     location.reload()
-  
+
     // when the refresh is complete, call the complete() method
     setTimeout(() => {
 
       event.target.complete();
-      
+
     }, 1500);
   }
 

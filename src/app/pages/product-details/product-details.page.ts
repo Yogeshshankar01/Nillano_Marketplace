@@ -437,6 +437,66 @@ export class ProductDetailsPage implements OnInit {
   }
 
 
+  async share(platform: string) {
+    // Logic to share content on selected platform
+
+    const link = `${window.location.origin}/@/${this.product.user.username}`
+
+    let shareUrl: any;
+
+    switch (platform) {
+      case 'copy':
+
+        // copy the link to the clipboard using the browser API
+        try {
+
+          await navigator.clipboard.writeText(link);
+
+          const toast = await this.toastController.create({
+            message: 'Link copied!',
+            duration: 2000,
+            color: 'dark'
+          });
+
+          await toast.present();
+
+        } catch (err) {
+          console.error('Failed to copy text: ', err);
+
+          const toast = await this.toastController.create({
+            color: 'danger',
+            message: 'Failed to copy text!',
+            duration: 2000
+          });
+        }
+
+        break;
+
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${link}`;
+        break;
+
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?url=${link}`;
+        break;
+
+        case 'whatsapp':
+          shareUrl = `https://api.whatsapp.com/send?text=${link}`;
+          break;
+
+      default:
+        break;
+    }
+
+    if (shareUrl) {
+      window.open(shareUrl, '_blank');
+    }
+
+    // await this.popoverController.dismiss();
+
+  }
+
+
   handleRefresh(event: any) {
     // do some work to refresh the content here
     // ...
