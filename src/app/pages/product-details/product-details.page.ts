@@ -444,7 +444,7 @@ export class ProductDetailsPage implements OnInit {
 
     let shareUrl: any;
 
-    const message = `Hey, check out this product:%0A%0A*Name:* ${this.product.name}%0A%0A*Description:* ${this.product.description}%0A%0A*Price:* ${this.product.discount_percent ? '~GH₵' + this.product.price+'~' : ''}  GH₵${!this.product.discount_percent ? this.product.price : this.product.discount_price}${this.product.discount_percent ? '%0A%0A*Discount:* ' + this.product.discount_percent+'%' : ''}%0A%0A%0A*Visit this link to order now:*%0A${link}`;
+    const message = `Hey, check out this product:%0A%0A*Name:* ${this.product.name}%0A%0A*Description:* ${this.product.description}%0A%0A*Price:* ${this.product.discount_percent ? '~GH₵' + this.product.price+'~' : ''} GH₵${!this.product.discount_percent ? this.product.price : this.product.discount_price}${this.product.discount_percent ? '%0A%0A*Discount:* ' + this.product.discount_percent+'%' : ''}%0A%0A%0A*Visit this link to order now:*%0A${link}`;
 
     switch (platform) {
       case 'copy':
