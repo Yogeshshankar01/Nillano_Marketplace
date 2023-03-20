@@ -7,7 +7,7 @@
     <ion-col [id]="category.name" style="color: black; cursor: pointer;" *ngFor="let category of categories" size="4"
       size-md="12" size-lg="12" class="category-col">
 
-      <ion-item class="bg-light rounded d-none d-sm-block" style="--background:#f2f2f2; --color: black;">
+      <ion-item lines="full" class="bg-light rounded d-none d-sm-block" style="--background:#f2f2f2; --color: black;">
         <ion-thumbnail slot="start">
           <img class="rounded-circle h-100 w-100" src="{{category.image.url}}"
             alt="{{category.name}}" />
@@ -57,7 +57,7 @@
         </ion-buttons>
       </ion-toolbar>
       <ion-list style="background: #fff;">
-        <ion-item [id]="'pop'+category.id" *ngFor="let category of categories">
+        <ion-item lines="none" [id]="'pop'+category.id" *ngFor="let category of categories">
           <ion-avatar slot="start">
             <ion-img src="{{category.image.url}}"></ion-img>
           </ion-avatar>
@@ -70,7 +70,7 @@
             <ng-template>
               <ion-content>
                 <ion-list>
-                  <ion-item *ngFor="let sub of category.Subcategories" (click)="productFilter(category.id,sub.id)">
+                  <ion-item lines="none" *ngFor="let sub of category.Subcategories" (click)="productFilter(category.id,sub.id)">
                     <ion-thumbnail slot="start">
                       <img class="rounded-circle" [alt]="sub.name" src="{{sub.image.url}}" />
                     </ion-thumbnail>
