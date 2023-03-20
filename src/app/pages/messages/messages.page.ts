@@ -38,7 +38,7 @@ export class MessagesPage implements OnInit {
 
   back() {
     // this.messageRead = false
-    this.router.navigate(['messages'])
+    this.router.navigate(['messages'], { replaceUrl: true })
   }
 
 
