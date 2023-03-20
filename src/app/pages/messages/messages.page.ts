@@ -114,8 +114,9 @@ export class MessagesPage implements OnInit {
 
   viewMessage(userId:number) {
 
+    location.replace(`/messages/${userId}`)
 
-    this.router.navigate([`/messages/${userId}`], { replaceUrl: true });
+    // this.router.navigate([`/messages/${userId}`], { replaceUrl: true });
   }
 
 
@@ -135,8 +136,8 @@ export class MessagesPage implements OnInit {
           this.selectedUser = false
           this.selectedUserId = 0
 
-          chatslist?.classList.remove('d-none')
-          chats?.classList.add('d-none')
+          // chatslist?.classList.remove('d-none')
+          // chats?.classList.add('d-none')
         }
 
         else {
@@ -178,11 +179,21 @@ export class MessagesPage implements OnInit {
                   )
     
               }
+
+              this.selectedUserMessages.messages.forEach((element: any) => {
+
+                if(element.read == false && element.from == this.selectedUserId){
+                  this.http.get(`${environment.server}/messaging/messages/read/${this.selectedUserMessages.id}`)
+                  .subscribe(res => {
+                    this.store.dispatch(getUserMessages())
+                  })
+                  return
+                }
+                
+              });
     
 
               if (window.innerWidth <= 767) {
-
-                console.log('screen')
 
                 setTimeout(() => {
 
@@ -191,8 +202,6 @@ export class MessagesPage implements OnInit {
 
                   chatslist.classList.add('d-none')
                   chats.classList.remove('d-none')
-
-                  console.log("DeBug")
 
                 }, 500);
 
@@ -216,46 +225,13 @@ export class MessagesPage implements OnInit {
 
   }
 
-  ionViewDidLeave() {
-    // this.messageRead = false
-  }
+  // ionViewDidLeave() {
+  //   // this.messageRead = false
+  // }
 
   ngAfterViewInit() {
 
-    // if (this.selectedUser) {
-
-    //   setTimeout(() => {
-
-    //     let chatslist = document.getElementById('chatslist') as HTMLElement
-    //     let chats = document.getElementById('chats') as HTMLElement
-
-    //     if (window.innerWidth <= 767) {
-
-    //       chatslist.classList.add('d-none')
-    //       chats.classList.remove('d-none')
-
-    //     }
-
-    //   }, 1000);
-
-    // }
-    // else {
-    //   setTimeout(() => {
-
-    //     if (this.selectedUser) {
-    //       let chatslist = document.getElementById('chatslist') as HTMLElement
-    //       let chats = document.getElementById('chats') as HTMLElement
-
-    //       if (window.innerWidth <= 767) {
-
-    //         chatslist.classList.add('d-none')
-    //         chats.classList.remove('d-none')
-
-    //       }
-    //     }
-
-    //   }, 2000);
-    // }
+    
 
   }
 
