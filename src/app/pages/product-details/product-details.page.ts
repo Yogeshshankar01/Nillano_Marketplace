@@ -440,7 +440,7 @@ export class ProductDetailsPage implements OnInit {
   async share(platform: string) {
     // Logic to share content on selected platform
 
-    const link = `${window.location.origin}/@/${this.product.user.username}`
+    const link = `${window.location.href}`
 
     let shareUrl: any;
 
