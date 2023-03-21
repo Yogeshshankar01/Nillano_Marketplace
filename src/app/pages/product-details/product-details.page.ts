@@ -444,7 +444,11 @@ export class ProductDetailsPage implements OnInit {
 
     let shareUrl: any;
 
-    const message = `Hey, check out this product:%0A%0A*Name:* ${this.product.name}%0A%0A*Description:* ${this.product.description}%0A%0A*Price:* ${this.product.discount_percent ? '~GH₵' + this.product.price+'~' : ''} GH₵${!this.product.discount_percent ? this.product.price : this.product.discount_price}${this.product.discount_percent ? '%0A%0A*Discount:* ' + this.product.discount_percent+'%' : ''}%0A%0A%0A*Visit this link to order now:*%0A${link}`;
+    const message = `Hey, check out this product:%0A%0A*Name:* ${this.product.name}%0A%0A*Description:* ${this.product.description}%0A%0A*Price:* ${this.product.discount_percent ? '~GH₵' + this.product.price+'~' : ''} GH₵${!this.product.discount_percent ? this.product.price : this.product.discount_price}${this.product.discount_percent ? '%0A%0A*Discount:* ' + this.product.discount_percent+'%' : ''}%0A%0A%0A*Visit this link to order now:*%0A${link}`; 
+
+    // ${this.product.discount_percent ? 'GH₵' + this.product.price : ''}
+
+    const messageTweet = `%0A${link}%0A%0ACheck out this product:%0AName: ${this.product.name}%0APrice: GH₵${this.product.price }${this.product.discount_percent ? '%0ADiscount Price: GH₵' + this.product.discount_price : ''}${this.product.discount_percent ? '%0ADiscount: ' + this.product.discount_percent+'%25' : ''}%0ADescription: ${this.product.description}`;
 
     switch (platform) {
       case 'copy':
@@ -479,7 +483,7 @@ export class ProductDetailsPage implements OnInit {
         break;
 
       case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?url=${link}`;
+        shareUrl = `https://twitter.com/intent/tweet?text=${messageTweet}`;
         break;
 
       case 'whatsapp':
