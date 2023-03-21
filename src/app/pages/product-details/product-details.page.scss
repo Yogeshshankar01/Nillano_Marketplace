@@ -32,3 +32,9 @@ ion-img.main {
     // @media(max-width:500px){
 
     // }
+
+    :host-context(.ios) {
+      .e{
+        margin-bottom: 0% !important;
+      }
+    }
