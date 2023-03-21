@@ -44,9 +44,17 @@ export class UserPage implements OnInit {
   async share(platform: string) {
     // Logic to share content on selected platform
 
-    const link = `${window.location.origin}/@/${this.user.username}`
+    const username = encodeURIComponent(this.user.username)
+    
+    const link = `${window.location.origin}/@/${username}`
 
     let shareUrl: any;
+
+    const message = encodeURIComponent(`Meet our seller on Niilano! Explore their wide range of products by visiting their profile link.
+
+${link}
+
+#Niilano #${this.user.username} #ShopWithConfidence #OnlineMarketplace #WideRangeOfProducts #ExploreNow`)
 
     switch (platform) {
       case 'copy':
@@ -54,7 +62,7 @@ export class UserPage implements OnInit {
         // copy the link to the clipboard using the browser API
         try {
 
-          await navigator.clipboard.writeText(link);
+          await navigator.clipboard.writeText(message);
 
           const toast = await this.toastController.create({
             message: 'Link copied!',
@@ -77,15 +85,15 @@ export class UserPage implements OnInit {
         break;
 
       case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${link}`;
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${message}`;
         break;
 
       case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?url=${link}`;
+        shareUrl = `https://twitter.com/intent/tweet?url=${message}`;
         break;
 
         case 'whatsapp':
-          shareUrl = `https://api.whatsapp.com/send?text=${link}`;
+          shareUrl = `https://api.whatsapp.com/send?text=${message}`;
           break;
 
       default:
