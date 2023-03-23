@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TosPage implements OnInit {
 
-  dropContent = 'ourmission'
+  dropContent = ''
 
   dropDown(content:string){
+    if(this.dropContent == content){
+      this.dropContent = ''
+      return
+    }
     this.dropContent = content ? content : ''
   }
 

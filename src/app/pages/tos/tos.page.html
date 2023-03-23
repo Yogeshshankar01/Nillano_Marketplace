@@ -36,8 +36,8 @@
     click on the drop-down menu next to each section to expand and read the details.</p>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title><h3 class="m-0 d-flex justify-content-between">Our Mission <ion-icon name="{{ dropContent=='ourmission' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3> </ion-card-title>
+    <ion-card-header (click)="dropDown('ourmission')">
+      <ion-card-title><h3 class="m-0 d-flex justify-content-between">OUR MISSION <ion-icon name="{{ dropContent=='ourmission' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3> </ion-card-title>
     </ion-card-header>
 
     <ion-card-content *ngIf="dropContent=='ourmission'">
@@ -48,11 +48,11 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>INTRODUCTION</ion-card-title>
+    <ion-card-header (click)="dropDown('introduction')">
+      <ion-card-title><h3 class="m-0 d-flex justify-content-between">INTRODUCTION <ion-icon name="{{ dropContent=='introduction' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3></ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='introduction'">
       <p>These Terms of Service (“Terms”) are a binding legal agreement between you and Niilano.com that govern your
         right to use the website and other offerings from Niilano.com (collectively, the “Niilano.com Platform”). When
         used in these Terms, “Niilano.com,” “we,” “us,” or “our” refers to the Niilano.com entity. Niilano.com is an
@@ -83,11 +83,11 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>REGISTRATION AND ACCOUNT</ion-card-title>
+    <ion-card-header (click)="dropDown('registrationandaccount')">
+      <ion-card-title><h3 class="m-0 d-flex justify-content-between">REGISTRATION AND ACCOUNT <ion-icon name="{{ dropContent=='registrationandaccount' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3> </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='registrationandaccount'">
       <ol>
         <li>You may not register with our marketplace if you are under 16 years of age.</li>
         <li>You may register your account with us by visiting our website and filling in the necessary information,
@@ -103,11 +103,11 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>PAYMENTS</ion-card-title>
+    <ion-card-header (click)="dropDown('payments')">
+      <ion-card-title><h3 class="m-0 d-flex justify-content-between">PAYMENTS <ion-icon name="{{ dropContent=='payments' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3></ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='payments'">
       <p>You should always make payments using any of the payment methods below.
         Payment methods include: Mobile Money, Bank transfer and cash on delivery.
       </p>
@@ -115,22 +115,22 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>PROMOTIONS </ion-card-title>
+    <ion-card-header (click)="dropDown('promotions')">
+      <ion-card-title><h3 class="m-0 d-flex justify-content-between">PROMOTIONS<ion-icon name="{{ dropContent=='promotions' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3> </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='promotions'">
       <p>There will be frequent promotions and these will be announced as the time approaches.
       </p>
     </ion-card-content>
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>RULES ABOUT CONTENTS </ion-card-title>
+    <ion-card-header (click)="dropDown('rulesandcontents')">
+      <ion-card-title><h3 class="m-0 d-flex justify-content-between">RULES ABOUT CONTENTS<ion-icon name="{{ dropContent=='rulesandcontents' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3>  </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='rulesandcontents'">
       <ol>
         <li>In our terms and conditions, “your content” refers to: – All materials and works (including files, graphics,
           images, audio, video and audio-visual material, scripts and software) that you submit to our marketplace for
@@ -165,11 +165,11 @@
 
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title> OUR RIGHTS TO USE YOUR CONTENT </ion-card-title>
+    <ion-card-header (click)="dropDown('ourrightstouseyourcontent')">
+      <ion-card-title> <h3 class="m-0 d-flex justify-content-between">OUR RIGHTS TO USE YOUR CONTENT<ion-icon name="{{ dropContent=='ourrightstouseyourcontent' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3> </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='ourrightstouseyourcontent'">
       <ol>
         <li>You grant us a free license to use, reproduce, store, adapt, publish and translate and distribute your
           content across our marketing channels and any existing or future media.</li>
@@ -182,11 +182,11 @@
 
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title> USE OF WEBSITE AND MOBILE APPLICATIONS </ion-card-title>
+    <ion-card-header (click)="dropDown('useofwebsiteandmobileapp')">
+      <ion-card-title><h3 class="m-0 d-flex justify-content-between">USE OF WEBSITE AND MOBILE APPLICATIONS<ion-icon name="{{ dropContent=='useofwebsiteandmobileapp' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3>  </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='useofwebsiteandmobileapp'">
       <ol>
         <li>In this section, “marketplace”, “platform” , “website” shall be used interchangeably to refer to
           Niilano.com's websites and mobile applications.</li>
@@ -203,11 +203,11 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title> COPYRIGHT AND TRADEMARKS </ion-card-title>
+    <ion-card-header (click)="dropDown('copyrightandtrademarks')">
+      <ion-card-title> <h3 class="m-0 d-flex justify-content-between">COPYRIGHT AND TRADEMARKS<ion-icon name="{{ dropContent=='copyrightandtrademarks' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3> </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='copyrightandtrademarks'">
       <ol>
         <li>Niilano.com’s logos and our other registered and unregistered trademarks are trademarks belonging to us, we
           give no permission for the use of these trademarks or logos and such use may constitute an infringement of our
@@ -220,11 +220,11 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title> DATA PRIVACY</ion-card-title>
+    <ion-card-header (click)="dropDown('dataprivacy')">
+      <ion-card-title> <h3 class="m-0 d-flex justify-content-between">DATA PRIVACY<ion-icon name="{{ dropContent=='dataprivacy' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3></ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='dataprivacy'">
       <ol>
         <li>Buyers agree to the processing of their personal data in accordance with the terms of Niilano.com's privacy
           and cookie notice.</li>
@@ -239,11 +239,11 @@
 
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title> NIILANO. COM’s ROLE AS A MARKET PLACE </ion-card-title>
+    <ion-card-header (click)="dropDown('roleasmarket')">
+      <ion-card-title> <h3 class="m-0 d-flex justify-content-between">NIILANO. COM’s ROLE AS A MARKET PLACE<ion-icon name="{{ dropContent=='roleasmarket' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3> </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='roleasmarket'">
       <ul>
         <li>We facilitate a marketplace for buyers and third party sellers.</li>
         <li>We put measures in place to ensure our buyers get quality products and also an excellent user experience.
@@ -263,11 +263,11 @@
 
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title> HIERARCHY </ion-card-title>
+    <ion-card-header (click)="dropDown('HIERARCHY')">
+      <ion-card-title><h3 class="m-0 d-flex justify-content-between">HIERARCHY<ion-icon name="{{ dropContent=='HIERARCHY' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3>  </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='HIERARCHY'">
       <p> Should there be any conflict in our general terms and conditions, the seller terms and conditions, and the
         Niilano.com codes, policies and guidelines, these terms and conditions, the seller terms and conditions and the
         Niilano.com codes, policies and guidelines shall prevail in the order here stated. </p>
@@ -275,11 +275,11 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title> VARIATION </ion-card-title>
+    <ion-card-header (click)="dropDown('VARIATION')">
+      <ion-card-title> <h3 class="m-0 d-flex justify-content-between">VARIATION<ion-icon name="{{ dropContent=='VARIATION' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3>  </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='VARIATION'">
       <ul>
         <li> Our terms and conditions, policies, guidelines, Niilano.com codes as well as seller terms and conditions
           may be revised from time to time. </li>
@@ -291,11 +291,11 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title> ASSIGNMENT </ion-card-title>
+    <ion-card-header (click)="dropDown('ASSIGNMENT')">
+      <ion-card-title> <h3 class="m-0 d-flex justify-content-between">ASSIGNMENT<ion-icon name="{{ dropContent=='ASSIGNMENT' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3> </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='ASSIGNMENT'">
       <ul>
         <li>You hereby agree that we may assign, transfer, sub-contract or otherwise deal with our rights and or
           obligations under these general terms and conditions. </li>
@@ -307,22 +307,22 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title> LAW AND JURISDICTION </ion-card-title>
+    <ion-card-header (click)="dropDown('LAW AND JURISDICTION')">
+      <ion-card-title> <h3 class="m-0 d-flex justify-content-between">LAW AND JURISDICTION<ion-icon name="{{ dropContent=='LAW AND JURISDICTION' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3>  </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content  *ngIf="dropContent=='LAW AND JURISDICTION'">
       <p> These general terms and conditions shall be governed by and constructed in accordance with the laws of Ghana.
       </p>
     </ion-card-content>
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title> ASSIGNMENT </ion-card-title>
+    <ion-card-header (click)="dropDown('OUR COMPANY DETAILS')">
+      <ion-card-title> <h3 class="m-0 d-flex justify-content-between">OUR COMPANY DETAILS<ion-icon name="{{ dropContent=='OUR COMPANY DETAILS' ? 'chevron-up-circle' : 'chevron-down-circle' }}" size="large"></ion-icon></h3> </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropContent=='OUR COMPANY DETAILS'">
       <ul>
         <li>You may chat our sellers for sales queries.</li>
         <li>You consent to receive notices electronically from us. We may provide all communications and information
