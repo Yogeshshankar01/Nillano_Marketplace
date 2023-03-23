@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TosPage implements OnInit {
 
-  isCollapsed = true
+  dropContent = 'ourmission'
+
+  dropDown(content:string){
+    this.dropContent = content ? content : ''
+  }
 
   constructor() { }
 
