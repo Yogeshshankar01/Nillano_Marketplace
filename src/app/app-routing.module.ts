@@ -59,6 +59,10 @@ const routes: Routes = [
     path: 'settings&support',
     loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
   },
+  {
+    path: 'tos',
+    loadChildren: () => import('./pages/tos/tos.module').then( m => m.TosPageModule)
+  },
 ];
 
 @NgModule({
