@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { MenuController, Platform } from '@ionic/angular';
+import { MenuController, ModalController, Platform } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { SaveditemsService } from 'src/app/services/saveditems.service';
 import { getUserProducts } from 'src/app/store/userProducts/userproducts.actions';
 import { AppState } from 'src/app/types/AppState';
+import { SupportComponent } from '../support/support.component';
 
 @Component({
   selector: 'app-menu',
@@ -15,8 +16,19 @@ export class MenuComponent implements OnInit {
 
   isIOS:boolean
 
-  constructor(private router: Router, private menuController: MenuController, private store: Store<AppState>,private savedItemsService:SaveditemsService,private platform: Platform) { 
+  constructor(private modalCtrl: ModalController,private router: Router, private menuController: MenuController, private store: Store<AppState>,private savedItemsService:SaveditemsService,private platform: Platform) { 
     this.isIOS = this.platform.is('ios');
+  }
+
+  async openSupportModal(){
+
+    this.menuController.close()
+    
+    const modal = await this.modalCtrl.create({
+      component: SupportComponent,
+      showBackdrop: true,
+    });
+    return await modal.present();
   }
 
   user: any

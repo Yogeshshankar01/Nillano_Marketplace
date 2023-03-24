@@ -1,21 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuComponent } from './menu.component';
+import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
+import { StoreModule } from '@ngrx/store';
 import { RouterModule } from '@angular/router';
-import { SupportModule } from '../support/support.module';
+import { SupportComponent } from './support.component';
 
 
 @NgModule({
-  declarations: [MenuComponent],
+  declarations: [SupportComponent],
   imports: [
     CommonModule,
+    FormsModule,
     IonicModule,
-    RouterModule,
-    SupportModule
+    RouterModule
   ],
   exports : [
-    MenuComponent
+    SupportComponent
   ]
 })
-export class MenuModule { }
+export class SupportModule { }

@@ -56,7 +56,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
   },
   {
-    path: 'settings&support',
+    path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
   },
   {

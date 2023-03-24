@@ -170,7 +170,7 @@ export class AuthPage implements OnInit {
     
     termsLink.onclick = () => {
       alert.dismiss()
-    this.router.navigate(['products'])
+    this.router.navigate(['tos'])
   }
 
   }

@@ -5,4 +5,8 @@ ion-card{
     p,ol,ul{
         line-height: 2em;
     }
+
+    ion-card-header{
+        cursor: pointer;
+    }
 }
