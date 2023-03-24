@@ -155,10 +155,22 @@
 
     </ion-row>
 
-    <div class="mt-2 fs-6 d-flex justify-content-center align-items-center text-dark ">
-      <ion-icon name="location-outline" style="color: #202428;" class="me-1"></ion-icon>
-      <span>{{product.location}}</span>
-    </div>
+    <ion-item lines="full" class="ion-no-padding">
+      <ion-icon size="large" color="danger" name="location-outline" slot="start"></ion-icon>
+      <ion-label text-wrap>
+        <h3>Product Location</h3>
+        <p>{{product.location}}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="full" class="ion-no-padding">
+      <ion-icon size="large" color="danger" name="call-outline" slot="start"></ion-icon>
+      <ion-label>
+        <h3>Shop Contact</h3>
+        <p *ngIf="product.user?.phone_number">{{product.user?.phone_number}}</p>
+        <p *ngIf="!product.user?.phone_number">No info provided</p>
+      </ion-label>
+    </ion-item>
 
     <div class="rounded mt-2">
 

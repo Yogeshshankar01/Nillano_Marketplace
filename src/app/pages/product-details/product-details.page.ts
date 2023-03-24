@@ -385,7 +385,7 @@ export class ProductDetailsPage implements OnInit {
 
             this.relatedProducts = this.product.user.products
 
-            // console.log(this.product.user.followers)
+            // console.log(this.product)
 
             this.titleService.setTitle(`${this.product.name} - GH₵${this.product.price}`);
 
