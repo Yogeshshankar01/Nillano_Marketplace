@@ -72,7 +72,7 @@
       Profile
     </ion-item>
 
-    <ion-item button detail="false" (click)="redirect('settings')">
+    <ion-item button detail="false" *ngIf="user" (click)="redirect('settings')">
       <ion-icon slot="start" name="settings"></ion-icon>
       Settings
     </ion-item>
