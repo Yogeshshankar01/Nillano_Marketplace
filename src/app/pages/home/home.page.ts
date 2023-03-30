@@ -99,7 +99,7 @@ export class HomePage implements OnDestroy, OnInit {
 
   toast: any
 
-  connected!: boolean;
+  connectedStatus = "not started"
 
   retry() {
     this.store.dispatch(getProducts({page:1}))
@@ -200,6 +200,7 @@ export class HomePage implements OnDestroy, OnInit {
 
       if (res.process) {
          this.products.length < 1 && this.store.dispatch(startLoading())
+         this.connectedStatus = "Connecting"
       }
 
       if (res.success) {
@@ -208,7 +209,7 @@ export class HomePage implements OnDestroy, OnInit {
         
         this.products = this.products.length > 0 ? [...this.products,...res.products] : res.products
 
-        this.connected = true
+        this.connectedStatus = "Connected"
 
         setTimeout(() => {
           let products = document.querySelector('.products') as HTMLElement
@@ -223,7 +224,7 @@ export class HomePage implements OnDestroy, OnInit {
 
         this.store.dispatch(endLoading())
 
-        this.connected = false
+        this.connectedStatus = "Failed"
 
         this.toast = this.toastController.create({
           message: res.message ? res.message : "Sorry, we're unable to retrieve products at the moment. We're working to fix the issue. Please try again later.",
