@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
 import { UserMessagesService } from 'src/app/services/userMessages/user-messages.service';
+import { WebSocketServiceService } from 'src/app/services/web-socket-service.service';
 import { getUserMessages } from 'src/app/store/getUserMessages/userMessages.action';
 import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
 import { AppState } from 'src/app/types/AppState';
@@ -93,18 +94,27 @@ export class MessagesPage implements OnInit {
       content = this.content
     }
 
-    this.http.post(`${environment.server}/messaging/send`, { to: messageToId, content: content })
-      .pipe(take(1))
-      .subscribe(
-        res => {
-          this.content = ""
-          this.store.dispatch(getUserMessages())
-          this.store.dispatch(endLoading())
-        },
-        err => {
+    const messageObj = {
+      content: content,
+      to: messageToId
+    };
 
-        }
-      )
+    const messageJSON = JSON.stringify(messageObj);
+    this.websocketservice.sendMessage(messageJSON)
+    this.content = ""
+
+    // this.http.post(`${environment.server}/messaging/send`, { to: messageToId, content: content })
+    //   .pipe(take(1))
+    //   .subscribe(
+    //     res => {
+    //       this.content = ""
+    //       this.store.dispatch(getUserMessages())
+    //       this.store.dispatch(endLoading())
+    //     },
+    //     err => {
+
+    //     }
+    //   )
 
   }
 
@@ -112,7 +122,7 @@ export class MessagesPage implements OnInit {
 
   selectedUserId = 0
 
-  viewMessage(userId:number) {
+  viewMessage(userId: number) {
 
     // location.replace(`/messages/${userId}`)
 
@@ -120,9 +130,11 @@ export class MessagesPage implements OnInit {
   }
 
 
-  constructor(private activeRoute: ActivatedRoute, private router: Router, private userMessagesService: UserMessagesService, private store: Store<AppState>, private http: HttpClient) { }
+  constructor(private activeRoute: ActivatedRoute, private router: Router, private userMessagesService: UserMessagesService, private store: Store<AppState>, private http: HttpClient, private websocketservice: WebSocketServiceService) { }
 
   messageRead = false
+
+  newChat = false
 
   ngOnInit() {
 
@@ -147,79 +159,159 @@ export class MessagesPage implements OnInit {
 
       })
 
-    this.store.select("getUserMessages")
+    console.log('websocket')
+
+    this.websocketservice.message$
       .subscribe(
         res => {
+          console.log(res)
 
-          if (res.success) {
-
+          if (res) {
             this.totalUnreadMessages = res.totalUnreadMesages
-            this.chats = JSON.parse(JSON.stringify(res.userMessages))
+            this.chats = res.usersMessages
+          }
 
-            console.log(this.selectedUserId)
+          if (this.selectedUserId != 0) {
 
-            if (this.selectedUserId != 0) {
+            this.store.dispatch(startLoading())
 
-              this.store.dispatch(startLoading())
+            if (localStorage.getItem("chatSellerMessageContent")) {
+              this.addChat(this.selectedUserId)
+            }
 
-              if (localStorage.getItem("chatSellerMessageContent")) {
-                this.addChat(this.selectedUserId)
-              }
+            this.selectedUserMessages = this.chats.find((chat: { id: any; }) => (chat.id == this.selectedUserId))
 
-              this.selectedUserMessages = this.chats.find((chat: { id: any; }) => (chat.id == this.selectedUserId))
 
-              if (!this.selectedUserMessages) {
-    
-                this.http.get<{ usersMessages: any[] }>(`${environment.server}/messaging/messages/user/${this.selectedUserId}`)
-                  .subscribe(
-                    res => {
-                      this.selectedUserMessages = res.usersMessages[0]
-    
-                    }
-                  )
-    
-              }
+            if (!this.selectedUserMessages) {
 
-              this.selectedUserMessages.messages.forEach((element: any) => {
+              this.newChat = true
 
-                if(element.read == false && element.from == this.selectedUserId){
-                  this.http.get(`${environment.server}/messaging/messages/read/${this.selectedUserMessages.id}`)
-                  .subscribe(res => {
-                    this.store.dispatch(getUserMessages())
-                  })
-                  return
-                }
-                
-              });
-    
+              this.http.get<{ usersMessages: any[] }>(`${environment.server}/messaging/messages/user/${this.selectedUserId}`)
+                .subscribe(
+                  res => {
 
-              // if (window.innerWidth <= 767) {
+                    this.selectedUserMessages = res.usersMessages[0]
 
-              //   setTimeout(() => {
+                    console.log("u", res.usersMessages[0])
 
-              //     let chatslist = document.getElementById('chatslist') as HTMLElement
-              //     let chats = document.getElementById('chats') as HTMLElement
-
-              //     chatslist.classList.add('d-none')
-              //     chats.classList.remove('d-none')
-
-              //   }, 500);
-
-              // }
-
-                this.store.dispatch(endLoading())
-              
+                  }
+                )
 
             }
 
+            console.log('selected messages', this.selectedUserMessages)
+
+            // this.selectedUserMessages.messages.forEach((element: any) => {
+
+            //   if(element.read == false && element.from == this.selectedUserId){
+            //     this.http.get(`${environment.server}/messaging/messages/read/${this.selectedUserMessages.id}`)
+            //     .subscribe(res => {
+            //       this.store.dispatch(getUserMessages())
+            //     })
+            //     return
+            //   }
+
+            // });
+
+
+            if (window.innerWidth <= 767) {
+
+              setTimeout(() => {
+
+                let chatslist = document.getElementById('chatslist') as HTMLElement
+                let chats = document.getElementById('chats') as HTMLElement
+
+                chatslist.classList.add('d-none')
+                chats.classList.remove('d-none')
+
+              }, 500);
+
+            }
+
+            this.store.dispatch(endLoading())
+
+
           }
 
-          if (res.fail) {
-            this.totalUnreadMessages = 0
-          }
-
+        },
+        error => {
+          console.error('WebSocket error:', error);
         }
       )
+
+    // this.store.select("getUserMessages")
+    //   .subscribe(
+    //     res => {
+
+    //       if (res.success) {
+
+    //         this.totalUnreadMessages = res.totalUnreadMesages
+    //         this.chats = JSON.parse(JSON.stringify(res.userMessages))
+
+    //         console.log(this.selectedUserId)
+
+    // if (this.selectedUserId != 0) {
+
+    //   this.store.dispatch(startLoading())
+
+    //   if (localStorage.getItem("chatSellerMessageContent")) {
+    //     this.addChat(this.selectedUserId)
+    //   }
+
+    //   this.selectedUserMessages = this.chats.find((chat: { id: any; }) => (chat.id == this.selectedUserId))
+
+    //   if (!this.selectedUserMessages) {
+
+    //     this.http.get<{ usersMessages: any[] }>(`${environment.server}/messaging/messages/user/${this.selectedUserId}`)
+    //       .subscribe(
+    //         res => {
+    //           this.selectedUserMessages = res.usersMessages[0]
+
+    //         }
+    //       )
+
+    //   }
+
+    //   this.selectedUserMessages.messages.forEach((element: any) => {
+
+    //     if(element.read == false && element.from == this.selectedUserId){
+    //       this.http.get(`${environment.server}/messaging/messages/read/${this.selectedUserMessages.id}`)
+    //       .subscribe(res => {
+    //         this.store.dispatch(getUserMessages())
+    //       })
+    //       return
+    //     }
+
+    //   });
+
+
+    //   if (window.innerWidth <= 767) {
+
+    //     setTimeout(() => {
+
+    //       let chatslist = document.getElementById('chatslist') as HTMLElement
+    //       let chats = document.getElementById('chats') as HTMLElement
+
+    //       chatslist.classList.add('d-none')
+    //       chats.classList.remove('d-none')
+
+    //     }, 500);
+
+    //   }
+
+    //     this.store.dispatch(endLoading())
+
+
+    // }
+
+    //       }
+
+    //       if (res.fail) {
+    //         this.totalUnreadMessages = 0
+    //       }
+
+    //     }
+    //   )
 
 
 
@@ -231,7 +323,7 @@ export class MessagesPage implements OnInit {
 
   ngAfterViewInit() {
 
-    
+
 
   }
 

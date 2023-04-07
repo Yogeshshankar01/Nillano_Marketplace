@@ -10,6 +10,7 @@ import { ProductsserviceService } from 'src/app/services/productsservice/product
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Subscription } from 'rxjs';
 import { SearchComponent } from 'src/app/components/search/search.component';
+import { WebSocketServiceService } from 'src/app/services/web-socket-service.service';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,7 @@ import { SearchComponent } from 'src/app/components/search/search.component';
 })
 export class HomePage implements OnDestroy, OnInit {
 
-  handleRefresh(event:any) {
+  handleRefresh(event: any) {
     // do some work to refresh the content here
     // ...
 
@@ -27,12 +28,12 @@ export class HomePage implements OnDestroy, OnInit {
     // refreshertext.style.color = "#000"
 
     location.reload()
-  
+
     // when the refresh is complete, call the complete() method
     setTimeout(() => {
 
       event.target.complete();
-      
+
     }, 1500);
   }
 
@@ -45,25 +46,6 @@ export class HomePage implements OnDestroy, OnInit {
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
-
-  chats = [
-    { name: "Lawson Shoes" },
-    { name: "ShoeShopper" },
-    { name: "MarketMaverick" },
-    { name: "Seller456" },
-    { name: "TradeMaster" },
-    { name: "Shopaholic789" },
-    { name: "LawsonLuxe" },
-    { name: "StepUpStyle" },
-    { name: "Lawson Shoes" },
-    { name: "ShoeShopper" },
-    { name: "MarketMaverick" },
-    { name: "Seller456" },
-    { name: "TradeMaster" },
-    { name: "Shopaholic789" },
-    { name: "LawsonLuxe" },
-    { name: "StepUpStyle" }
-  ]
 
   title = 'Home Page'
 
@@ -79,7 +61,7 @@ export class HomePage implements OnDestroy, OnInit {
 
   isIOS!: boolean;
 
-  constructor(private store: Store<AppState>, private router: Router, private toastController: ToastController, private productsService: ProductsserviceService, private authService: AuthService, private actionSheetController: ActionSheetController,private platform: Platform,private alertController:AlertController,private modalCtrl:ModalController) {
+  constructor(private store: Store<AppState>, private router: Router, private toastController: ToastController, private productsService: ProductsserviceService, private authService: AuthService, private actionSheetController: ActionSheetController, private platform: Platform, private alertController: AlertController, private modalCtrl: ModalController, private websocketservice: WebSocketServiceService) {
 
     this.isIOS = this.platform.is('ios');
 
@@ -91,7 +73,7 @@ export class HomePage implements OnDestroy, OnInit {
       message: 'You need to log in to perform this action.',
       buttons: ['OK']
     });
-  
+
     await alert.present();
   }
 
@@ -102,7 +84,7 @@ export class HomePage implements OnDestroy, OnInit {
   connected!: boolean;
 
   retry() {
-    this.store.dispatch(getProducts({page:1}))
+    this.store.dispatch(getProducts({ page: 1 }))
   }
 
   totalUnreadMessages = 0
@@ -127,13 +109,13 @@ export class HomePage implements OnDestroy, OnInit {
     }
   }
 
-  loadMoreProducts(event:any) {
+  loadMoreProducts(event: any) {
     // Fetch more products from your database or service
 
-    let nextPage:number = Number(localStorage.getItem('currentPage'))
-   
-    this.store.dispatch(getProducts({page:nextPage + 1}))
-    
+    let nextPage: number = Number(localStorage.getItem('currentPage'))
+
+    this.store.dispatch(getProducts({ page: nextPage + 1 }))
+
 
     setTimeout(() => {
       let products = document.querySelector('.products') as HTMLElement
@@ -143,10 +125,10 @@ export class HomePage implements OnDestroy, OnInit {
       event.target.complete();
     }, 2000);
 
-  
+
   }
 
-  async searchI(){
+  async searchI() {
     const modal = await this.modalCtrl.create({
       component: SearchComponent,
       showBackdrop: true,
@@ -157,6 +139,14 @@ export class HomePage implements OnDestroy, OnInit {
   ngOnInit() {
 
     // this.presentLoginAlert()
+
+    this.websocketservice.totalUnreadMessages
+      .subscribe(
+        res => {
+          // console.log(res)
+          this.totalUnreadMessages = res
+        }
+      )
 
     if (localStorage.getItem("access_token")) {
       this.isLoggedIn = true
@@ -174,21 +164,21 @@ export class HomePage implements OnDestroy, OnInit {
         }
       )
 
-    this.store.select("getUserMessages")
-      .subscribe(
-        res => {
-          if (res.success) {
-            this.totalUnreadMessages = res.totalUnreadMesages
-          }
+    // this.store.select("getUserMessages")
+    //   .subscribe(
+    //     res => {
+    //       if (res.success) {
+    //         this.totalUnreadMessages = res.totalUnreadMesages
+    //       }
 
-          if (res.fail) {
-            this.totalUnreadMessages = 0
-          }
+    //       if (res.fail) {
+    //         this.totalUnreadMessages = 0
+    //       }
 
-        }
-      )
+    //     }
+    //   )
 
-    this.store.dispatch(getProducts({page:1}))
+    this.store.dispatch(getProducts({ page: 1 }))
 
     // Getting the states of the products at each time
     this.productsStateSubscription = this.store.select('products').subscribe(res => {
@@ -199,14 +189,14 @@ export class HomePage implements OnDestroy, OnInit {
       // }
 
       if (res.process) {
-         this.products.length < 1 && this.store.dispatch(startLoading())
+        this.products.length < 1 && this.store.dispatch(startLoading())
       }
 
       if (res.success) {
         this.store.dispatch(endLoading())
         // console.log(res.products)
-        
-        this.products = this.products.length > 0 ? [...this.products,...res.products] : res.products
+
+        this.products = this.products.length > 0 ? [...this.products, ...res.products] : res.products
 
         this.connected = true
 
@@ -235,7 +225,7 @@ export class HomePage implements OnDestroy, OnInit {
             {
               text: 'Retry',
               handler: () => {
-                this.store.dispatch(getProducts({page:1}))
+                this.store.dispatch(getProducts({ page: 1 }))
               }
             }
           ]

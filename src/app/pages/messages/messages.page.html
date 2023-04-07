@@ -20,7 +20,7 @@
     <ion-refresher-content pullingIcon="chevron-down-circle-outline" refreshingSpinner="circles"></ion-refresher-content>
   </ion-refresher>
 
-  <ion-row *ngIf="chats?.length > 0" class="h-100">
+  <ion-row *ngIf="chats?.length > 0 || newChat" class="h-100">
 
     <ion-col [ngClass]="{'d-sm-block d-none': selectedUserMessages, '': !selectedUserMessages}" class="mh-100" id="chatslist" style="overflow-y: scroll;" size="12" size-md="5" size-lg="4" >
       
@@ -120,7 +120,7 @@
 
   </ion-row>
 
-  <div class="px-1" *ngIf="chats?.length < 1" id="container">
+  <div class="px-1" *ngIf="chats?.length < 1 && !newChat" id="container">
     <strong class="text-dark">You have no chats at the moment</strong>
     <p> Start by messaging some sellers about their products. </p>
   </div>
