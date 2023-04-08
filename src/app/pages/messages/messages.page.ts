@@ -159,12 +159,10 @@ export class MessagesPage implements OnInit {
 
       })
 
-    console.log('websocket')
-
     this.websocketservice.message$
       .subscribe(
         res => {
-          console.log(res)
+          // console.log(res)
 
           if (res) {
             this.totalUnreadMessages = res.totalUnreadMesages
@@ -192,26 +190,31 @@ export class MessagesPage implements OnInit {
 
                     this.selectedUserMessages = res.usersMessages[0]
 
-                    console.log("u", res.usersMessages[0])
+                    // console.log("u", res.usersMessages[0])
 
                   }
                 )
 
             }
 
-            console.log('selected messages', this.selectedUserMessages)
+            // console.log('selected messages', this.selectedUserMessages)
 
-            // this.selectedUserMessages.messages.forEach((element: any) => {
+           if(this.selectedUserMessages){
+            this.selectedUserMessages.messages.forEach((element: any) => {
 
-            //   if(element.read == false && element.from == this.selectedUserId){
-            //     this.http.get(`${environment.server}/messaging/messages/read/${this.selectedUserMessages.id}`)
-            //     .subscribe(res => {
-            //       this.store.dispatch(getUserMessages())
-            //     })
-            //     return
-            //   }
+              if(element.read == false && element.from == this.selectedUserId){
+                
+                this.http.get(`${environment.server}/messaging/messages/read/${this.selectedUserMessages.id}`)
+                .subscribe(res => {
+                  // this.store.dispatch(getUserMessages())
+                  // element.read = true
+                  this.selectedUserMessages.unreadMessages = this.selectedUserMessages.unreadMessages - 1
+                })
+                // return
+              }
 
-            // });
+            });
+           }
 
 
             if (window.innerWidth <= 767) {
