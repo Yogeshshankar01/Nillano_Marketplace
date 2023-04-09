@@ -3,7 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, ModalController, NavParams } from '@ionic/angular';
+import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
+import { endLoading, startLoading } from 'src/app/store/loading/loading.action';
+import { AppState } from 'src/app/types/AppState';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -20,10 +23,21 @@ export class ForgetPasswordComponent implements OnInit {
   displayResetForm!: boolean;
   resetToken!: string;
 
-  constructor(private modalController:ModalController,private formBuilder: FormBuilder,private alertController:AlertController,private http:HttpClient,private navParams: NavParams,private router:Router) { }
+  constructor(private modalController:ModalController,private formBuilder: FormBuilder,private alertController:AlertController,private http:HttpClient,private navParams: NavParams,private router:Router,private store: Store<AppState>,) { }
+
+  async reCreateModal(){
+    const modal = await this.modalController.create({
+      component: ForgetPasswordComponent
+    });
+    await modal.present();
+  }
 
   submitResetPasswordForm() {
     const email = this.resetPasswordForm.get('email').value;
+
+    this.store.dispatch(startLoading())
+
+    this.dismiss()
 
     const mainDomain = `${location.protocol}//${location.hostname}`;
 
@@ -36,12 +50,15 @@ export class ForgetPasswordComponent implements OnInit {
     this.http.post<{message:string}>(`${environment.server}/users/requestresetpassword`,data)
     .pipe(take(1))
     .subscribe(res=>{
-      console.log(res)
-      res.message ? this.presentAlert(res.message,'') : this.presentAlert("Unable to connect",'')
+      res.message ? this.presentAlert(res.message,'') : ''
+      this.store.dispatch(endLoading())
     },err=>{
 
       err.error.message ? this.presentAlert(err.error.message,'') : this.presentAlert("Unable to connect",'')
-
+      this.store.dispatch(endLoading())
+      
+      this.reCreateModal()
+      
     })
     // Display success/failure message to user
   }
@@ -75,7 +92,7 @@ export class ForgetPasswordComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         res=>{
-          console.log(res)
+          // console.log(res)
         },
         err=>{
           this.resetLinkError = err.error.message ? err.error.message : "Unable to connect"
@@ -98,7 +115,11 @@ export class ForgetPasswordComponent implements OnInit {
 
   onSubmit() {
     if (this.changePasswordForm.valid) {
-      // this.modalController.dismiss(this.changePasswordForm.value);
+
+      this.dismiss()
+      
+      this.store.dispatch(startLoading())
+
       const data = {
         newPassword : this.changePasswordForm.get('newPassword')?.value
       }
@@ -107,9 +128,11 @@ export class ForgetPasswordComponent implements OnInit {
       .pipe(take(1))
       .subscribe(res=>{
         this.presentAlert(res.message,'')
-        this.dismiss()
+        this.store.dispatch(endLoading())
       },err=>{
         err.error.message ? this.presentAlert(err.error.message,'') : this.presentAlert("Unable to connect",'')
+        this.store.dispatch(endLoading())
+        this.reCreateModal()
       })
       
     }
