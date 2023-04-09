@@ -16,16 +16,18 @@ import { environment } from 'src/environments/environment';
 })
 export class ForgetPasswordComponent implements OnInit {
 
-  resetPasswordForm!:any
+  resetPasswordForm!: any
 
   changePasswordForm!: FormGroup;
 
   displayResetForm!: boolean;
   resetToken!: string;
 
-  constructor(private modalController:ModalController,private formBuilder: FormBuilder,private alertController:AlertController,private http:HttpClient,private navParams: NavParams,private router:Router,private store: Store<AppState>,) { }
+  showPassword = false
 
-  async reCreateModal(){
+  constructor(private modalController: ModalController, private formBuilder: FormBuilder, private alertController: AlertController, private http: HttpClient, private navParams: NavParams, private router: Router, private store: Store<AppState>,) { }
+
+  async reCreateModal() {
     const modal = await this.modalController.create({
       component: ForgetPasswordComponent
     });
@@ -42,29 +44,29 @@ export class ForgetPasswordComponent implements OnInit {
     const mainDomain = `${location.protocol}//${location.hostname}`;
 
     const data = {
-      email : email,
-      mainDomain : mainDomain
+      email: email,
+      mainDomain: mainDomain
     }
 
     // Send reset password request to server using email
-    this.http.post<{message:string}>(`${environment.server}/users/requestresetpassword`,data)
-    .pipe(take(1))
-    .subscribe(res=>{
-      res.message ? this.presentAlert(res.message,'') : ''
-      this.store.dispatch(endLoading())
-    },err=>{
+    this.http.post<{ message: string }>(`${environment.server}/users/requestresetpassword`, data)
+      .pipe(take(1))
+      .subscribe(res => {
+        res.message ? this.presentAlert(res.message, '') : ''
+        this.store.dispatch(endLoading())
+      }, err => {
 
-      err.error.message ? this.presentAlert(err.error.message,'') : this.presentAlert("Unable to connect",'')
-      this.store.dispatch(endLoading())
-      
-      this.reCreateModal()
-      
-    })
+        err.error.message ? this.presentAlert(err.error.message, '') : this.presentAlert("Unable to connect", '')
+        this.store.dispatch(endLoading())
+
+        this.reCreateModal()
+
+      })
     // Display success/failure message to user
   }
 
   dismiss() {
-    if(this.displayResetForm){
+    if (this.displayResetForm) {
       this.router.navigate(['/auth'], { queryParams: { page: 'login' } });
     }
     this.modalController.dismiss();
@@ -72,7 +74,7 @@ export class ForgetPasswordComponent implements OnInit {
 
   resetLinkError!: string;
 
-  httpOptions!: {headers:HttpHeaders};
+  httpOptions!: { headers: HttpHeaders };
 
   ngOnInit() {
 
@@ -86,18 +88,18 @@ export class ForgetPasswordComponent implements OnInit {
       })
     };
 
-    if(this.displayResetForm){
-      
-      this.http.get(`${environment.server}/users/resetpassword/decodejwt`,this.httpOptions)
-      .pipe(take(1))
-      .subscribe(
-        res=>{
-          // console.log(res)
-        },
-        err=>{
-          this.resetLinkError = err.error.message ? err.error.message : "Unable to connect"
-        }
-      )
+    if (this.displayResetForm) {
+
+      this.http.get(`${environment.server}/users/resetpassword/decodejwt`, this.httpOptions)
+        .pipe(take(1))
+        .subscribe(
+          res => {
+            // console.log(res)
+          },
+          err => {
+            this.resetLinkError = err.error.message ? err.error.message : "Unable to connect"
+          }
+        )
     }
 
     // console.log(this.displayResetForm)
@@ -117,24 +119,24 @@ export class ForgetPasswordComponent implements OnInit {
     if (this.changePasswordForm.valid) {
 
       this.dismiss()
-      
+
       this.store.dispatch(startLoading())
 
       const data = {
-        newPassword : this.changePasswordForm.get('newPassword')?.value
+        newPassword: this.changePasswordForm.get('newPassword')?.value
       }
-     
-      this.http.post<{message:string}>(`${environment.server}/users/resetpassword`,data,this.httpOptions)
-      .pipe(take(1))
-      .subscribe(res=>{
-        this.presentAlert(res.message,'')
-        this.store.dispatch(endLoading())
-      },err=>{
-        err.error.message ? this.presentAlert(err.error.message,'') : this.presentAlert("Unable to connect",'')
-        this.store.dispatch(endLoading())
-        this.reCreateModal()
-      })
-      
+
+      this.http.post<{ message: string }>(`${environment.server}/users/resetpassword`, data, this.httpOptions)
+        .pipe(take(1))
+        .subscribe(res => {
+          this.presentAlert(res.message, '')
+          this.store.dispatch(endLoading())
+        }, err => {
+          err.error.message ? this.presentAlert(err.error.message, '') : this.presentAlert("Unable to connect", '')
+          this.store.dispatch(endLoading())
+          this.reCreateModal()
+        })
+
     }
   }
 
@@ -160,9 +162,9 @@ export class ForgetPasswordComponent implements OnInit {
       animated: true,
       translucent: true
     });
-  
+
     await alert.present();
   }
-  
+
 
 }
