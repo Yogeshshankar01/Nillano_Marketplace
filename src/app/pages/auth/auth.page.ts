@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, MenuController, ModalController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Subscription, take } from 'rxjs';
+import { ForgetPasswordComponent } from 'src/app/components/forget-password/forget-password.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { checkLogin } from 'src/app/store/checkLogin/checklogin.actions';
 import { getUserMessages } from 'src/app/store/getUserMessages/userMessages.action';
@@ -227,6 +228,18 @@ export class AuthPage implements OnInit {
 
   }
 
+  async presentForgetPasswordModal(display:boolean,token?:string){
+    const modal = await this.modalController.create({
+      component : ForgetPasswordComponent,
+      componentProps: {
+        displayResetForm : display,
+        token : token ? token : ''
+      },
+      showBackdrop : true
+    });
+    return await modal.present();
+  }
+
   private routeSub!: Subscription;
 
   ngOnInit() {
@@ -241,6 +254,11 @@ export class AuthPage implements OnInit {
     this.menuController.close()
 
     this.routeSub = this.route.queryParams.subscribe(params => {
+
+      if(params['page'] == 'resetpassword' && params['token']){
+        this.presentForgetPasswordModal(true,params['token'])
+      }
+
       this.selectedTab = params['page'];
       // Update the view with the new "id" value
     });
