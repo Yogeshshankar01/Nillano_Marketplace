@@ -25,8 +25,18 @@ export class ForgetPasswordComponent implements OnInit {
 
   showPassword = false
 
-  constructor(private modalController: ModalController, private formBuilder: FormBuilder, private alertController: AlertController, private http: HttpClient, private navParams: NavParams, private router: Router, private store: Store<AppState>,) { }
+  constructor(
+    // Inject required services and modules for the component
+    private modalController: ModalController,
+    private formBuilder: FormBuilder,
+    private alertController: AlertController,
+    private http: HttpClient,
+    private navParams: NavParams,
+    private router: Router,
+    private store: Store<AppState>,
+  ) { }
 
+  // Method to recreate the modal
   async reCreateModal() {
     const modal = await this.modalController.create({
       component: ForgetPasswordComponent
@@ -34,28 +44,47 @@ export class ForgetPasswordComponent implements OnInit {
     await modal.present();
   }
 
+  // Method to dismiss the modal
+  dismiss() {
+    // If the reset password form is displayed, navigate to the login page
+    if (this.displayResetForm) {
+      this.router.navigate(['/auth'], { queryParams: { page: 'login' } });
+    }
+    // Dismiss the modal
+    this.modalController.dismiss();
+  }
+
+  // Method to handle submission of the reset password form
   submitResetPasswordForm() {
+
+    // Extract email from the form
     const email = this.resetPasswordForm.get('email').value;
 
+    // Dispatch the start loading action
     this.store.dispatch(startLoading())
 
+    // Dismiss the modal
     this.dismiss()
 
+    // Get the main domain of the application
     const mainDomain = `${location.protocol}//${location.hostname}`;
 
+    // Prepare data to send to the server
     const data = {
       email: email,
       mainDomain: mainDomain
     }
 
-    // Send reset password request to server using email
+    // Send a post request to the server to reset the password
     this.http.post<{ message: string }>(`${environment.server}/users/requestresetpassword`, data)
       .pipe(take(1))
       .subscribe(res => {
+        // If there is a message in the response, show it in an alert
         res.message ? this.presentAlert(res.message, '') : ''
+        // Dispatch the end loading action
         this.store.dispatch(endLoading())
       }, err => {
-
+        // If there is an error, show it in an alert and recreate the modal
         err.error.message ? this.presentAlert(err.error.message, '') : this.presentAlert("Unable to connect", '')
         this.store.dispatch(endLoading())
 
@@ -63,13 +92,6 @@ export class ForgetPasswordComponent implements OnInit {
 
       })
     // Display success/failure message to user
-  }
-
-  dismiss() {
-    if (this.displayResetForm) {
-      this.router.navigate(['/auth'], { queryParams: { page: 'login' } });
-    }
-    this.modalController.dismiss();
   }
 
   resetLinkError!: string;
