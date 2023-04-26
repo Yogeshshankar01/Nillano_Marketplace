@@ -63,7 +63,8 @@
 
                   <ion-card class="m-0" style="background: #f2f2f2;">
 
-                    <img [src]="product.image.url" class="w-100" alt="{{ product.name }}">
+                    <img [src]="product.image?.url" class="w-100" alt="{{ product.name }}">
+                    
 
                     <ion-card-header class="p-2 pb-0">
                       <ion-card-title class="fs-6"
