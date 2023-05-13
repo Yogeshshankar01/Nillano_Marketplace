@@ -198,13 +198,34 @@
               <p>{{product.user?.following.length}} following | {{product.user?.followers.length}} followers</p>
             </ion-label>
 
-            <ion-button slot="end" *ngIf="!isFollowing" fill="clear" size="large">
-              <ion-icon class="text-primary" name="add-circle-outline"></ion-icon>
+           <div *ngIf="!isFollowing" (click)="followUser()" class="text-center h-100">
+            <ion-button class="m-0" slot="end" style="height:max-content;" fill="clear" size="large">
+              <ion-icon class="text-primary" name="add-circle-outline"></ion-icon> 
             </ion-button>
 
-            <ion-button slot="end" *ngIf="isFollowing" fill="clear" size="large">
-              <ion-icon class="text-dark" name="checkmark-done-circle"></ion-icon>
+            <br>
+            
+            <span style="font-size: .8em;">
+              Follow
+            </span>
+           </div>
+
+
+           <div *ngIf="isFollowing" class="text-center h-100">
+            <ion-button class="m-0" slot="end" style="height:max-content;" fill="clear" size="large">
+              <ion-icon class="text-dark" name="checkmark-done-circle"></ion-icon> 
             </ion-button>
+
+            <br>
+            
+            <span style="font-size: .8em;">
+              Following
+            </span>
+           </div>
+
+            <!-- <ion-button slot="end" *ngIf="isFollowing" fill="clear" size="large">
+              <ion-icon class="text-dark" name="checkmark-done-circle"></ion-icon>
+            </ion-button> -->
             
           </ion-item>
 

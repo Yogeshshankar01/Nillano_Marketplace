@@ -102,15 +102,19 @@
     
       </div>
     
-      <p class="text-center text-dark">
+      <p *ngIf="user?.bio" class="text-center text-dark">
         {{ user?.bio }}
       </p>
     
       <div class="mb-3 text-center">
     
-        <ion-button style="--background:#1A4640; --color:#f2f2f2;">
-          <ion-icon class="me-1" name="person-add"></ion-icon>
+        <ion-button (click)="followUser()" *ngIf="!isFollowing" style="--background:#1A4640; --color:#f2f2f2;">
+          <!-- <ion-icon class="me-1" name="person-add"></ion-icon> -->
           Follow
+        </ion-button>
+
+        <ion-button (click)="followUser()" *ngIf="isFollowing" style="--background:#000; --color:#f2f2f2;">
+          Unfollow
         </ion-button>
     
       </div>

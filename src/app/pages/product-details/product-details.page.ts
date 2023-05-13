@@ -377,6 +377,11 @@ export class ProductDetailsPage implements OnInit {
             this.store.dispatch(endLoading())
 
             this.product = JSON.parse(JSON.stringify(prod.product))
+
+            // Filter following and followers arrays to remove objects with status = 'inactive'
+            this.product.user.following = this.product.user.following.filter((obj:any) => obj.status !== 'inactive');
+            this.product.user.followers = this.product.user.followers.filter((obj:any) => obj.status !== 'inactive');
+
             this.selectedMainImage = this.product.image.url
 
             this.otherImages = [this.product.image, ...this.product.images]
@@ -401,7 +406,7 @@ export class ProductDetailsPage implements OnInit {
                 this.currentUserId = await res.profile.id
                 // console.log(this.currentUserId)
                 this.isLiked = this.product.Likes.some((like: { user_id: number; }) => like.user_id === this.currentUserId);
-                this.isFollowing = this.product.user.followers.some((follower: { followerId: number; }) => follower.followerId === this.currentUserId);
+                this.isFollowing = this.product.user.followers.some((follower: { followerId: number; status:string; }) => follower.followerId === this.currentUserId && follower.status === 'active');
                 // console.log(this.isFollowing)
               },
               err => {
@@ -433,6 +438,58 @@ export class ProductDetailsPage implements OnInit {
       )
 
     // console.log(this.productId)
+
+  }
+
+  async followUser() {
+
+    if(!this.currentUserId){
+
+      const toast = await this.toastController.create({
+        message: "Please login to follow this user",
+        duration: 1500,
+        color: 'danger',
+        position: 'bottom',
+        mode: 'ios'
+      });
+
+      await toast.present();
+
+      return
+
+    }
+
+    this.userProfile.follow(this.product.user.id)
+      .pipe(take(1))
+      .subscribe(
+        async res => {
+
+          this.store.dispatch(getProduct({ productID: Number(this.productId) }))
+
+          const toast = await this.toastController.create({
+            message: res.msg,
+            duration: 1500,
+            color: 'dark',
+            position: 'bottom',
+            mode: 'ios'
+          });
+
+          await toast.present();
+        },
+        async err => {
+          console.log(err)
+
+          const toast = await this.toastController.create({
+            message: "An error occured",
+            duration: 1500,
+            color: 'danger',
+            position: 'bottom',
+            mode: 'ios'
+          });
+
+          await toast.present();
+        }
+      )
 
   }
 
