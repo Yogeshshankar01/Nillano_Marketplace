@@ -43,7 +43,7 @@
 
         <div class="bg-light" style="height: 10%;" >
 
-          <ion-item lines="none" class="h-100 ion-no-padding">
+          <ion-item lines="none" button detail="false" [routerLink]="['/@', selectedUserMessages?.username]" class="h-100 ion-no-padding">
 
             <ion-button (click)="back()" slot="start" class="m-0 d-sm-none d-block" fill="clear" style="--padding-start:0%" >
 
