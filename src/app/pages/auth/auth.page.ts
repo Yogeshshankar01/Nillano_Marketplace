@@ -280,6 +280,10 @@ export class AuthPage implements OnInit {
     return null;
   }
 
+  toHome(){
+    this.router.navigate(['home'])
+  }
+
 
   constructor(private store: Store<AppState>, private authService: AuthService, private toastController: ToastController, private router: Router, private menuController: MenuController, private route: ActivatedRoute,private modalController:ModalController,private http:HttpClient,private alertController:AlertController) {
 
