@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, MenuController, ModalController, ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
@@ -86,7 +86,13 @@ export class AuthPage implements OnInit {
 
     else {
       this.isModalOpen = false
-      this.presentTermsAndConditionsAlert()
+
+      setTimeout(() => {
+
+        this.router.navigate(['/home'])
+        
+      }, 100);
+
       return
     }
 
@@ -138,14 +144,58 @@ export class AuthPage implements OnInit {
 
     this.isModalOpen = false
 
-    this.registerForm.get('bio')?.setValue(this.bio)
-    this.registerForm.get('username')?.setValue(this.username)
+    // this.registerForm.get('bio')?.setValue(this.bio)
+    // this.registerForm.get('username')?.setValue(this.username)
 
-    this.presentTermsAndConditionsAlert()
+    let sellerInfo = {
+      email : this.registeredUserEmail,
+      username : this.username,
+      bio : this.bio
+    }
+
+    this.http.post<{message : string}>(`${environment.server}/users/updateSellerInfo`,sellerInfo)
+    .subscribe(
+      res=>{
+        // console.log(res.message)
+
+        this.toastController.create({
+          message: res.message,
+          duration: 1500,
+          header: "Success",
+          color: 'primary',
+          position: 'bottom'
+        }).then(toast => toast.present())
+
+        setTimeout(() => {
+
+          this.router.navigate(['home'])
+          
+        }, 200);
+
+      },
+      err=>{
+        console.log(err)
+      }
+    )
+
+    // this.presentTermsAndConditionsAlert()
     
   }
 
+  registeredUserEmail! : string
+  registeredFirstName! : string
+
   async presentTermsAndConditionsAlert() {
+
+    this.registerForm.markAllAsTouched()
+
+    if(this.registerForm.invalid){
+      return
+    }
+
+    this.registeredUserEmail = this.registerForm.get('email')?.value
+    this.registeredFirstName = this.registerForm.get('first_name')?.value
+
     const alert = await this.alertController.create({
       header: 'Terms of Service',
       message: 'By registering you agree to our <a id="termsLink" class="terms-link" >terms of service</a>.',
@@ -186,19 +236,29 @@ export class AuthPage implements OnInit {
   registerForm: FormGroup
 
   register() {
+    
     this.store.dispatch(register({ registrationDetails:this.registerForm.value }))
     // console.log(this.registerForm.value)
   }
 
    showPassword = false;
 
+   loginSubmitted = false
+
   login() {
+    
+    this.loginForm.markAllAsTouched()
+
+    if(this.loginForm.invalid){
+      return
+    }
+
     this.store.dispatch(login({ email: this.loginForm.get('email')?.value, password: this.loginForm.get('password')?.value }))
   }
 
-  onSegmentChange(event: any) {
+  authPageChange(page: string) {
 
-    this.router.navigate(['/auth'], { queryParams: { page: event.detail.value } });
+    this.router.navigate(['/auth'], { queryParams: { page: page } });
 
   }
   currentRoute: any
@@ -209,21 +269,34 @@ export class AuthPage implements OnInit {
     this.isModalOpen = isOpen;
   }
 
+  matchPasswords(control: AbstractControl): { [key: string]: any } | null {
+    const password = control.root.get('password');
+    const confirmPassword = control.value;
+    
+    if (password && confirmPassword !== password.value) {
+      return { passwordMismatch: true };
+    }
+
+    return null;
+  }
+
 
   constructor(private store: Store<AppState>, private authService: AuthService, private toastController: ToastController, private router: Router, private menuController: MenuController, private route: ActivatedRoute,private modalController:ModalController,private http:HttpClient,private alertController:AlertController) {
 
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)])
+      password: new FormControl('', [Validators.required])
     });
 
     this.registerForm = new FormGroup({
       first_name: new FormControl('', [Validators.required]),
       last_name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
+      mobile : new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      username: new FormControl(''),
-      bio: new FormControl('')
+      confirmPassword: new FormControl('',[Validators.required, this.matchPasswords.bind(this)]),
+      // username: new FormControl(''),
+      // bio: new FormControl('')
     });
 
   }
@@ -277,10 +350,8 @@ export class AuthPage implements OnInit {
               duration: 1500,
               header: "Login Successful",
               color: 'primary',
-              position: 'bottom'
+              position: 'top'
             }).then(toast => toast.present())
-
-            localStorage.getItem('registered') && localStorage.removeItem('registered')
 
             this.store.dispatch(getUserMessages())
 
@@ -288,14 +359,20 @@ export class AuthPage implements OnInit {
 
             this.store.dispatch(getUserProducts())
 
-            if (this.currentRoute.includes('?')) {
-              location.assign(this.currentRoute)
-            }
-            else {
-              this.router.navigate([this.currentRoute])
+            if(!localStorage.getItem('registered')){
+
+              if (this.currentRoute.includes('?')) {
+                location.assign(this.currentRoute)
+              }
+              else {
+                this.router.navigate([this.currentRoute])
+              }
+
+              localStorage.removeItem('currentroute')
+
             }
 
-            localStorage.removeItem('currentroute')
+            localStorage.getItem('registered') && localStorage.removeItem('registered')
 
           }
           if (loginState.isLogingInFailure) {
@@ -305,7 +382,8 @@ export class AuthPage implements OnInit {
               duration: 5000,
               header: "Login Failed",
               color: 'danger',
-              position: 'bottom'
+              position: 'top',
+              mode: 'ios'
             }).then(toast => toast.present())
           }
 
@@ -331,6 +409,8 @@ export class AuthPage implements OnInit {
 
             localStorage.setItem('registered','true')
 
+            this.setOpen(true)
+
             this.store.dispatch(login({ email: this.registerForm.get('email')?.value, password: this.registerForm.get('password')?.value }))
 
             this.toastController.create({
@@ -354,7 +434,7 @@ export class AuthPage implements OnInit {
               color: 'danger',
               position: 'bottom'
             }).then(toast => toast.present())
-            this.registerForm.reset()
+            // this.registerForm.reset()
           }
 
         }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AnimationController } from '@ionic/angular';
+import { AnimationController, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-welcome',
@@ -8,11 +8,11 @@ import { AnimationController } from '@ionic/angular';
 })
 export class WelcomeComponent implements OnInit {
 
-  isModalOpen = true;
+  // isModalOpen = true;
 
-  setOpen(isOpen: boolean) {
-    this.isModalOpen = isOpen;
-  }
+  // setOpen(isOpen: boolean) {
+  //   this.isModalOpen = isOpen;
+  // }
 
   enterAnimation = (baseEl: HTMLElement) => {
     const root = baseEl.shadowRoot;
@@ -38,11 +38,16 @@ export class WelcomeComponent implements OnInit {
       .addAnimation([backdropAnimation, wrapperAnimation]);
   };
 
+  async closeModal() {
+    await this.modalController.dismiss();
+  }
+  
+
   leaveAnimation = (baseEl: HTMLElement) => {
     return this.enterAnimation(baseEl).direction('reverse');
   };
 
-  constructor(private animationCtrl: AnimationController) { }
+  constructor(private animationCtrl: AnimationController,private modalController:ModalController) { }
 
   ngOnInit() {}
 

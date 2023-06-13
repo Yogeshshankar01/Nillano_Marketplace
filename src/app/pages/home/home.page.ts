@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { Subscription } from 'rxjs';
 import { SearchComponent } from 'src/app/components/search/search.component';
 import { WebSocketServiceService } from 'src/app/services/web-socket-service.service';
+import { WelcomeComponent } from 'src/app/components/welcome/welcome.component';
 
 @Component({
   selector: 'app-home',
@@ -136,6 +137,14 @@ export class HomePage implements OnDestroy, OnInit {
     return await modal.present();
   }
 
+  async presentWelcomeModal() {
+    const modal = await this.modalCtrl.create({
+      component: WelcomeComponent,
+      initialBreakpoint : 1
+    });
+    return await modal.present();
+  }
+
   ngOnInit() {
 
     // this.presentLoginAlert()
@@ -163,6 +172,10 @@ export class HomePage implements OnDestroy, OnInit {
           }
         }
       )
+
+      if(this.welcomeMessage){
+        this.presentWelcomeModal()
+      }
 
     // this.store.select("getUserMessages")
     //   .subscribe(

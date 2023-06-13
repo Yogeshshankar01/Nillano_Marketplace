@@ -1,45 +1,73 @@
-<ion-modal #modal trigger="open-modal" [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation" [isOpen]="isModalOpen" >
-  <ng-template>
-    <ion-content class="modal-content">
-      <ion-toolbar>
-        <ion-title>Welcome to Niilano!</ion-title>
-        <ion-buttons slot="end">
-          <ion-button color="light" (click)="modal.dismiss()">Close</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
+    <ion-header>
+    <ion-toolbar>
+      <ion-title>Welcome to Niilano!</ion-title>
+      <ion-buttons slot="end">
+        <ion-button color="light" (click)="closeModal()">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-        <ion-text class="ion-text-center">
-          <h4>We're excited to have you on board as a new user. Here's a quick guide to help you get started:</h4>
-        </ion-text>
+    <ion-content class="modal-content ion-padding">
+      
+      <ion-list>
+        <ion-item-divider>
+          <ion-label>Getting Started Guide</ion-label>
+        </ion-item-divider>
 
-        <ion-list>
-          <ion-item>
-            <ion-label class="ion-text-wrap">Browse our selection of products available for purchase or rent.</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label class="ion-text-wrap">You can filter by category, price, and more to find exactly what you're looking for.</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label class="ion-text-wrap">Once you've found something you like, you can add it to your cart and proceed to checkout.</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label class="ion-text-wrap">If you want to rent, select the duration of the rental period. You can choose from a variety of rental periods, depending on the product.</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label class="ion-text-wrap">If you choose to purchase, you can pay using a variety of payment methods, including credit card, PayPal, and more.</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label class="ion-text-wrap">After your order is processed, you'll receive a confirmation email with all the details.</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label class="ion-text-wrap">If you have any issues or questions, our support team is here to help. You can reach us through the in-app chat or email us at support@niilano.com.</ion-label>
-          </ion-item>
-        </ion-list>
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            <h2>Browse our selection</h2>
+            <p>Explore our wide range of products available for purchase or rent.</p>
+          </ion-label>
+        </ion-item>
 
-        <ion-text class="ion-text-center">
-          <h3>Thanks for choosing Niilano, and happy shopping!</h3>
-        </ion-text>
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            <h2>Filter and search</h2>
+            <p>Use filters and search options to find exactly what you're looking for.</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            <h2>Add to cart</h2>
+            <p>Add products to your cart and proceed to checkout.</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            <h2>Rent or purchase</h2>
+            <p>Choose the rental duration or proceed with the purchase.</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            <h2>Payment options</h2>
+            <p>Pay securely using various payment methods.</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            <h2>Order confirmation</h2>
+            <p>Receive a confirmation email with all the details after your order is processed.</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            <h2>Need help?</h2>
+            <p>Contact our support team via in-app chat or email us at support@niilano.com.</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-text class="ion-text-center">
+        <h3>Thanks for choosing Niilano, and happy shopping!</h3>
+      </ion-text>
 
     </ion-content>
-  </ng-template>
-</ion-modal>

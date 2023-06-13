@@ -3,6 +3,10 @@ ion-content{
     --background : #1A4640;
 }
 
+input{
+    background-color: #f2f2f2;
+}
+
 img#login-bg{
     position: absolute;
     left: 0%;
@@ -38,6 +42,14 @@ ion-segment-button.register{
     border-bottom-right-radius: 1em;
 }
 
+.auth-bg{
+    background-image: url(../../../assets/images/auth-bg.png);
+    background-repeat: no-repeat;
+    background-size: 500px;
+    background-position-x: center;
+    background-position-y: bottom;
+}
+
 .active-tab {
     background-color: #212529;
     --ion-color-base:#f2f2f2;
@@ -48,12 +60,40 @@ ion-segment-button.register{
     .main-content{
         width: 60% !important;
     }
+
+    .auth-bg{
+        background-size: 400px;
+    }
 }
 
 @media(max-width:600px){
 
     .main-content{
         width: 75% !important;
+    }
+
+    .m-hidden{
+        display: none;
+    }
+
+    .m{
+        margin-top: 5%;
+    }
+
+    .m-auth-bg{
+        background-image: url(../../../assets/images/auth-bg.png);
+        background-repeat: no-repeat;
+        background-size: 300px;
+        background-position-x: center;
+        background-position-y: bottom;
+    }
+
+    .m-btn{
+        background-color: #f2f2f285;
+    }
+
+    form{
+        padding: 3%;
     }
 
 }
@@ -64,8 +104,8 @@ ion-segment-button.register{
     }
 
     ion-content{
-        --background: linear-gradient(180deg, #1A4640 0%, #f2f2f2 100%);
-        // --background : #1A4640;
+        // --background: linear-gradient(180deg, #1A4640 0%, #f2f2f2 100%);
+        --background : #fff;
     }
 
     img#login-bg{
